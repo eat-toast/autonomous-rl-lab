@@ -10,7 +10,7 @@ from .config import load_config
 from .dqn import DQNAgent, seed_everything
 from .evaluation import evaluate
 from .maze import Maze, MazeEnv
-from .storage import utc_now, write_json
+from .storage import replace_with_retry, utc_now, write_json
 
 
 class BudgetExpired(Exception):
@@ -21,7 +21,7 @@ def save_checkpoint(path, agent, config, seed, step):
     temporary = path.with_suffix(".tmp")
     torch.save({"schema_version": 1, "algorithm": "dqn", "config": config.to_dict(),
                 "seed": seed, "step": step, "model_state": agent.online.state_dict()}, temporary)
-    temporary.replace(path)
+    replace_with_retry(temporary, path)
 
 
 def train_seed(run_dir, seed):

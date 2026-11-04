@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 import statistics
+import shutil
 import subprocess
 import sys
 from uuid import uuid4
@@ -29,11 +30,22 @@ def aggregate(summaries):
     return result
 
 
-def run_experiment(config, output):
+def run_experiment(config, output, reuse_completed_from=None):
     config.validate()
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + uuid4().hex[:8]
     run_dir = Path(output).resolve() / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
+    if reuse_completed_from is not None:
+        from .config import from_dict
+        reuse_completed_from = Path(reuse_completed_from).resolve()
+        original = json.loads((reuse_completed_from / "config.json").read_text(encoding="utf-8"))
+        if from_dict(original).to_dict() != config.to_dict():
+            raise ValueError("Recovery can reuse seeds only with exactly the same configuration")
+        write_json(run_dir / "recovery_provenance.json", {
+            "original_run": str(reuse_completed_from),
+            "original_metadata": json.loads((reuse_completed_from / "metadata.json").read_text(encoding="utf-8")),
+            "policy": "Copy only completed seed artifacts; restart failed seeds from initialization. Original run retained.",
+            "change": "Bounded checkpoint/JSON replacement retry; learning algorithm unchanged."})
     write_json(run_dir / "config.json", config.to_dict())
     write_json(run_dir / "metadata.json", {"experiment_id": run_id, **runtime_metadata(),
                                           "source_hashes": snapshot_source(run_dir)})
@@ -43,6 +55,18 @@ def run_experiment(config, output):
         manifest = make_splits(config)
         write_json(run_dir / "mazes.json", manifest)
         for seed in config.train.seeds:
+            prior_summary = reuse_completed_from / f"seed_{seed}" / "summary.json" if reuse_completed_from else None
+            if prior_summary and prior_summary.exists():
+                prior = json.loads(prior_summary.read_text(encoding="utf-8"))
+                if prior["status"] == "completed":
+                    shutil.copytree(prior_summary.parent, run_dir / f"seed_{seed}")
+                    old_log = reuse_completed_from / f"seed_{seed}_worker.log"
+                    if old_log.exists():
+                        shutil.copyfile(old_log, run_dir / old_log.name)
+                    summaries.append(prior)
+                    write_json(run_dir / "summary.json", {"seeds": summaries, "aggregate": aggregate(summaries)})
+                    print(f"{run_id}: reused completed seed={seed} from {reuse_completed_from.name}", flush=True)
+                    continue
             print(f"{run_id}: seed={seed}, budget={config.train.steps} steps / {config.train.max_seconds}s", flush=True)
             log = run_dir / f"seed_{seed}_worker.log"
             command = [sys.executable, "-m", "rl_lab", "_worker", "--run", str(run_dir), "--seed", str(seed)]

@@ -15,6 +15,7 @@ from rl_lab.maze import ACTIONS, Maze, MazeEnv, astar, generate_maze, make_split
 from rl_lab.runner import aggregate
 from rl_lab.plots import trailing_mean
 from rl_lab.train import save_checkpoint, train_seed
+from rl_lab.storage import replace_with_retry
 
 
 def bfs_length(grid):
@@ -158,6 +159,26 @@ class AlgorithmTests(unittest.TestCase):
 
 
 class PipelineTests(unittest.TestCase):
+    def test_atomic_save_retries_only_permission_errors_and_is_bounded(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source, destination = Path(directory) / "tmp", Path(directory) / "result"
+            source.write_text("complete", encoding="utf-8")
+            original_replace = Path.replace
+            calls = []
+            def sharing_violation_once(path, target):
+                calls.append(1)
+                if len(calls) == 1:
+                    raise PermissionError("transient sharing violation")
+                return original_replace(path, target)
+            with patch.object(Path, "replace", sharing_violation_once), patch("rl_lab.storage.time.sleep"):
+                replace_with_retry(source, destination)
+            self.assertEqual(destination.read_text(encoding="utf-8"), "complete")
+            self.assertEqual(len(calls), 2)
+            with patch.object(Path, "replace", side_effect=PermissionError("locked")) as replace_mock, \
+                    patch("rl_lab.storage.time.sleep"):
+                with self.assertRaises(PermissionError):
+                    replace_with_retry(source, destination, attempts=3)
+            self.assertEqual(replace_mock.call_count, 3)
     def test_reward_smoothing_uses_only_past_episodes(self):
         np.testing.assert_allclose(trailing_mean([1, 3, 8, -2], window=2), [1, 2, 5.5, 3])
         np.testing.assert_allclose(trailing_mean([1, 3]), trailing_mean([1, 3, 100])[:2])

@@ -31,3 +31,13 @@ return 상승이 목표 도달을 의미하지 않을 수 있으므로 greedy �
 
 실행: `python scripts/run_study.py`
 결과: `studies/20261104_four_steps/`, 개별 run은 `runs/`에 보존.
+
+## 저장 오류 복구 기록
+
+B의 seed 1은 16,000스텝 모델 저장 중 Windows 파일 접근 오류(WinError 5)로 실패했다.
+원본 run과 로그/중간 checkpoint를 보존한다. 모델/JSON 파일 교체에 제한된 재시도를 추가하고,
+성공한 seed 0/2는 새 run에 복사해 출처를 기록하며 seed 1만 동일 설정으로 처음부터 재실행한다.
+재학습을 이어가는 resume는 아니다. 같은 모델/보상/미로/seed를 유지한다.
+복구용 재실행 한 번에 최대 20,000스텝을 별도 허용한다. 계획된 240,000스텝 외에
+실패 시도까지 포함한 학습량 상한은 260,000스텝이며 전체 wall limit 2,700초는 유지한다.
+보존된 실패 protocol과 recovery_provenance.json에서 코드/복사 출처를 확인할 수 있다.

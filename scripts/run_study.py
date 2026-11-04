@@ -155,12 +155,25 @@ def write_report(folder, conditions, decisions):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=ROOT / "studies/20261104_four_steps")
+    parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--retry-run", type=Path)
     args = parser.parse_args()
     folder = args.output.resolve()
-    folder.mkdir(parents=True, exist_ok=False)
+    folder.mkdir(parents=True, exist_ok=args.resume)
+    previous_elapsed = 0.0
+    previous_conditions = {}
+    if args.resume:
+        previous = read(folder / "protocol.json")
+        if previous["status"] != "failed":
+            raise ValueError("Resume is allowed only after a recorded study failure")
+        write_json(folder / f"protocol_failed_{int(time.time())}.json", previous)
+        previous_elapsed = previous.get("elapsed_seconds", 0.)
+        previous_conditions = {r["label"]: Path(r["run"])
+                               for r in read(folder / "progress.json")["completed"]}
     start = time.monotonic()
     protocol = {"created_at_utc": utc_now(), "status": "running", "seeds": [0, 1, 2],
                 "max_training_steps": 240000, "max_wall_seconds": 2700,
+                "max_recovery_training_steps": 20000 if args.retry_run else 0,
                 "selection": "final validation mean success, lower sample SD, path efficiency; exact tie keeps reference",
                 "steps": ["A: 2k -> 20k", "B: epsilon decay 1600 -> 16000 vs A",
                           "C: learning rate .001 -> .0003 vs selected A/B",
@@ -176,18 +189,28 @@ def main():
     base["evaluation"]["diagnose_training_fit"] = True
 
     def execute(label, raw, reference):
-        if time.monotonic() - start + 3*raw["train"]["hard_timeout_seconds"] > protocol["max_wall_seconds"]:
+        if label in previous_conditions:
+            run = previous_conditions[label]
+            if read(run / "config.json") != raw:
+                raise ValueError("Previously completed condition config mismatch")
+            conditions.append((label, run))
+            print(f"REUSE CONDITION {label}: {run.name}", flush=True)
+            return run
+        if previous_elapsed + time.monotonic() - start + 3*raw["train"]["hard_timeout_seconds"] > protocol["max_wall_seconds"]:
             raise TimeoutError("Not enough suite wall budget to safely start another condition")
         write_json(folder / f"config_{label}.json", raw)
         print(f"START {label}: {raw['hypothesis']}", flush=True)
-        run, complete = run_experiment(from_dict(raw), ROOT / "runs")
+        retry = None
+        if args.retry_run and from_dict(read(args.retry_run / "config.json")).to_dict() == from_dict(raw).to_dict():
+            retry = args.retry_run
+        run, complete = run_experiment(from_dict(raw), ROOT / "runs", reuse_completed_from=retry)
         if not complete:
             raise RuntimeError(f"{label} incomplete; retained {run}")
         if read(run / "mazes.json") != expected_manifest:
             raise AssertionError("Maze sets changed between conditions")
         conditions.append((label, run))
         write_json(folder / "progress.json", {"completed": [{"label": a, "run": str(b)} for a, b in conditions],
-                                               "decisions": decisions, "elapsed_seconds": time.monotonic()-start})
+                                               "decisions": decisions, "elapsed_seconds": previous_elapsed+time.monotonic()-start})
         stats = summarize_condition(label, run)
         print(f"DONE {label}: train={stats['training_greedy_success_mean']:.1%}, "
               f"validation={stats['validation_success_mean']:.1%} +/- {stats['validation_success_std']:.1%}", flush=True)
@@ -220,7 +243,7 @@ def main():
         winner = choose_reference(selected, drun)
         decisions.append(f"Provisional selected condition: {winner.name}; D score={selection_score(drun)}")
         write_report(folder, conditions, decisions)
-        protocol.update(status="completed", elapsed_seconds=time.monotonic()-start,
+        protocol.update(status="completed", elapsed_seconds=previous_elapsed+time.monotonic()-start,
                         completed_at_utc=utc_now(), provisional_selected_run=winner.name)
         write_json(folder / "protocol.json", protocol)
         write_json(folder / "progress.json", {"completed": [{"label": a, "run": str(b)} for a, b in conditions],
@@ -229,7 +252,7 @@ def main():
     except Exception as error:
         import traceback
         protocol.update(status="failed", error=str(error), traceback=traceback.format_exc(),
-                        elapsed_seconds=time.monotonic()-start)
+                        elapsed_seconds=previous_elapsed+time.monotonic()-start)
         write_json(folder / "protocol.json", protocol)
         raise
 

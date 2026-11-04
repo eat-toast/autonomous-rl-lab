@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import platform
 import subprocess
+import time
 import zipfile
 
 
@@ -15,11 +16,23 @@ def utc_now():
     return datetime.now(timezone.utc).isoformat()
 
 
+def replace_with_retry(source, destination, attempts=10):
+    """Bounded retry for transient Windows/OneDrive sharing violations."""
+    for attempt in range(attempts):
+        try:
+            Path(source).replace(destination)
+            return
+        except PermissionError:
+            if attempt == attempts - 1:
+                raise
+            time.sleep(min(.05 * 2**attempt, 1.0))
+
+
 def write_json(path, value):
     path = Path(path)
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False), encoding="utf-8")
-    temporary.replace(path)
+    replace_with_retry(temporary, path)
 
 
 def git(*args):
