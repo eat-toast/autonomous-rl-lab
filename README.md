@@ -140,3 +140,13 @@ python scripts/diagnose_failures.py --output diagnostics/new_diagnosis
 ```
 
 원본 결과를 변경하거나 최종 테스트를 평가하지 않는다.
+
+## 현재 스펙·실험 후보·인스타 소개 회차
+
+- [현재 실험 상세 스펙](docs/current_experiment_spec_20261104.md): 지도 분리, 모델, Replay, 학습/평가 절차.
+- [기법별 실험 후보](docs/experiment_candidates_20261104.md): 버퍼 clear/용량/PER/n-step 등 기대 효과와 trade-off, 대조 설계. 새 학습을 실행한 목록은 아니다.
+- `exports/instagram_01_maze_intro/`: 지도·규칙·현재 CNN DQN·향후 알고리즘 계획을 소개하는 카드 6장과 캡션.
+- `exports/Instagram_01_maze_intro_20261104.zip`: 1회차 게시용 파일 묶음. 성능 수치는 소개 회차에서 제외했다.
+
+`scripts/export_intro_content.py`는 결과 확인 담당의 `approved_for_intro` 사실 파일과 훈련 예시 지도
+해시를 확인해 소개 이미지를 생성한다. 캡션은 게시물 담당이 별도로 검토하며 공개 업로드는 하지 않는다.
