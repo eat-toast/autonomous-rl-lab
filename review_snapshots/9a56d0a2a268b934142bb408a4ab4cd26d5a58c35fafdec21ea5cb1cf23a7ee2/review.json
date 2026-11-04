@@ -1,0 +1,160 @@
+{
+  "status": "approved_for_dev_report",
+  "reviewer": "results_review",
+  "reviewed_at_utc": "2026-11-04T04:37:59.808643+00:00",
+  "comparison_sha256": "814ce82a07c10f8437f54f420998ab2a88b668fc2d1678c0de913c7eab4ccf95",
+  "protocol_sha256": "62d32176cb9d0b2d2f68dcbe54330fc2e35c69d8a12518690624c55fd19779f1",
+  "approved_run_ids": [
+    "20261104T031358Z_d9a39f92",
+    "20261104T041427Z_d0628be7",
+    "20261104T042433Z_2393292b",
+    "20261104T042641Z_28c82317",
+    "20261104T043140Z_b130954f"
+  ],
+  "scope": {
+    "conditions": 5,
+    "new_conditions": 4,
+    "policy_seeds_per_condition": 3,
+    "validation_mazes": 8,
+    "checkpoint": "latest.pt",
+    "mode": "read-only original artifact audit; only this review and facts files created",
+    "excluded": [
+      "retraining",
+      "final-test evaluation",
+      "source/config/result/protocol mutation"
+    ]
+  },
+  "checks": [
+    {
+      "name": "run_integrity_Pilot 2k",
+      "status": "pass",
+      "detail": "3 completed seeds, checkpoint steps and parameter counts match; CSV and metrics independently recomputed; no final-test artifacts.",
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T031358Z_d9a39f92\\summary.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T031358Z_d9a39f92\\mazes.json"
+      ]
+    },
+    {
+      "name": "run_integrity_A_budget",
+      "status": "pass",
+      "detail": "3 completed seeds, checkpoint steps and parameter counts match; CSV and metrics independently recomputed; no final-test artifacts.",
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T041427Z_d0628be7\\summary.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T041427Z_d0628be7\\mazes.json"
+      ]
+    },
+    {
+      "name": "run_integrity_B_explore",
+      "status": "pass",
+      "detail": "3 completed seeds, checkpoint steps and parameter counts match; CSV and metrics independently recomputed; no final-test artifacts.",
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042433Z_2393292b\\summary.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042433Z_2393292b\\mazes.json"
+      ]
+    },
+    {
+      "name": "run_integrity_C_lr",
+      "status": "pass",
+      "detail": "3 completed seeds, checkpoint steps and parameter counts match; CSV and metrics independently recomputed; no final-test artifacts.",
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042641Z_28c82317\\summary.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042641Z_28c82317\\mazes.json"
+      ]
+    },
+    {
+      "name": "run_integrity_D_width",
+      "status": "pass",
+      "detail": "3 completed seeds, checkpoint steps and parameter counts match; CSV and metrics independently recomputed; no final-test artifacts.",
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T043140Z_b130954f\\summary.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T043140Z_b130954f\\mazes.json"
+      ]
+    },
+    {
+      "name": "controlled_changes",
+      "status": "pass",
+      "detail": "One intended learning variable per declared reference; operational budgets/diagnostic logging excluded.",
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\studies\\20261104_four_steps\\config_A_budget.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\studies\\20261104_four_steps\\config_B_explore.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\studies\\20261104_four_steps\\config_C_lr.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\studies\\20261104_four_steps\\config_D_width.json"
+      ]
+    },
+    {
+      "name": "selection",
+      "status": "pass",
+      "detail": "B provisionally selected by final validation mean; C and D correctly reference B. Highest intermediate checkpoint was not substituted.",
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\studies\\20261104_four_steps\\comparison.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\studies\\20261104_four_steps\\protocol.json"
+      ]
+    },
+    {
+      "name": "recovery_and_budget",
+      "status": "pass",
+      "detail": "Copied seeds are exact; failed seed restarted with identical episode prefix; no duplicate counting of reused seeds; 256000 study steps within 260000 cap.",
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T041728Z_495ad93c\\seed_1\\error.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042433Z_2393292b\\recovery_provenance.json"
+      ]
+    },
+    {
+      "name": "same_maze_sets",
+      "status": "pass",
+      "detail": "All five complete maze manifests have the identical SHA-256; train/validation/test geometry hashes and seeds are disjoint.",
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T031358Z_d9a39f92\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T041427Z_d0628be7\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042433Z_2393292b\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042641Z_28c82317\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T043140Z_b130954f\\mazes.json"
+      ]
+    },
+    {
+      "name": "reward_plot_semantics",
+      "status": "pass",
+      "detail": "Code uses undiscounted episode return, causal trailing 20 episode mean with shorter startup window, exploration-inclusive training data, and excludes unfinished final episode.",
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\rl_lab\\plots.py",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\rl_lab\\train.py"
+      ]
+    }
+  ],
+  "errors": [],
+  "recovery": {
+    "original_run": "20261104T041728Z_495ad93c",
+    "recovered_run": "20261104T042433Z_2393292b",
+    "failure_seed": 1,
+    "failure_step": 16000,
+    "failure_type": "PermissionError / WinError 5 during checkpoint replace",
+    "successful_reused_seeds": [
+      0,
+      2
+    ],
+    "reused_checkpoint_hashes_match": true,
+    "rerun_seed": 1,
+    "matching_completed_episode_prefix": 195,
+    "actual_training_steps_excluding_historical_pilot": 256000,
+    "training_step_cap_including_recovery": 260000,
+    "elapsed_seconds": 1173.186999999918,
+    "wall_limit_seconds": 2700,
+    "evidence": [
+      "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T041728Z_495ad93c\\seed_1\\error.json",
+      "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042433Z_2393292b\\recovery_provenance.json"
+    ]
+  },
+  "limitations": [
+    "This is a development-validation report, not final held-out test performance. No new model inference or final-test evaluation was performed by this reviewer.",
+    "Three policy seeds and eight fixed validation mazes provide limited evidence; 24 episodes do not mean 24 distinct mazes.",
+    "Validation was repeatedly observed and used to select C/D reference settings, so provisional selection can overfit this small development set.",
+    "Reported variability is sample standard deviation across policy seeds, not a confidence interval or uncertainty across maze distributions.",
+    "Training return includes epsilon-greedy exploration; final training-maze and validation success use greedy policies and are different metrics.",
+    "Episode counts differ between seeds because successful episodes terminate early. Cross-condition sample-efficiency comparison must use environment steps as well.",
+    "Path efficiency is conditional on successful episodes; values of 1.0 do not indicate every evaluation maze was solved.",
+    "Exact causes of failure or poor generalization remain hypotheses. Zero seed dispersion with universal failure is not evidence of useful stability.",
+    "Wall-clock timings were observed under a varying desktop workload and are not a controlled hardware-speed benchmark.",
+    "Storage retry changed execution plumbing; recovered B combines exact completed artifacts from the original code commit with one seed restarted after the storage-only fix. Provenance is retained."
+  ],
+  "approval_scope": "Approved for accurately qualified development-result reporting and Instagram draft creation; not final performance certification."
+}

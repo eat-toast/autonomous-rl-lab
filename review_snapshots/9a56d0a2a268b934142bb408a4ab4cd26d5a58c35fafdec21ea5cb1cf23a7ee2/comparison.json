@@ -1,0 +1,110 @@
+{
+  "conditions": [
+    {
+      "label": "Pilot 2k",
+      "run_id": "20261104T031358Z_d9a39f92",
+      "steps": 2000,
+      "epsilon_decay_steps": 1600,
+      "learning_rate": 0.001,
+      "hidden_units": 64,
+      "parameters": 210212,
+      "validation_success_mean": 0.0,
+      "validation_success_std": 0.0,
+      "training_greedy_success_mean": 0.0,
+      "completed_training_episodes": 60,
+      "successful_training_episodes": 5,
+      "time_mean_seconds": 10.114666666680327,
+      "seed_validation_success": {
+        "0": 0.0,
+        "1": 0.0,
+        "2": 0.0
+      }
+    },
+    {
+      "label": "A_budget",
+      "run_id": "20261104T041427Z_d0628be7",
+      "steps": 20000,
+      "epsilon_decay_steps": 1600,
+      "learning_rate": 0.001,
+      "hidden_units": 64,
+      "parameters": 210212,
+      "validation_success_mean": 0.041666666666666664,
+      "validation_success_std": 0.07216878364870322,
+      "training_greedy_success_mean": 0.041666666666666664,
+      "completed_training_episodes": 638,
+      "successful_training_episodes": 80,
+      "time_mean_seconds": 54.281666666734964,
+      "seed_validation_success": {
+        "0": 0.0,
+        "1": 0.0,
+        "2": 0.125
+      }
+    },
+    {
+      "label": "B_explore",
+      "run_id": "20261104T042433Z_2393292b",
+      "steps": 20000,
+      "epsilon_decay_steps": 16000,
+      "learning_rate": 0.001,
+      "hidden_units": 64,
+      "parameters": 210212,
+      "validation_success_mean": 0.125,
+      "validation_success_std": 0.21650635094610965,
+      "training_greedy_success_mean": 0.5416666666666666,
+      "completed_training_episodes": 838,
+      "successful_training_episodes": 394,
+      "time_mean_seconds": 123.25533333343144,
+      "seed_validation_success": {
+        "0": 0.0,
+        "1": 0.375,
+        "2": 0.0
+      }
+    },
+    {
+      "label": "C_lr",
+      "run_id": "20261104T042641Z_28c82317",
+      "steps": 20000,
+      "epsilon_decay_steps": 16000,
+      "learning_rate": 0.0003,
+      "hidden_units": 64,
+      "parameters": 210212,
+      "validation_success_mean": 0.0,
+      "validation_success_std": 0.0,
+      "training_greedy_success_mean": 0.041666666666666664,
+      "completed_training_episodes": 629,
+      "successful_training_episodes": 67,
+      "time_mean_seconds": 95.68233333341777,
+      "seed_validation_success": {
+        "0": 0.0,
+        "1": 0.0,
+        "2": 0.0
+      }
+    },
+    {
+      "label": "D_width",
+      "run_id": "20261104T043140Z_b130954f",
+      "steps": 20000,
+      "epsilon_decay_steps": 16000,
+      "learning_rate": 0.001,
+      "hidden_units": 128,
+      "parameters": 415332,
+      "validation_success_mean": 0.041666666666666664,
+      "validation_success_std": 0.07216878364870322,
+      "training_greedy_success_mean": 0.3541666666666667,
+      "completed_training_episodes": 756,
+      "successful_training_episodes": 280,
+      "time_mean_seconds": 60.32299999985844,
+      "seed_validation_success": {
+        "0": 0.0,
+        "1": 0.0,
+        "2": 0.125
+      }
+    }
+  ],
+  "decisions": [
+    "C reference selected from A/B: 20261104T042433Z_2393292b; scores A=(0.041666666666666664, -0.07216878364870322, 1.0), B=(0.125, -0.21650635094610965, 1.0)",
+    "D reference selected after C: 20261104T042433Z_2393292b; C score=(0.0, -0.0, -1.0)",
+    "Provisional selected condition: 20261104T042433Z_2393292b; D score=(0.041666666666666664, -0.07216878364870322, 1.0)"
+  ],
+  "final_test_used": false
+}

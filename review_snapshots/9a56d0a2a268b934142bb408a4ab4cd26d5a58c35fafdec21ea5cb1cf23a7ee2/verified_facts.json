@@ -1,0 +1,218 @@
+{
+  "status": "approved_for_dev_report",
+  "reviewer": "results_review",
+  "reviewed_at_utc": "2026-11-04T04:37:59.808643+00:00",
+  "comparison_sha256": "814ce82a07c10f8437f54f420998ab2a88b668fc2d1678c0de913c7eab4ccf95",
+  "protocol_sha256": "62d32176cb9d0b2d2f68dcbe54330fc2e35c69d8a12518690624c55fd19779f1",
+  "approved_run_ids": [
+    "20261104T031358Z_d9a39f92",
+    "20261104T041427Z_d0628be7",
+    "20261104T042433Z_2393292b",
+    "20261104T042641Z_28c82317",
+    "20261104T043140Z_b130954f"
+  ],
+  "facts": [
+    {
+      "condition": "Pilot 2k",
+      "run_id": "20261104T031358Z_d9a39f92",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 2000,
+      "parameter_count": 210212,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "validation_success_mean": 0.0,
+      "validation_success_sample_sd": 0.0,
+      "validation_success_mean_percent": 0.0,
+      "validation_success_sample_sd_percentage_points": 0.0,
+      "training_greedy_success_mean": 0.0,
+      "completed_training_episodes": 60,
+      "successful_training_episodes": 5,
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T031358Z_d9a39f92\\summary.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T031358Z_d9a39f92\\config.json",
+        "seed_*/latest_validation.json",
+        "seed_*/training_episodes.csv"
+      ],
+      "interpretation_scope": "Fixed development validation set only; 24 episodes share 8 geometries across 3 policies."
+    },
+    {
+      "condition": "A_budget",
+      "run_id": "20261104T041427Z_d0628be7",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "parameter_count": 210212,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.0,
+        0.0,
+        0.125
+      ],
+      "validation_success_mean": 0.041666666666666664,
+      "validation_success_sample_sd": 0.07216878364870322,
+      "validation_success_mean_percent": 4.166666666666666,
+      "validation_success_sample_sd_percentage_points": 7.216878364870322,
+      "training_greedy_success_mean": 0.041666666666666664,
+      "completed_training_episodes": 638,
+      "successful_training_episodes": 80,
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T041427Z_d0628be7\\summary.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T041427Z_d0628be7\\config.json",
+        "seed_*/latest_validation.json",
+        "seed_*/training_episodes.csv"
+      ],
+      "interpretation_scope": "Fixed development validation set only; 24 episodes share 8 geometries across 3 policies."
+    },
+    {
+      "condition": "B_explore",
+      "run_id": "20261104T042433Z_2393292b",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "parameter_count": 210212,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.0,
+        0.375,
+        0.0
+      ],
+      "validation_success_mean": 0.125,
+      "validation_success_sample_sd": 0.21650635094610965,
+      "validation_success_mean_percent": 12.5,
+      "validation_success_sample_sd_percentage_points": 21.650635094610966,
+      "training_greedy_success_mean": 0.5416666666666666,
+      "completed_training_episodes": 838,
+      "successful_training_episodes": 394,
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042433Z_2393292b\\summary.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042433Z_2393292b\\config.json",
+        "seed_*/latest_validation.json",
+        "seed_*/training_episodes.csv"
+      ],
+      "interpretation_scope": "Fixed development validation set only; 24 episodes share 8 geometries across 3 policies."
+    },
+    {
+      "condition": "C_lr",
+      "run_id": "20261104T042641Z_28c82317",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "parameter_count": 210212,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "validation_success_mean": 0.0,
+      "validation_success_sample_sd": 0.0,
+      "validation_success_mean_percent": 0.0,
+      "validation_success_sample_sd_percentage_points": 0.0,
+      "training_greedy_success_mean": 0.041666666666666664,
+      "completed_training_episodes": 629,
+      "successful_training_episodes": 67,
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042641Z_28c82317\\summary.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042641Z_28c82317\\config.json",
+        "seed_*/latest_validation.json",
+        "seed_*/training_episodes.csv"
+      ],
+      "interpretation_scope": "Fixed development validation set only; 24 episodes share 8 geometries across 3 policies."
+    },
+    {
+      "condition": "D_width",
+      "run_id": "20261104T043140Z_b130954f",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "parameter_count": 415332,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.0,
+        0.0,
+        0.125
+      ],
+      "validation_success_mean": 0.041666666666666664,
+      "validation_success_sample_sd": 0.07216878364870322,
+      "validation_success_mean_percent": 4.166666666666666,
+      "validation_success_sample_sd_percentage_points": 7.216878364870322,
+      "training_greedy_success_mean": 0.3541666666666667,
+      "completed_training_episodes": 756,
+      "successful_training_episodes": 280,
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T043140Z_b130954f\\summary.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T043140Z_b130954f\\config.json",
+        "seed_*/latest_validation.json",
+        "seed_*/training_episodes.csv"
+      ],
+      "interpretation_scope": "Fixed development validation set only; 24 episodes share 8 geometries across 3 policies."
+    }
+  ],
+  "limitations": [
+    "This is a development-validation report, not final held-out test performance. No new model inference or final-test evaluation was performed by this reviewer.",
+    "Three policy seeds and eight fixed validation mazes provide limited evidence; 24 episodes do not mean 24 distinct mazes.",
+    "Validation was repeatedly observed and used to select C/D reference settings, so provisional selection can overfit this small development set.",
+    "Reported variability is sample standard deviation across policy seeds, not a confidence interval or uncertainty across maze distributions.",
+    "Training return includes epsilon-greedy exploration; final training-maze and validation success use greedy policies and are different metrics.",
+    "Episode counts differ between seeds because successful episodes terminate early. Cross-condition sample-efficiency comparison must use environment steps as well.",
+    "Path efficiency is conditional on successful episodes; values of 1.0 do not indicate every evaluation maze was solved.",
+    "Exact causes of failure or poor generalization remain hypotheses. Zero seed dispersion with universal failure is not evidence of useful stability.",
+    "Wall-clock timings were observed under a varying desktop workload and are not a controlled hardware-speed benchmark.",
+    "Storage retry changed execution plumbing; recovered B combines exact completed artifacts from the original code commit with one seed restarted after the storage-only fix. Provenance is retained."
+  ],
+  "approved_claims": [
+    "In this fixed 10x10 development experiment, increasing the training budget from 2000 to 20000 steps changed final mean validation success from 0% to 4.1667%.",
+    "At the same 20000-step budget, longer exploration produced final validation success of 12.5% mean with 21.6506 percentage-point sample SD across seeds [0%,37.5%,0%].",
+    "Lowering learning rate to 0.0003 under the selected exploration condition produced 0% final validation success in this run.",
+    "Increasing FC width from 64 to 128 increased parameters from 210212 to 415332 and produced 4.1667% mean validation success, versus 12.5% for its B reference.",
+    "The provisionally selected B condition had 54.1667% mean greedy success on familiar training mazes and 12.5% on the fixed validation mazes.",
+    "All claims compare the latest checkpoints. The final held-out test set was not used by the study code or recorded evaluation workflow."
+  ],
+  "unapproved_claims": [
+    "A larger model generally worsens DQN or longer exploration generally solves mazes.",
+    "Exploration is proven to be the sole cause of failure, or the familiar/unseen gap proves one specific overfitting mechanism.",
+    "These results establish final generalization performance, statistical significance, or algorithm superiority.",
+    "Reward growth alone proves successful navigation, or a single best intermediate result is the final success rate.",
+    "All 24 evaluation episodes are independent maze instances, or a zero standard deviation from all failures means robust success."
+  ],
+  "controlled_changes": {
+    "A_vs_Pilot": {
+      "train.steps": [
+        2000,
+        20000
+      ]
+    },
+    "B_vs_A": {
+      "train.epsilon_decay_steps": [
+        1600,
+        16000
+      ]
+    },
+    "C_vs_B": {
+      "train.learning_rate": [
+        0.001,
+        0.0003
+      ]
+    },
+    "D_vs_B": {
+      "network.hidden_units": [
+        64,
+        128
+      ]
+    }
+  },
+  "maze_manifest_sha256": "f2ff03ac3978a04c869128ca0202288881e154f8b545a732c80fb439c3a978e9",
+  "actual_study_training_steps": 256000,
+  "provisional_selected_run": "20261104T042433Z_2393292b",
+  "evidence_basis": "Independent recomputation of stored artifacts and CPU checkpoint metadata; no retraining or model evaluation."
+}

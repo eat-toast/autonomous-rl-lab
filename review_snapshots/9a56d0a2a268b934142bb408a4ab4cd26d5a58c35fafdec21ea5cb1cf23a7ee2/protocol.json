@@ -1,0 +1,23 @@
+{
+  "created_at_utc": "2026-11-04T04:24:32.405789+00:00",
+  "status": "completed",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "max_training_steps": 240000,
+  "max_wall_seconds": 2700,
+  "max_recovery_training_steps": 20000,
+  "selection": "final validation mean success, lower sample SD, path efficiency; exact tie keeps reference",
+  "steps": [
+    "A: 2k -> 20k",
+    "B: epsilon decay 1600 -> 16000 vs A",
+    "C: learning rate .001 -> .0003 vs selected A/B",
+    "D: FC 64 -> 128 vs selected A/B/C"
+  ],
+  "final_test_used": false,
+  "elapsed_seconds": 1173.186999999918,
+  "completed_at_utc": "2026-11-04T04:34:54.829403+00:00",
+  "provisional_selected_run": "20261104T042433Z_2393292b"
+}

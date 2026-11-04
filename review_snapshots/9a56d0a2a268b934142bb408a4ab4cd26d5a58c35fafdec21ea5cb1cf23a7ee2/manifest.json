@@ -1,0 +1,10 @@
+{
+  "study": "studies/20261104_four_steps",
+  "review_status": "approved_for_dev_report",
+  "sha256": {
+    "protocol.json": "62d32176cb9d0b2d2f68dcbe54330fc2e35c69d8a12518690624c55fd19779f1",
+    "comparison.json": "814ce82a07c10f8437f54f420998ab2a88b668fc2d1678c0de913c7eab4ccf95",
+    "review.json": "61e8094bd269ce4944f068b41e3f835f76b03fa5b8704faee9a25b438546c9de",
+    "verified_facts.json": "4be2cacfab0fde04d7e17ee89f0a9913eea79459b3bcde58f7221080328e2927"
+  }
+}
