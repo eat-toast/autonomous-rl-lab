@@ -12,6 +12,28 @@ import zipfile
 ROOT = Path(__file__).resolve().parent.parent
 
 
+def state_digest(value):
+    """Stable hash of tensor/scalar state, used for event invariants (not checkpoint IDs)."""
+    import torch
+    digest = hashlib.sha256()
+    def visit(item):
+        if isinstance(item, torch.Tensor):
+            tensor = item.detach().cpu().contiguous()
+            digest.update(str((str(tensor.dtype), tuple(tensor.shape))).encode())
+            digest.update(tensor.numpy().tobytes())
+        elif isinstance(item, dict):
+            for key in sorted(item, key=lambda k: str(k)):
+                digest.update(repr(key).encode())
+                visit(item[key])
+        elif isinstance(item, (list, tuple)):
+            for child in item:
+                visit(child)
+        else:
+            digest.update(repr(item).encode())
+    visit(value)
+    return digest.hexdigest()
+
+
 def utc_now():
     return datetime.now(timezone.utc).isoformat()
 
@@ -57,11 +79,18 @@ def snapshot_source(run_dir):
     return manifest
 
 
-def runtime_metadata():
+def runtime_metadata(device="cpu"):
     versions = {}
     for name in ("torch", "numpy", "matplotlib", "Pillow"):
         versions[name] = importlib.metadata.version(name)
+    accelerator = {}
+    if device == "cuda":
+        import torch
+        accelerator = {"gpu_name": torch.cuda.get_device_name(0), "cuda_build": torch.version.cuda,
+                       "cudnn_version": torch.backends.cudnn.version(),
+                       "gpu_total_memory_bytes": torch.cuda.get_device_properties(0).total_memory,
+                       "precision": "float32; TF32 and AMP disabled"}
     return {"python": platform.python_version(), "platform": platform.platform(),
-            "packages": versions, "device": "cpu", "torch_threads": 1,
+            "packages": versions, "device": device, "accelerator": accelerator, "torch_threads": 1,
             "git_commit": git("rev-parse", "HEAD"), "git_status": git("status", "--porcelain"),
             "git_diff": git("diff", "HEAD"), "created_at_utc": utc_now()}

@@ -1,15 +1,22 @@
 import random
+import os
+from collections import Counter
 import numpy as np
 import torch
 from torch import nn
 
 
 def seed_everything(seed):
+    os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.set_num_threads(1)
     torch.use_deterministic_algorithms(True)
+    torch.backends.cudnn.benchmark = False
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cuda.matmul.allow_tf32 = False
+    torch.backends.cudnn.allow_tf32 = False
 
 
 class QNetwork(nn.Module):
@@ -38,28 +45,74 @@ class ReplayBuffer:
         self.actions = np.empty(capacity, dtype=np.int64)
         self.rewards = np.empty(capacity, dtype=np.float32)
         self.terminated = np.empty(capacity, dtype=np.bool_)
+        self.insertion_steps = np.empty(capacity, dtype=np.int64)
+        self.maze_seeds = np.empty(capacity, dtype=np.int64)
+        self.last_sample_stats = None
+        self.sampled_transitions = 0
+        self.sampled_goals = 0
+        self.sampled_age_sum = 0
+        self.sampled_maze_counts = Counter()
         self.rng = np.random.default_rng(seed)
 
-    def add(self, state, action, reward, next_state, terminated):
+    def add(self, state, action, reward, next_state, terminated, step=0, maze_seed=-1):
         i = self.position
         self.states[i], self.actions[i], self.rewards[i] = state, action, reward
         self.next_states[i], self.terminated[i] = next_state, terminated
+        self.insertion_steps[i], self.maze_seeds[i] = step, maze_seed
         self.position = (i + 1) % self.capacity
         self.count = min(self.count + 1, self.capacity)
 
     def sample(self, batch_size):
         ids = self.rng.choice(self.count, batch_size, replace=False)
+        newest = int(self.insertion_steps[:self.count].max())
+        ages = newest-self.insertion_steps[ids]
+        sampled_goals = int(self.terminated[ids].sum())
+        self.sampled_transitions += len(ids)
+        self.sampled_goals += sampled_goals
+        self.sampled_age_sum += int(ages.sum())
+        self.sampled_maze_counts.update(map(int, self.maze_seeds[ids]))
+        self.last_sample_stats = {
+            "mean_age_steps": float(ages.mean()),
+            "goal_transitions": sampled_goals,
+            "unique_maze_count": int(len(np.unique(self.maze_seeds[ids])))}
         return (torch.tensor(self.states[ids], dtype=torch.float32),
                 torch.tensor(self.actions[ids]), torch.tensor(self.rewards[ids]),
                 torch.tensor(self.next_states[ids], dtype=torch.float32),
                 torch.tensor(self.terminated[ids]))
 
+    def clear(self):
+        """Logically remove stored experience; preserve sampler RNG and allocated arrays."""
+        self.position, self.count = 0, 0
+        self.last_sample_stats = None
+
+    def snapshot(self, current_step):
+        sampling = {"scope": "since run start; survives clear", "transitions": self.sampled_transitions,
+                    "goal_transitions": self.sampled_goals,
+                    "mean_age_steps": self.sampled_age_sum/self.sampled_transitions if self.sampled_transitions else None,
+                    "maze_counts": {str(k): v for k, v in sorted(self.sampled_maze_counts.items())}}
+        if not self.count:
+            return {"count": 0, "position": self.position, "capacity": self.capacity, "goal_transitions": 0,
+                    "oldest_step": None, "newest_step": None, "mean_age_steps": None,
+                    "maze_counts": {}, "last_sample": self.last_sample_stats, "sampling_totals": sampling}
+        ids, counts = np.unique(self.maze_seeds[:self.count], return_counts=True)
+        steps = self.insertion_steps[:self.count]
+        return {"count": self.count, "position": self.position, "capacity": self.capacity,
+                "goal_transitions": int(self.terminated[:self.count].sum()),
+                "oldest_step": int(steps.min()), "newest_step": int(steps.max()),
+                "mean_age_steps": float((current_step-steps).mean()),
+                "age_quantiles_0_25_50_75_100": np.quantile(current_step-steps, [0, .25, .5, .75, 1]).tolist(),
+                "maze_counts": {str(int(k)): int(v) for k, v in zip(ids, counts)},
+                "last_sample": self.last_sample_stats, "sampling_totals": sampling}
+
 
 class DQNAgent:
     def __init__(self, config, seed):
         self.config = config
-        self.online = QNetwork(config.env.size, config.network.hidden_units)
-        self.target = QNetwork(config.env.size, config.network.hidden_units)
+        self.device = torch.device(config.train.device)
+        if self.device.type == "cuda" and not torch.cuda.is_available():
+            raise RuntimeError("CUDA was requested but is not available; no silent CPU fallback")
+        self.online = QNetwork(config.env.size, config.network.hidden_units).to(self.device)
+        self.target = QNetwork(config.env.size, config.network.hidden_units).to(self.device)
         self.target.load_state_dict(self.online.state_dict())
         self.target.requires_grad_(False)
         self.optimizer = torch.optim.Adam(self.online.parameters(), lr=config.train.learning_rate)
@@ -78,6 +131,8 @@ class DQNAgent:
 
     def update(self):
         states, actions, rewards, next_states, terminated = self.replay.sample(self.config.train.batch_size)
+        states, actions, rewards, next_states, terminated = (
+            tensor.to(self.device) for tensor in (states, actions, rewards, next_states, terminated))
         values = self.online(states).gather(1, actions[:, None]).squeeze(1)
         with torch.no_grad():
             targets = td_targets(rewards, terminated, self.target(next_states), self.config.train.gamma)
@@ -97,4 +152,5 @@ class DQNAgent:
 
 def greedy_action(model, state):
     with torch.inference_mode():
-        return int(model(torch.from_numpy(state).unsqueeze(0)).argmax(dim=1).item())
+        device = next(model.parameters()).device
+        return int(model(torch.from_numpy(state).unsqueeze(0).to(device)).argmax(dim=1).item())

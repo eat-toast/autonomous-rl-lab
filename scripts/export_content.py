@@ -97,7 +97,8 @@ def load_and_audit(run):
         checkpoint = folder / "latest.pt"
         payload = torch.load(checkpoint, map_location="cpu", weights_only=True)
         seed_everything(seed)
-        model = QNetwork(config["env"]["size"], config.get("network", {}).get("hidden_units", 64))
+        model = QNetwork(config["env"]["size"], config.get("network", {}).get("hidden_units", 64)).to(
+            config["train"].get("device", "cpu"))
         model.load_state_dict(payload["model_state"])
         restored = evaluate(model, from_dict(payload["config"]).env, manifest["splits"]["validation"])
         recorded = json.loads((folder / "latest_validation.json").read_text(encoding="utf-8"))

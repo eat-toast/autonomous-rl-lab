@@ -21,6 +21,7 @@ class NetworkConfig:
 
 @dataclass(frozen=True)
 class TrainConfig:
+    device: str = "cpu"
     seeds: list[int] = field(default_factory=lambda: [0])
     steps: int = 512
     max_seconds: float = 60.0
@@ -38,6 +39,9 @@ class TrainConfig:
     epsilon_end: float = 0.10
     epsilon_decay_steps: int = 400
     gradient_clip: float = 10.0
+    replay_event_step: int = 0
+    replay_clear: bool = False
+    replay_pause_steps: int = 0
 
 
 @dataclass(frozen=True)
@@ -70,6 +74,8 @@ class Config:
                     raise ValueError("Configuration must contain finite numbers")
         if self.algorithm != "dqn":
             raise ValueError("Phase 1 supports only dqn")
+        if t.device not in ("cpu", "cuda"):
+            raise ValueError("device must be cpu or cuda")
         if type(self.network.hidden_units) is not int or not 1 <= self.network.hidden_units <= 512:
             raise ValueError("hidden_units must be an integer in [1, 512]")
         if type(e.size) is not int or not 3 <= e.size <= 40:
@@ -100,10 +106,23 @@ class Config:
             raise ValueError("Invalid discount or exploration schedule")
         if t.learning_rate <= 0 or t.gradient_clip <= 0 or t.max_replay_mb <= 0:
             raise ValueError("Optimizer and memory limits must be positive")
+        if type(t.replay_clear) is not bool:
+            raise ValueError("replay_clear must be boolean")
+        if any(type(v) is not int or v < 0 for v in (t.replay_event_step, t.replay_pause_steps)):
+            raise ValueError("Replay event/pause steps must be nonnegative integers")
+        if t.replay_event_step:
+            if t.replay_event_step + t.replay_pause_steps >= t.steps:
+                raise ValueError("Replay event/pause must finish before training ends")
+            if t.replay_event_step < t.learning_starts:
+                raise ValueError("Replay event must occur after learning starts")
+        elif t.replay_clear or t.replay_pause_steps:
+            raise ValueError("Replay clearing/pause requires an event step")
+        if t.replay_clear and t.replay_pause_steps < t.batch_size:
+            raise ValueError("After clear, refill pause must supply at least a batch")
         if not 0 < v.target_success_rate <= 1 or type(v.maze_seed) is not int or v.maze_seed < 0:
             raise ValueError("Invalid evaluation settings")
         # Preallocated uint8 states: two states per transition + scalar arrays.
-        replay_bytes = t.replay_capacity * (2 * 3 * e.size * e.size + 17)
+        replay_bytes = t.replay_capacity * (2 * 3 * e.size * e.size + 29)
         if replay_bytes > t.max_replay_mb * 1024**2:
             raise ValueError("Replay allocation exceeds max_replay_mb")
         return self

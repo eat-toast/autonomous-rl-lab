@@ -59,7 +59,7 @@ def mask_diagnostic(model, env_config, mazes):
         while not env.finished:
             valid = valid_actions(env.maze.grid, env.position)
             with torch.inference_mode():
-                q = model(torch.from_numpy(obs).unsqueeze(0))[0].clone()
+                q = model(torch.from_numpy(obs).unsqueeze(0).to(next(model.parameters()).device))[0].clone()
                 q[[a for a in range(4) if a not in valid]] = -torch.inf
                 action = int(q.argmax())
             obs, reward, terminated, truncated, info = env.step(action)
@@ -94,7 +94,7 @@ def main():
         seed_everything(seed)
         folder = args.run / f"seed_{seed}"
         payload = torch.load(folder / "latest.pt", map_location="cpu", weights_only=True)
-        model = QNetwork(config.env.size, config.network.hidden_units)
+        model = QNetwork(config.env.size, config.network.hidden_units).to(config.train.device)
         model.load_state_dict(payload["model_state"])
         model.eval()
         recorded = read(folder / "latest_validation.json")
@@ -111,7 +111,7 @@ def main():
                 env = MazeEnv(config.env, Maze.from_dict(raw))
                 env.position = tuple(cycle["position"])
                 with torch.inference_mode():
-                    q = model(torch.from_numpy(env.observe()).unsqueeze(0))[0].tolist()
+                    q = model(torch.from_numpy(env.observe()).unsqueeze(0).to(config.train.device))[0].tolist()
                 chosen = int(np.argmax(q))
                 current_distance = len(astar(env.maze.grid, env.position))-1
                 shortest_actions = []

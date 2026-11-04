@@ -6,7 +6,8 @@
 
 ## 환경과 고정 규칙
 
-- Python 3.12 + PyTorch. CPU 1 thread, 별도 GPU 사용 없음.
+- Python 3.12 + PyTorch. 기본 설정은 CPU 1 thread이며 `train.device`로 CUDA를 선택할 수 있다.
+- Replay 첫 묶음은 RTX 4060에서 조건별로 순차 실행한다. 기존 CPU 결과와의 비교에는 장치 차이를 기록한다. [실험 프로토콜](docs/replay_study_protocol_20261104.md)을 참고한다.
 - N×N 미로, 3채널 전체 지도(벽·에이전트·목표), 상하좌우 4개 행동.
 - 일반 이동 -0.01, 충돌 -0.05, 목표 +1.0. 코인 없음.
 - CNN 2층 + FC 64 + Q값 4개. 미로 크기마다 별도 모델을 학습한다.
