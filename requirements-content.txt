@@ -1,0 +1,2 @@
+# Optional: encoding actual evaluation rollouts as MP4.
+imageio-ffmpeg==0.6.0

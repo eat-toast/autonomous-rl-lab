@@ -80,7 +80,26 @@
 
 ## 다음 단계
 
-Phase 2의 Double/Dueling DQN, 공정한 3~5 seed 벤치마크, 크기 확장,
-영상 저장, Codex를 연결한 제한 예산 연구 오케스트레이터는 아직 구현하지 않았다.
+Phase 2의 Double/Dueling DQN, 공정한 알고리즘 간 벤치마크, 크기 확장,
+Codex를 연결한 제한 예산 연구 오케스트레이터는 아직 구현하지 않았다.
 GitHub `origin`은 `https://github.com/eat-toast/autonomous-rl-lab.git`이다.
 원격 업로드는 별도로 실행하며 이 구현 과정에서 자동 push하지 않는다.
+
+## 인스타용 예비 실험 콘텐츠
+
+3개 seed × 2,000스텝의 짧은 DQN 예비 실험과 실제 평가 기록을 기반으로
+카드뉴스 5장(1080×1350), 무음 MP4(1080×1920, 16초), 캡션을 생성했다.
+실험 결과는 [예비 실험 보고서](docs/pilot_content_report.md)를 참고한다.
+최종 파일은 `exports/20261104_dqn_pilot_final/`에 있다.
+
+재생성하려면 영상 패키지를 프로젝트 전용 폴더에 설치하고 별도 출력 폴더를 지정한다.
+아래의 `python`은 실행 스크립트가 사용하는 실제 Python 경로로 바꿀 수 있다.
+
+```powershell
+python -m pip install --target .tools --no-deps -r requirements-content.txt
+python scripts/export_content.py --run runs/20261104T031358Z_d9a39f92 --output exports/new_export
+```
+
+이 exporter는 해당 예비 실험의 편집 템플릿이다. 다른 조건/결과의 게시물을 만들 때에는
+문구를 수정해야 한다. 영상은 학습 타임랩스가 아니라 저장된 greedy 평가 경로의 재생이다.
+인스타그램 업로드는 수행하지 않는다.

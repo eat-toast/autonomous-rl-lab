@@ -5,6 +5,8 @@ __pycache__/
 runs/
 datasets/
 .cache/
+.tools/
+exports/
 *.pt
 *.pth
 *.mp4
