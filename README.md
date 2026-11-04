@@ -117,3 +117,14 @@ python scripts/export_content.py --run runs/20261104T031358Z_d9a39f92 --output e
 승인된 실험은 [실험 프로토콜](docs/study_protocol.md)을 따른다.
 `python scripts/run_study.py`는 4조건 × 3seed를 순서대로 실행하며 결과에 따라 다음 기준을 선택한다.
 각 조건의 설정, 선택 근거, 원본 실행 경로, 비교 그림과 표를 `studies/`에 저장한다.
+
+## 세 역할의 에이전트 협업
+
+사용자 요청에 따라 현재 chat의 작업을 실험설계·실행, 독립 결과 검증, 인스타 작성으로 나눴다.
+[에이전트 작업 흐름](docs/agent_workflow.md)과 `agents/`에 각 역할의 입력·출력·권한을 기록했다.
+실험 담당의 원본을 검증 담당이 확인한 뒤 게시물 담당에게 넘긴다.
+
+4단계 실험의 게시물 생성기는 `scripts/export_study_content.py`다.
+`verified_facts.json`의 통과 상태와 comparison/protocol 해시를 확인한 경우만 파일을 생성한다.
+이는 현재 작업의 역할 분리와 게시물 생성 게이트이며, chat 밖에서 상시 실행되는 무인 서비스나
+별도 Codex 맞춤 에이전트 등록·스케줄러를 제공하는 것은 아니다.

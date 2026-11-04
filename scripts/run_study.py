@@ -130,7 +130,7 @@ def write_report(folder, conditions, decisions):
     for r in rows:
         report.append(f"| {r['label']} | {r['steps']} | {r['epsilon_decay_steps']} | {r['learning_rate']} | "
                       f"{r['hidden_units']} | {r['parameters']:,} | {r['training_greedy_success_mean']:.1%} | "
-                      f"{r['validation_success_mean']:.1%} ± {r['validation_success_std']:.1%} |")
+                      f"{r['validation_success_mean']:.1%} ± {r['validation_success_std']*100:.1f}%p |")
     report += ["", "## 선택 기록", ""] + [f"- {d}" for d in decisions]
     report += ["", "## 그래프 해석", "",
                "- reward_curve.png: x축 완료 에피소드, y축 에피소드 누적 보상. 얇은 선은 원본, 굵은 선은 최근 20개 이동평균.",
