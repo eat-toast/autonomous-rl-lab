@@ -13,6 +13,7 @@ from rl_lab.dqn import DQNAgent, QNetwork, ReplayBuffer, seed_everything, td_tar
 from rl_lab.evaluation import evaluate, summarize
 from rl_lab.maze import ACTIONS, Maze, MazeEnv, astar, generate_maze, make_splits
 from rl_lab.runner import aggregate
+from rl_lab.plots import trailing_mean
 from rl_lab.train import save_checkpoint, train_seed
 
 
@@ -118,6 +119,20 @@ class AlgorithmTests(unittest.TestCase):
         for size in (10, 15, 20, 30, 40):
             self.assertEqual(QNetwork(size)(torch.zeros(2, 3, size, size)).shape, (2, 4))
 
+    def test_configurable_width_parameter_count_and_checkpoint(self):
+        config = from_dict({"network": {"hidden_units": 128}})
+        agent = DQNAgent(config, 7)
+        self.assertEqual(sum(p.numel() for p in agent.online.parameters()), 415332)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "wide.pt"
+            save_checkpoint(path, agent, config, 7, 0)
+            payload = torch.load(path, weights_only=True)
+            restored_config = from_dict(payload["config"])
+            restored = QNetwork(restored_config.env.size, restored_config.network.hidden_units)
+            restored.load_state_dict(payload["model_state"])
+            x = torch.zeros(1, 3, 10, 10)
+            torch.testing.assert_close(agent.online(x), restored(x))
+
     def test_evaluation_does_not_mutate_training_model_or_rng(self):
         config = Config()
         model = QNetwork(10)
@@ -143,6 +158,9 @@ class AlgorithmTests(unittest.TestCase):
 
 
 class PipelineTests(unittest.TestCase):
+    def test_reward_smoothing_uses_only_past_episodes(self):
+        np.testing.assert_allclose(trailing_mean([1, 3, 8, -2], window=2), [1, 2, 5.5, 3])
+        np.testing.assert_allclose(trailing_mean([1, 3]), trailing_mean([1, 3, 100])[:2])
     def test_invalid_configs(self):
         for raw in ({"train": {"seeds": [0, 0]}}, {"train": {"max_replay_mb": .0001}},
                     {"train": {"steps": 10000}}, {"env": {"goal_reward": 2}},
@@ -170,7 +188,8 @@ class PipelineTests(unittest.TestCase):
                             "train": {"steps": 40, "learning_starts": 8, "batch_size": 4,
                                       "replay_capacity": 50, "target_update": 10},
                             "evaluation": {"interval": 20, "train_mazes": 4,
-                                           "validation_mazes": 2, "test_mazes": 2}})
+                                           "validation_mazes": 2, "test_mazes": 2,
+                                           "diagnose_training_fit": True}})
         runs = []
         for _ in range(2):
             with tempfile.TemporaryDirectory() as directory:
@@ -178,15 +197,16 @@ class PipelineTests(unittest.TestCase):
                 (root / "config.json").write_text(json.dumps(config.to_dict()), encoding="utf-8")
                 (root / "mazes.json").write_text(json.dumps(make_splits(config)), encoding="utf-8")
                 manifest = make_splits(config)
-                allowed = {m["hash"] for m in manifest["splits"]["validation"]}
+                allowed = [{m["hash"] for m in manifest["splits"][name]} for name in ("train", "validation")]
                 def validation_only(model, env_config, mazes, deadline_check=None):
-                    self.assertEqual({m["hash"] for m in mazes}, allowed)
+                    self.assertIn({m["hash"] for m in mazes}, allowed)
                     return evaluate(model, env_config, mazes, deadline_check)
                 with patch("rl_lab.train.evaluate", side_effect=validation_only):
                     result = train_seed(root, 0)
                 self.assertEqual(result["status"], "completed")
                 self.assertEqual(result["environment_steps"], 40)
                 self.assertTrue((root / "seed_0" / "best.pt").exists())
+                self.assertTrue((root / "seed_0" / "final_training_evaluation.json").exists())
                 self.assertFalse(list((root / "seed_0").glob("evaluation_test_*.json")))
                 history = [{k: v for k, v in row.items() if k != "elapsed_seconds"}
                            for row in result["validation_history"]]

@@ -13,12 +13,12 @@ def seed_everything(seed):
 
 
 class QNetwork(nn.Module):
-    def __init__(self, size):
+    def __init__(self, size, hidden_units=64):
         super().__init__()
         self.layers = nn.Sequential(
             nn.Conv2d(3, 16, 3, padding=1), nn.ReLU(),
             nn.Conv2d(16, 32, 3, padding=1), nn.ReLU(), nn.Flatten(),
-            nn.Linear(32 * size * size, 64), nn.ReLU(), nn.Linear(64, 4))
+            nn.Linear(32 * size * size, hidden_units), nn.ReLU(), nn.Linear(hidden_units, 4))
 
     def forward(self, observations):
         return self.layers(observations)
@@ -58,8 +58,8 @@ class ReplayBuffer:
 class DQNAgent:
     def __init__(self, config, seed):
         self.config = config
-        self.online = QNetwork(config.env.size)
-        self.target = QNetwork(config.env.size)
+        self.online = QNetwork(config.env.size, config.network.hidden_units)
+        self.target = QNetwork(config.env.size, config.network.hidden_units)
         self.target.load_state_dict(self.online.state_dict())
         self.target.requires_grad_(False)
         self.optimizer = torch.optim.Adam(self.online.parameters(), lr=config.train.learning_rate)

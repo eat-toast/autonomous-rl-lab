@@ -103,3 +103,17 @@ python scripts/export_content.py --run runs/20261104T031358Z_d9a39f92 --output e
 이 exporter는 해당 예비 실험의 편집 템플릿이다. 다른 조건/결과의 게시물을 만들 때에는
 문구를 수정해야 한다. 영상은 학습 타임랩스가 아니라 저장된 greedy 평가 경로의 재생이다.
 인스타그램 업로드는 수행하지 않는다.
+
+## 에피소드 보상 그래프와 4단계 실험
+
+각 run에 `reward_curve.png`(에피소드 축), `reward_curve_steps.png`(환경 스텝 축)를 저장한다.
+에피소드 return은 할인하지 않은 실제 보상의 합이다. 원본과 최근 20개 이동평균을 표시하며,
+성공률도 함께 표시한다. 이동평균의 초기 구간은 사용 가능한 과거 에피소드만 평균한다.
+마지막 미완료 에피소드는 제외한다. 탐색이 포함된 훈련 return과 greedy 검증 성능은 다르다.
+
+`network.hidden_units`로 FC 너비를 지정할 수 있다. 기존 checkpoint는 기본 64로 복원된다.
+`evaluation.diagnose_training_fit=true`이면 마지막 checkpoint를 훈련 미로에서도 greedy 평가한다.
+
+승인된 실험은 [실험 프로토콜](docs/study_protocol.md)을 따른다.
+`python scripts/run_study.py`는 4조건 × 3seed를 순서대로 실행하며 결과에 따라 다음 기준을 선택한다.
+각 조건의 설정, 선택 근거, 원본 실행 경로, 비교 그림과 표를 `studies/`에 저장한다.

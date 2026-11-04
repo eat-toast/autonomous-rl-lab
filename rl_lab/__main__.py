@@ -36,7 +36,7 @@ def main():
     payload = torch.load(checkpoint, map_location="cpu", weights_only=True)
     config = from_dict(payload["config"])
     seed_everything(payload["seed"])
-    model = QNetwork(config.env.size)
+    model = QNetwork(config.env.size, config.network.hidden_units)
     model.load_state_dict(payload["model_state"])
     run_dir = checkpoint.parent.parent
     manifest = json.loads((run_dir / "mazes.json").read_text(encoding="utf-8"))

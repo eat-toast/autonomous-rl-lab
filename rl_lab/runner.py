@@ -75,8 +75,8 @@ def run_experiment(config, output):
         write_json(run_dir / "research_notes.json", {
             "hypothesis": config.hypothesis, "changes": config.change_description,
             "comparison_to_previous": None,
-            "conclusion": "Pipeline check only. No convergence or algorithm-ranking claim.",
-            "next_experiment": "After Phase 1 review, compare DQN/Double/Dueling with >=3 training seeds.",
+            "conclusion": "See recorded metrics; no cross-algorithm or convergence claim is generated automatically.",
+            "next_experiment": "Follow the predefined study protocol; use validation only for development.",
             "final_test_used": False})
         print(f"Results: {run_dir}", flush=True)
         return run_dir, completed

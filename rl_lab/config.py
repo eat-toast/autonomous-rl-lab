@@ -15,6 +15,11 @@ class EnvConfig:
 
 
 @dataclass(frozen=True)
+class NetworkConfig:
+    hidden_units: int = 64
+
+
+@dataclass(frozen=True)
 class TrainConfig:
     seeds: list[int] = field(default_factory=lambda: [0])
     steps: int = 512
@@ -43,6 +48,7 @@ class EvalConfig:
     validation_mazes: int = 4
     test_mazes: int = 8
     maze_seed: int = 20261104
+    diagnose_training_fit: bool = False
 
 
 @dataclass(frozen=True)
@@ -50,6 +56,7 @@ class Config:
     env: EnvConfig = field(default_factory=EnvConfig)
     train: TrainConfig = field(default_factory=TrainConfig)
     evaluation: EvalConfig = field(default_factory=EvalConfig)
+    network: NetworkConfig = field(default_factory=NetworkConfig)
     algorithm: str = "dqn"
     hypothesis: str = "Phase 1 smoke: verify the pipeline; no performance claim."
     change_description: str = "New whole-map CNN DQN baseline; legacy code not used."
@@ -63,6 +70,8 @@ class Config:
                     raise ValueError("Configuration must contain finite numbers")
         if self.algorithm != "dqn":
             raise ValueError("Phase 1 supports only dqn")
+        if type(self.network.hidden_units) is not int or not 1 <= self.network.hidden_units <= 512:
+            raise ValueError("hidden_units must be an integer in [1, 512]")
         if type(e.size) is not int or not 3 <= e.size <= 40:
             raise ValueError("size must be an integer in [3, 40]")
         if not 0 < e.wall_probability < 0.7 or e.max_steps < 1:
@@ -108,6 +117,7 @@ def from_dict(raw):
     raw["env"] = EnvConfig(**raw.get("env", {}))
     raw["train"] = TrainConfig(**raw.get("train", {}))
     raw["evaluation"] = EvalConfig(**raw.get("evaluation", {}))
+    raw["network"] = NetworkConfig(**raw.get("network", {}))
     return Config(**raw).validate()
 
 

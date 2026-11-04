@@ -34,6 +34,7 @@ def train_seed(run_dir, seed):
     started, step, status = time.monotonic(), 0, "running"
     evaluations, first_target, best_score, last_loss = [], None, (-1.0, -1.0), None
     agent = None
+    training_fit = None
 
     def check_budget():
         if time.monotonic() - started >= config.train.max_seconds:
@@ -101,6 +102,9 @@ def train_seed(run_dir, seed):
                     save_checkpoint(folder / "latest.pt", agent, config, seed, step)
                     record_validation(step, stream)
         status = "completed"
+        if config.evaluation.diagnose_training_fit:
+            training_fit = evaluate(agent.online, config.env, manifest["splits"]["train"], check_budget)
+            write_json(folder / "final_training_evaluation.json", training_fit)
     except BudgetExpired as error:
         status = "time_limit"
         write_json(folder / "error.json", {"type": type(error).__name__, "message": str(error)})
@@ -116,6 +120,7 @@ def train_seed(run_dir, seed):
                    "sample_efficiency_steps": first_target,
                    "parameter_count": sum(p.numel() for p in agent.online.parameters()) if agent else None,
                    "last_loss": last_loss, "validation_history": evaluations,
+                   "training_greedy": training_fit["metrics"] if training_fit else None,
                    "last_validation": evaluations[-1] if evaluations else None,
                    "finished_at_utc": utc_now(),
                    "note": "Validation performance only; held-out test has not been evaluated."}
