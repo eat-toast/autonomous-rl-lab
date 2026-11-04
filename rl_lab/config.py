@@ -21,6 +21,7 @@ class NetworkConfig:
 
 @dataclass(frozen=True)
 class TrainConfig:
+    method: str = "baseline"
     device: str = "cpu"
     seeds: list[int] = field(default_factory=lambda: [0])
     steps: int = 512
@@ -67,6 +68,10 @@ class Config:
 
     def validate(self):
         e, t, v = self.env, self.train, self.evaluation
+        if t.method not in ("baseline", "success", "per", "nstep", "double", "mask"):
+            raise ValueError("Unknown method")
+        if t.method == "success" and t.replay_capacity != 2000:
+            raise ValueError("success method requires fixed 1800+200 slots")
         # Reject invalid values before directories, processes, or tensors are created.
         for section in (asdict(e), asdict(t), asdict(v)):
             for value in section.values():

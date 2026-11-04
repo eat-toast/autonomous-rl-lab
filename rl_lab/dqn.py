@@ -153,4 +153,9 @@ class DQNAgent:
 def greedy_action(model, state):
     with torch.inference_mode():
         device = next(model.parameters()).device
-        return int(model(torch.from_numpy(state).unsqueeze(0).to(device)).argmax(dim=1).item())
+        states = torch.from_numpy(state).unsqueeze(0).to(device)
+        values = model(states)
+        if getattr(model, "action_mask", False):
+            from .methods import legal_masks
+            values = values.masked_fill(~legal_masks(states), -torch.inf)
+        return int(values.argmax(dim=1).item())

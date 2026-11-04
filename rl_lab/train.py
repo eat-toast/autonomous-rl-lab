@@ -71,7 +71,11 @@ def train_seed(run_dir, seed):
 
     try:
         seed_everything(seed)
-        agent = DQNAgent(config, seed)
+        if config.train.method == "baseline":
+            agent = DQNAgent(config, seed)
+        else:
+            from .methods import MethodAgent
+            agent = MethodAgent(config, seed)
         manifest = json.loads((run_dir / "mazes.json").read_text(encoding="utf-8"))
         train_pool = [Maze.from_dict(m) for m in manifest["splits"]["train"]]
         rng = np.random.default_rng(seed)
@@ -94,7 +98,10 @@ def train_seed(run_dir, seed):
                 step = next_step
                 trajectory.update(struct.pack("<qqqqqd??", step, env.maze.seed, action,
                                               env.position[0], env.position[1], reward, terminated, truncated))
-                agent.replay.add(state, action, reward, next_state, terminated, step, env.maze.seed)
+                if hasattr(agent, "observe"):
+                    agent.observe(state, action, reward, next_state, terminated, truncated, step, env.maze.seed)
+                else:
+                    agent.replay.add(state, action, reward, next_state, terminated, step, env.maze.seed)
                 state = next_state
                 episode_reward += reward
                 collisions += int(info["collision"])
@@ -152,6 +159,8 @@ def train_seed(run_dir, seed):
                         "step": step, "optimizer_updates": optimizer_updates,
                         "trajectory_sha256": trajectory.hexdigest(), "state_hashes": fingerprints(),
                         **agent.replay.snapshot(step)})
+        if hasattr(agent, "flush"):
+            agent.flush()
         status = "completed"
         if config.evaluation.diagnose_training_fit:
             training_fit = evaluate(agent.online, config.env, manifest["splits"]["train"], check_budget)
@@ -174,6 +183,9 @@ def train_seed(run_dir, seed):
                    "device": str(agent.device) if agent else config.train.device,
                    "last_loss": last_loss, "validation_history": evaluations,
                    "optimizer_updates": optimizer_updates, "paused_updates": paused_updates,
+                   "processed_samples": optimizer_updates * config.train.batch_size,
+                   "nstep_lengths": dict(agent.nstep.lengths) if hasattr(agent, "nstep") else None,
+                   "nstep_horizon_flush": agent.nstep.horizon_flush if hasattr(agent, "nstep") else None,
                    "evaluation_environment_steps": evaluation_environment_steps,
                    "paused_env_steps": paused_env_steps,
                    "trajectory_sha256": trajectory.hexdigest(),
