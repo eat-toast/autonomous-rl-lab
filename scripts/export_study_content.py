@@ -2,7 +2,6 @@
 import argparse
 import csv
 import json
-import hashlib
 from pathlib import Path
 import sys
 import zipfile
@@ -12,6 +11,7 @@ sys.path.insert(0, str(ROOT))
 from PIL import ImageDraw
 from scripts.export_content import card, text, TEAL, INK, MUTED, PAPER, ORANGE, LINE
 from rl_lab.plots import trailing_mean
+from scripts.commit_review import commit_review, validate_review
 
 NAMES = {"Pilot 2k": "기존 2천 스텝", "A_budget": "1. 학습량", "B_explore": "2. 탐색 기간",
          "C_lr": "3. 학습률", "D_width": "4. 모델 크기"}
@@ -27,26 +27,21 @@ def main():
     parser.add_argument("--study", type=Path, default=ROOT / "studies/20261104_four_steps")
     parser.add_argument("--output", type=Path, default=ROOT / "exports/20261104_dqn_four_steps")
     args = parser.parse_args()
-    protocol = read(args.study / "protocol.json")
-    if protocol["status"] != "completed":
-        raise ValueError("Study must be completed before creating publication assets")
-    comparison = read(args.study / "comparison.json")
-    verified = read(args.study / "verified_facts.json")
-    if verified.get("status") != "approved_for_dev_report":
-        raise ValueError("Independent results review has not approved the facts")
-    for filename, field in (("comparison.json", "comparison_sha256"), ("protocol.json", "protocol_sha256")):
-        digest = hashlib.sha256((args.study / filename).read_bytes()).hexdigest()
-        if digest != verified.get(field, "").lower():
-            raise ValueError(f"Verified facts no longer match {filename}")
+    protocol, comparison = validate_review(args.study)
     rows = comparison["conditions"]
-    if set(verified.get("approved_run_ids", [])) != {r["run_id"] for r in rows}:
-        raise ValueError("Verified run IDs do not match the study")
     actual = rows[1:]
     best = next(r for r in actual if r["run_id"] == protocol["provisional_selected_run"])
     width = actual[-1]
     reference = next(r for r in actual[:-1] if r["steps"] == width["steps"] and
                      r["learning_rate"] == width["learning_rate"] and
                      r["epsilon_decay_steps"] == width["epsilon_decay_steps"])
+    if args.output.exists():
+        raise FileExistsError(args.output)
+    review_commit = commit_review(args.study)
+    # A commit hook must not silently change the reviewed publication inputs.
+    current_protocol, current_comparison = validate_review(args.study)
+    if current_protocol != protocol or current_comparison != comparison:
+        raise ValueError("Study changed while committing its review")
     args.output.mkdir(parents=True, exist_ok=False)
 
     im, d = card(1, "연구 노트 02 / 학습량 · 탐색 · 학습률 · 모델 크기")
@@ -159,7 +154,8 @@ def main():
             (graphs / f"{row['label'].replace(' ', '_')}_{name}").write_bytes(source.read_bytes())
     (args.output / "provenance.json").write_text(json.dumps({"study": str(args.study),
         "selected_run": best["run_id"], "width_reference_run": reference["run_id"],
-        "original_run_ids": [r["run_id"] for r in rows], "no_instagram_upload": True}, indent=2), encoding="utf-8")
+        "original_run_ids": [r["run_id"] for r in rows], "review_commit": review_commit,
+        "no_instagram_upload": True}, indent=2), encoding="utf-8")
     archive = args.output.parent / "Instagram_DQN_four_steps_20261104.zip"
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as z:
         for path in args.output.rglob("*"):

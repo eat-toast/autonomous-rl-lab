@@ -1,0 +1,2 @@
+# Review snapshots preserve the exact bytes used for SHA-256 verification.
+review_snapshots/** -text

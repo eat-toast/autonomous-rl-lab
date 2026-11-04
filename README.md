@@ -127,6 +127,9 @@ python scripts/export_content.py --run runs/20261104T031358Z_d9a39f92 --output e
 
 4단계 실험의 게시물 생성기는 `scripts/export_study_content.py`다.
 `verified_facts.json`의 통과 상태와 comparison/protocol 해시를 확인한 경우만 파일을 생성한다.
+결과 검증 뒤에는 `python scripts/commit_review.py --study <study 경로>`로 검증 자료를
+`review_snapshots/`에 보존하고 로컬 Git 커밋을 만든다. 4단계 게시물 생성기는 이 훅을
+자동 호출하며 커밋 실패 시 제작을 중단한다. 같은 자료는 기존 커밋을 재사용하고 push하지 않는다.
 이는 현재 작업의 역할 분리와 게시물 생성 게이트이며, chat 밖에서 상시 실행되는 무인 서비스나
 별도 Codex 맞춤 에이전트 등록·스케줄러를 제공하는 것은 아니다.
 
