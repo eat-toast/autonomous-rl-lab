@@ -8,6 +8,7 @@ datasets/
 .tools/
 exports/
 studies/
+diagnostics/
 *.pt
 *.pth
 *.mp4

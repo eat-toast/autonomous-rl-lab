@@ -128,3 +128,15 @@ python scripts/export_content.py --run runs/20261104T031358Z_d9a39f92 --output e
 `verified_facts.json`의 통과 상태와 comparison/protocol 해시를 확인한 경우만 파일을 생성한다.
 이는 현재 작업의 역할 분리와 게시물 생성 게이트이며, chat 밖에서 상시 실행되는 무인 서비스나
 별도 Codex 맞춤 에이전트 등록·스케줄러를 제공하는 것은 아니다.
+
+## 실패 경로 진단
+
+[실패 진단 보고서](docs/failure_diagnosis_20261104.md)에 제자리/왕복 순환, 훈련·검증 격차,
+재학습 없는 유효 행동 마스크 진단을 기록했다. 마스크 진단은 평가 정책을 바꾼 별도 확인이며
+기존 벤치마크 결과로 대체하지 않는다.
+
+```powershell
+python scripts/diagnose_failures.py --output diagnostics/new_diagnosis
+```
+
+원본 결과를 변경하거나 최종 테스트를 평가하지 않는다.
