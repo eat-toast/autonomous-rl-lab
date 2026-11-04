@@ -1,0 +1,8 @@
+{
+  "algorithm": "dqn",
+  "hypothesis": "Verify train/evaluate/checkpoint pipeline on 10x10; no performance claim.",
+  "change_description": "Initial CNN baseline with frozen whole-map state and reward-v1.",
+  "env": {"size": 10, "wall_probability": 0.2, "max_steps": 100},
+  "train": {"seeds": [0], "steps": 512, "max_seconds": 60, "hard_timeout_seconds": 120},
+  "evaluation": {"interval": 128, "train_mazes": 16, "validation_mazes": 4, "test_mazes": 8}
+}

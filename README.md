@@ -1,0 +1,86 @@
+# Autonomous RL Lab
+
+장애물 미로에서 DQN 계열을 비교하고, 이후 예산 내 자율 연구로 확장하는 프로젝트.
+현재는 **Phase 1: 새 CNN DQN 기준 모델과 재현 가능한 실행 파이프라인**이다.
+기존 PC의 DQN은 참고 자료이며, 기존 성능을 재현했다고 주장하지 않는다.
+
+## 환경과 고정 규칙
+
+- Python 3.12 + PyTorch. CPU 1 thread, 별도 GPU 사용 없음.
+- N×N 미로, 3채널 전체 지도(벽·에이전트·목표), 상하좌우 4개 행동.
+- 일반 이동 -0.01, 충돌 -0.05, 목표 +1.0. 코인 없음.
+- CNN 2층 + FC 64 + Q값 4개. 미로 크기마다 별도 모델을 학습한다.
+- 검증/최종 테스트는 훈련 미로와 seed·격자 해시가 다르다.
+- [고정 실험 계약](docs/design.md)에 생성 규칙, 종료 조건, 지표 정의를 기록했다.
+
+## 실행 (PowerShell)
+
+현재 PC의 Python 경로는 실행 스크립트가 자동으로 찾는다.
+라이브러리가 설치되지 않은 새 PC에서는 Python 3.12 환경을 준비하고
+`python -m pip install -r requirements.txt`를 먼저 실행한다.
+실제 검증한 버전은 `requirements-tested.txt`를 참고한다.
+
+```powershell
+# 단위 테스트 + 40스텝 재현성 통합 테스트
+.\scripts\lab.ps1 test
+
+# 기본 smoke: 10×10, 1 seed, 512 환경 스텝. 대규모 학습 아님.
+.\scripts\lab.ps1 train
+
+# 저장된 체크포인트를 개발 검증 미로에서 독립 평가
+.\scripts\lab.ps1 evaluate -Checkpoint 'runs\<run-id>\seed_0\latest.pt'
+
+# Phase 1 검토 후 수동 실행할 수 있는 3-seed 짧은 설정 (자동 실행하지 않음)
+.\scripts\lab.ps1 train -Config configs/phase1_three_seeds.json
+
+# 최종 선택이 끝난 뒤에만 실행. 같은 run/seed는 1회만 허용.
+.\scripts\lab.ps1 evaluate -Checkpoint 'runs\<run-id>\seed_0\best.pt' -FinalTest
+```
+
+다른 Python을 쓰려면 `-PythonPath 'C:\...\python.exe'`를 지정한다.
+어떤 환경에서도 프로젝트 루트에서 `python -m rl_lab train --config configs/smoke.json`
+또는 `python -m unittest discover -s tests -v`로 실행할 수 있다.
+
+## 결과
+
+각 실행은 `runs/<UTC시각_UUID>/`를 새로 만들고 기존 결과를 덮어쓰지 않는다.
+
+| 파일 | 내용 |
+|---|---|
+| `config.json`, `metadata.json` | 설정·가설·코드 변경 설명, Git 커밋/변경 상태, 버전, 실행 환경 |
+| `source_snapshot.zip` | 해당 실행의 코드·문서·설정 사본 (해시는 metadata에 포함) |
+| `mazes.json` | 세 split의 실제 지도, seed, 밀도, A* 경로 |
+| `seed_*/training_episodes.csv` | 훈련 에피소드별 결과 |
+| `seed_*/validation.jsonl` | 검증 곡선: 스텝, 손실, epsilon, 성공률, 경로 효율 |
+| `seed_*/best.pt`, `latest.pt` | 검증 기준 최고/마지막 모델 (학습 resume용은 아님) |
+| `seed_*/best_validation.json`, `latest_validation.json` | 평가별 실제 이동 경로와 실패 포함 결과 |
+| `summary.json`, `summary.csv` | seed별 지표, 완료 seed의 평균/표본 표준편차, 제외 seed 표시 |
+| `status.json`, `seed_*_worker.log` | 완료·실패·제한 도달 상태 및 오류 로그 |
+| `learning_curve.png`, `path_comparison.png` | 학습 곡선과 A* 대비 이동 경로 |
+| `research_notes.json` | 결론 범위·다음 실험 제안. 현재 자동 AI 가설 생성은 아님 |
+
+`runs/`와 모델 파일은 로컬에 보존하고 Git에 올리지 않는다.
+명시적으로 파일을 삭제하지 않는 한 실패 결과도 보존한다.
+재현하려면 snapshot을 별도 폴더에 풀고 기록된 패키지 버전과 `config.json`으로 다시 실행한다.
+다른 OS/하드웨어/PyTorch 버전의 bit 단위 동일성은 보장하지 않는다.
+
+## 지표 해석과 제한
+
+- 성공률은 평가 미로 에피소드의 성공 비율이다. 게시물의 '학습 seed 중 성공한 정책 비율'과 다르다.
+- 성공한 에피소드가 없으면 평균 성공 스텝과 경로 효율은 `null`이다.
+- 성공 seed가 아닌 **모든 완료 학습 seed**의 검증 성공률로 평균·표준편차를 낸다.
+- sample efficiency 미달은 `null`, 평균은 도달한 seed만 집계하므로 `n`도 확인해야 한다.
+- 훈련 시간에는 검증과 체크포인트 저장 시간이 포함된다.
+- smoke의 낮은 성공률은 구현 오류나 알고리즘 성능 결론이 아니다. 수렴을 검증하는 학습량이 아니다.
+- `best.pt`는 검증 성공률→성공 경로 효율 순서로 선택하며, 동률이면 먼저 얻은 모델을 유지한다.
+- 최종 테스트 미로는 train에서 평가하지 않는다. test 반복 사용을 피해야 하며, 1회 제한은
+  같은 run/seed 범위의 보조 장치일 뿐 여러 run 간 테스트 누출까지 방지하지 않는다.
+- replay 메모리 제한은 replay 배열에만 해당한다. 전체 프로세스 RSS의 OS 강제 제한은 아직 없다.
+- 실패 후 새 run으로 재실행 가능. 중간 학습 상태의 완전한 resume는 미구현이다.
+
+## 다음 단계
+
+Phase 2의 Double/Dueling DQN, 공정한 3~5 seed 벤치마크, 크기 확장,
+영상 저장, Codex를 연결한 제한 예산 연구 오케스트레이터는 아직 구현하지 않았다.
+GitHub `origin`은 `https://github.com/eat-toast/autonomous-rl-lab.git`이다.
+원격 업로드는 별도로 실행하며 이 구현 과정에서 자동 push하지 않는다.

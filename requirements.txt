@@ -1,0 +1,5 @@
+# Python 3.12; exact versions used for verification are in requirements-tested.txt.
+torch>=2.5,<3
+numpy>=2,<3
+matplotlib>=3.9,<4
+Pillow>=11,<13

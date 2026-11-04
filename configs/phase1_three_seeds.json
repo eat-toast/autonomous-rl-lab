@@ -1,0 +1,8 @@
+{
+  "algorithm": "dqn",
+  "hypothesis": "Short multi-seed baseline pipeline verification; not a converged benchmark.",
+  "change_description": "Same observation/reward/model; more steps and 3 independent policy seeds.",
+  "env": {"size": 10, "wall_probability": 0.2, "max_steps": 100},
+  "train": {"seeds": [0, 1, 2], "steps": 2000, "max_seconds": 90, "hard_timeout_seconds": 150, "epsilon_decay_steps": 1600},
+  "evaluation": {"interval": 500, "train_mazes": 16, "validation_mazes": 8, "test_mazes": 16}
+}

@@ -1,0 +1,7 @@
+# Verified on Python 3.12.6 / Windows, 2026-11-04.
+# CUDA-enabled torch was already installed; all project executions use CPU only.
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.5.1+cu121
+numpy==2.4.3
+matplotlib==3.10.8
+Pillow==12.3.0
