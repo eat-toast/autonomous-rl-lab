@@ -1,0 +1,739 @@
+{
+  "study_id": "MLP-04",
+  "reviewer": "results_review",
+  "reviewed_at_utc": "2026-11-06T23:16:44.060147+00:00",
+  "protocol_sha256": "90bc8c5c53f11d9a58bd8829fa3890a391f30bce196348829c999dda0aa94da9",
+  "comparison_sha256": "e60c6b85bd1fdfa01f627945a77f00393e84c0bc892f2025c83c32ec7488e313",
+  "status": "approved_for_dev_report",
+  "approved_run_ids": [
+    "MLP-01/MLP14",
+    "MLP-04/MLP14-count"
+  ],
+  "review_elapsed_since_execution_started_seconds": 102.46624898910522,
+  "checkpoint_step": 20000,
+  "final_test_used": false,
+  "scope": "CPU restore of 6 final checkpoints; 48 validation and 96 train greedy episodes replayed.",
+  "checks": [
+    "paired config and manifest, including per-maze geometry and shortest paths",
+    "archived runtime source, Git recovery, worker provenance and sequential CUDA budget",
+    "action/observation/path/reward traces",
+    "forced visit-count and replay probe",
+    "training exploration return and greedy metrics",
+    "full evaluation schedule and intermediate best validation metrics",
+    "paired validation outcomes and adoption rule"
+  ],
+  "limit": "One device, three paired seeds and eight previously used development validation mazes per seed.",
+  "conditions": {
+    "MLP-01/MLP14": {
+      "success_rate_mean": 0.7916666666666666,
+      "success_rate_sample_sd": 0.14433756729740643,
+      "success_rate_range": [
+        0.625,
+        0.875
+      ],
+      "successes": 19,
+      "episodes": 24,
+      "success_rates": [
+        0.875,
+        0.625,
+        0.875
+      ],
+      "successes_by_seed": [
+        7,
+        5,
+        7
+      ],
+      "validation_episodes_by_seed": [
+        8,
+        8,
+        8
+      ],
+      "failure_types_by_seed": [
+        {
+          "two_cell_oscillation": 1,
+          "stationary_collision": 0,
+          "other_with_collision": 0,
+          "other": 0
+        },
+        {
+          "two_cell_oscillation": 1,
+          "stationary_collision": 2,
+          "other_with_collision": 0,
+          "other": 0
+        },
+        {
+          "two_cell_oscillation": 1,
+          "stationary_collision": 0,
+          "other_with_collision": 0,
+          "other": 0
+        }
+      ],
+      "collision_actions_by_seed": [
+        0,
+        160,
+        0
+      ],
+      "success_path_efficiency_by_seed": [
+        0.9428571428571428,
+        0.92,
+        0.9571428571428572
+      ],
+      "training_greedy_by_seed": [
+        {
+          "episodes": 16,
+          "successes": 15,
+          "success_rate": 0.9375,
+          "failed_episodes": 1,
+          "path_efficiency": 0.8631668331668332,
+          "mean_success_steps": 21.333333333333332,
+          "collisions": 88,
+          "failure_types": {
+            "two_cell_oscillation": 0,
+            "stationary_collision": 1,
+            "other_with_collision": 0,
+            "other": 0
+          }
+        },
+        {
+          "episodes": 16,
+          "successes": 12,
+          "success_rate": 0.75,
+          "failed_episodes": 4,
+          "path_efficiency": 0.8936480186480187,
+          "mean_success_steps": 20.5,
+          "collisions": 160,
+          "failure_types": {
+            "two_cell_oscillation": 2,
+            "stationary_collision": 2,
+            "other_with_collision": 0,
+            "other": 0
+          }
+        },
+        {
+          "episodes": 16,
+          "successes": 14,
+          "success_rate": 0.875,
+          "failed_episodes": 2,
+          "path_efficiency": 0.9016813543599258,
+          "mean_success_steps": 20.571428571428573,
+          "collisions": 0,
+          "failure_types": {
+            "two_cell_oscillation": 2,
+            "stationary_collision": 0,
+            "other_with_collision": 0,
+            "other": 0
+          }
+        }
+      ],
+      "exploration_return_last20_by_seed": [
+        0.725,
+        0.1404999999999997,
+        0.42449999999999993
+      ],
+      "intermediate_best_by_seed": [
+        {
+          "step": 15500,
+          "validation_success_rate": 1.0
+        },
+        {
+          "step": 19000,
+          "validation_success_rate": 1.0
+        },
+        {
+          "step": 19500,
+          "validation_success_rate": 1.0
+        }
+      ],
+      "checkpoint_sha256_by_seed": [
+        "acdd9dabedddc88c5c51277c41c624f7f490dc3106aa94ad82070643641607d8",
+        "93b4fb5da38e51935d9c575735f3a788632d1d1a3aee0f06a38c03f94b44144c",
+        "f9af8d6bd9bda2a6b3a3871309ea2f7175f81a5ee7c4560fc7deaf1418d6adc7"
+      ]
+    },
+    "MLP-04/MLP14-count": {
+      "success_rate_mean": 0.875,
+      "success_rate_sample_sd": 0.0,
+      "success_rate_range": [
+        0.875,
+        0.875
+      ],
+      "successes": 21,
+      "episodes": 24,
+      "success_rates": [
+        0.875,
+        0.875,
+        0.875
+      ],
+      "successes_by_seed": [
+        7,
+        7,
+        7
+      ],
+      "validation_episodes_by_seed": [
+        8,
+        8,
+        8
+      ],
+      "failure_types_by_seed": [
+        {
+          "two_cell_oscillation": 1,
+          "stationary_collision": 0,
+          "other_with_collision": 0,
+          "other": 0
+        },
+        {
+          "two_cell_oscillation": 0,
+          "stationary_collision": 1,
+          "other_with_collision": 0,
+          "other": 0
+        },
+        {
+          "two_cell_oscillation": 1,
+          "stationary_collision": 0,
+          "other_with_collision": 0,
+          "other": 0
+        }
+      ],
+      "collision_actions_by_seed": [
+        0,
+        87,
+        0
+      ],
+      "success_path_efficiency_by_seed": [
+        0.8837662337662338,
+        0.9240259740259741,
+        0.9714285714285714
+      ],
+      "training_greedy_by_seed": [
+        {
+          "episodes": 16,
+          "successes": 16,
+          "success_rate": 1.0,
+          "failed_episodes": 0,
+          "path_efficiency": 0.9375,
+          "mean_success_steps": 19.5,
+          "collisions": 0,
+          "failure_types": {
+            "two_cell_oscillation": 0,
+            "stationary_collision": 0,
+            "other_with_collision": 0,
+            "other": 0
+          }
+        },
+        {
+          "episodes": 16,
+          "successes": 15,
+          "success_rate": 0.9375,
+          "failed_episodes": 1,
+          "path_efficiency": 0.8343356643356643,
+          "mean_success_steps": 22.266666666666666,
+          "collisions": 82,
+          "failure_types": {
+            "two_cell_oscillation": 0,
+            "stationary_collision": 1,
+            "other_with_collision": 0,
+            "other": 0
+          }
+        },
+        {
+          "episodes": 16,
+          "successes": 16,
+          "success_rate": 1.0,
+          "failed_episodes": 0,
+          "path_efficiency": 0.9156655844155844,
+          "mean_success_steps": 20.125,
+          "collisions": 0,
+          "failure_types": {
+            "two_cell_oscillation": 0,
+            "stationary_collision": 0,
+            "other_with_collision": 0,
+            "other": 0
+          }
+        }
+      ],
+      "exploration_return_last20_by_seed": [
+        0.7525,
+        0.7254999999999999,
+        0.7384999999999999
+      ],
+      "intermediate_best_by_seed": [
+        {
+          "step": 15500,
+          "validation_success_rate": 1.0
+        },
+        {
+          "step": 17500,
+          "validation_success_rate": 1.0
+        },
+        {
+          "step": 15500,
+          "validation_success_rate": 1.0
+        }
+      ],
+      "checkpoint_sha256_by_seed": [
+        "29c5e9dc0ebf90fff22182e7c8fba8c17b4180aa4bfc825b92340488ea53560f",
+        "a16fe76dcba1e602333d77196f2382fb1d4591a12d7397346b2207dd35ecdb87",
+        "b4100e49b04e6d819a3cac8639d96d8ffa969332d1e5e5fdbe29c3670035bee7"
+      ]
+    }
+  },
+  "paired_validation": [
+    {
+      "seed": 0,
+      "maze_hash": "c320d665180be7c6e81494f567eb675e22058a4e47e1475f03f373663882f797",
+      "maze_seed": 20271104,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 0.6,
+      "candidate_efficiency": 0.8181818181818182
+    },
+    {
+      "seed": 0,
+      "maze_hash": "0296bff060dea70599b7d7717e7b13af5d080643c02e4a7b3f714ee90f2d0fd5",
+      "maze_seed": 20271105,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 1.0,
+      "candidate_efficiency": 0.9
+    },
+    {
+      "seed": 0,
+      "maze_hash": "0c27a58e9d1ac59e0daeb18743b9eef4439f42a26d82ee40b1fbcce220d7ea09",
+      "maze_seed": 20271106,
+      "baseline": "two_cell_oscillation",
+      "candidate": "success",
+      "baseline_success": false,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": null,
+      "candidate_efficiency": 0.8181818181818182
+    },
+    {
+      "seed": 0,
+      "maze_hash": "77ff42ea5a02becc1b2c71c8303c90db7170aa3bc209804152dfc46136d36715",
+      "maze_seed": 20271107,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 1.0,
+      "candidate_efficiency": 1.0
+    },
+    {
+      "seed": 0,
+      "maze_hash": "acd22df7daa2dce9e2070fb3afd6dadbcd6b926891d56a2c6f5d517b70e2cbbc",
+      "maze_seed": 20271108,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 1.0,
+      "candidate_efficiency": 0.75
+    },
+    {
+      "seed": 0,
+      "maze_hash": "6cba00113aad8efd3cab96a67f87470133a3090e2fd92b74d52dac2fd9a285dd",
+      "maze_seed": 20271109,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 1.0,
+      "candidate_efficiency": 0.9
+    },
+    {
+      "seed": 0,
+      "maze_hash": "90712ed3b87d76cc7cabc1ad7f38b44787cbed40ae3b0f24a261435355966077",
+      "maze_seed": 20271110,
+      "baseline": "success",
+      "candidate": "two_cell_oscillation",
+      "baseline_success": true,
+      "candidate_success": false,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 1.0,
+      "candidate_efficiency": null
+    },
+    {
+      "seed": 0,
+      "maze_hash": "29dbde0c1eab4da2092479b8dcf9e5c8502b500f9fa57d3039f9bddbdfba931a",
+      "maze_seed": 20271111,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 1.0,
+      "candidate_efficiency": 1.0
+    },
+    {
+      "seed": 1,
+      "maze_hash": "c320d665180be7c6e81494f567eb675e22058a4e47e1475f03f373663882f797",
+      "maze_seed": 20271104,
+      "baseline": "success",
+      "candidate": "stationary_collision",
+      "baseline_success": true,
+      "candidate_success": false,
+      "baseline_collisions": 0,
+      "candidate_collisions": 87,
+      "baseline_efficiency": 0.9,
+      "candidate_efficiency": null
+    },
+    {
+      "seed": 1,
+      "maze_hash": "0296bff060dea70599b7d7717e7b13af5d080643c02e4a7b3f714ee90f2d0fd5",
+      "maze_seed": 20271105,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 0.9,
+      "candidate_efficiency": 1.0
+    },
+    {
+      "seed": 1,
+      "maze_hash": "0c27a58e9d1ac59e0daeb18743b9eef4439f42a26d82ee40b1fbcce220d7ea09",
+      "maze_seed": 20271106,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 0.9,
+      "candidate_efficiency": 0.8181818181818182
+    },
+    {
+      "seed": 1,
+      "maze_hash": "77ff42ea5a02becc1b2c71c8303c90db7170aa3bc209804152dfc46136d36715",
+      "maze_seed": 20271107,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 1.0,
+      "candidate_efficiency": 1.0
+    },
+    {
+      "seed": 1,
+      "maze_hash": "acd22df7daa2dce9e2070fb3afd6dadbcd6b926891d56a2c6f5d517b70e2cbbc",
+      "maze_seed": 20271108,
+      "baseline": "stationary_collision",
+      "candidate": "success",
+      "baseline_success": false,
+      "candidate_success": true,
+      "baseline_collisions": 79,
+      "candidate_collisions": 0,
+      "baseline_efficiency": null,
+      "candidate_efficiency": 1.0
+    },
+    {
+      "seed": 1,
+      "maze_hash": "6cba00113aad8efd3cab96a67f87470133a3090e2fd92b74d52dac2fd9a285dd",
+      "maze_seed": 20271109,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 0.9,
+      "candidate_efficiency": 0.75
+    },
+    {
+      "seed": 1,
+      "maze_hash": "90712ed3b87d76cc7cabc1ad7f38b44787cbed40ae3b0f24a261435355966077",
+      "maze_seed": 20271110,
+      "baseline": "two_cell_oscillation",
+      "candidate": "success",
+      "baseline_success": false,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": null,
+      "candidate_efficiency": 1.0
+    },
+    {
+      "seed": 1,
+      "maze_hash": "29dbde0c1eab4da2092479b8dcf9e5c8502b500f9fa57d3039f9bddbdfba931a",
+      "maze_seed": 20271111,
+      "baseline": "stationary_collision",
+      "candidate": "success",
+      "baseline_success": false,
+      "candidate_success": true,
+      "baseline_collisions": 81,
+      "candidate_collisions": 0,
+      "baseline_efficiency": null,
+      "candidate_efficiency": 0.9
+    },
+    {
+      "seed": 2,
+      "maze_hash": "c320d665180be7c6e81494f567eb675e22058a4e47e1475f03f373663882f797",
+      "maze_seed": 20271104,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 0.9,
+      "candidate_efficiency": 1.0
+    },
+    {
+      "seed": 2,
+      "maze_hash": "0296bff060dea70599b7d7717e7b13af5d080643c02e4a7b3f714ee90f2d0fd5",
+      "maze_seed": 20271105,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 1.0,
+      "candidate_efficiency": 1.0
+    },
+    {
+      "seed": 2,
+      "maze_hash": "0c27a58e9d1ac59e0daeb18743b9eef4439f42a26d82ee40b1fbcce220d7ea09",
+      "maze_seed": 20271106,
+      "baseline": "two_cell_oscillation",
+      "candidate": "success",
+      "baseline_success": false,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": null,
+      "candidate_efficiency": 0.9
+    },
+    {
+      "seed": 2,
+      "maze_hash": "77ff42ea5a02becc1b2c71c8303c90db7170aa3bc209804152dfc46136d36715",
+      "maze_seed": 20271107,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 1.0,
+      "candidate_efficiency": 1.0
+    },
+    {
+      "seed": 2,
+      "maze_hash": "acd22df7daa2dce9e2070fb3afd6dadbcd6b926891d56a2c6f5d517b70e2cbbc",
+      "maze_seed": 20271108,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 0.9,
+      "candidate_efficiency": 1.0
+    },
+    {
+      "seed": 2,
+      "maze_hash": "6cba00113aad8efd3cab96a67f87470133a3090e2fd92b74d52dac2fd9a285dd",
+      "maze_seed": 20271109,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 0.9,
+      "candidate_efficiency": 0.9
+    },
+    {
+      "seed": 2,
+      "maze_hash": "90712ed3b87d76cc7cabc1ad7f38b44787cbed40ae3b0f24a261435355966077",
+      "maze_seed": 20271110,
+      "baseline": "success",
+      "candidate": "two_cell_oscillation",
+      "baseline_success": true,
+      "candidate_success": false,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 1.0,
+      "candidate_efficiency": null
+    },
+    {
+      "seed": 2,
+      "maze_hash": "29dbde0c1eab4da2092479b8dcf9e5c8502b500f9fa57d3039f9bddbdfba931a",
+      "maze_seed": 20271111,
+      "baseline": "success",
+      "candidate": "success",
+      "baseline_success": true,
+      "candidate_success": true,
+      "baseline_collisions": 0,
+      "candidate_collisions": 0,
+      "baseline_efficiency": 1.0,
+      "candidate_efficiency": 1.0
+    }
+  ],
+  "transitions": {
+    "success_success": 16,
+    "success_failure": 3,
+    "failure_success": 5,
+    "failure_failure": 0
+  },
+  "forced_observation_probe": {
+    "forced_positions": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "candidate_neighbor_observations": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.3333333432674408
+      ],
+      [
+        0.0,
+        0.3333333432674408,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.6666666865348816
+      ],
+      [
+        0.0,
+        0.6666666865348816,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "same_cell_west_feature_at_east_in_mlp2": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "same_cell_west_feature_at_east_in_mlp4": [
+      0.3333333333333333,
+      0.6666666666666666,
+      1,
+      1
+    ],
+    "note": "Forced trace illustrates the observation mechanism only, not learned behavior."
+  },
+  "execution_ledger": [
+    {
+      "seed": 0,
+      "status": "completed",
+      "charged_steps": 20000,
+      "run_id": "MLP14-count_seed_0",
+      "started_at_utc": "2026-11-06T23:15:03.069160+00:00",
+      "return_code": 0,
+      "elapsed_seconds": 30.811999999918044,
+      "finished_at_utc": "2026-11-06T23:15:33.876368+00:00",
+      "environment_steps": 20000
+    },
+    {
+      "seed": 1,
+      "status": "completed",
+      "charged_steps": 20000,
+      "run_id": "MLP14-count_seed_1",
+      "started_at_utc": "2026-11-06T23:15:33.879893+00:00",
+      "return_code": 0,
+      "elapsed_seconds": 31.25,
+      "finished_at_utc": "2026-11-06T23:16:05.126923+00:00",
+      "environment_steps": 20000
+    },
+    {
+      "seed": 2,
+      "status": "completed",
+      "charged_steps": 20000,
+      "run_id": "MLP14-count_seed_2",
+      "started_at_utc": "2026-11-06T23:16:05.130925+00:00",
+      "return_code": 0,
+      "elapsed_seconds": 31.438000000081956,
+      "finished_at_utc": "2026-11-06T23:16:36.564942+00:00",
+      "environment_steps": 20000
+    }
+  ],
+  "decision": "adopt"
+}
