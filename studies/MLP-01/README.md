@@ -1,4 +1,6 @@
-# MLP-01 · 더듬이 MLP 실험
+# MLP1 기본 관측 · MLP2 이웃 방문
+
+원본 묶음 ID는 `MLP-01`이다. 원본 조건 `MLP10`과 `MLP14`는 각각 **MLP-01-기본관측**과 **MLP-02-이웃방문**을 가리킨다.
 
 [실험 목록](../../docs/experiment_index.md) · [계획서](../../docs/mlp_feelers_study_plan.md) · [새 세션용 프롬프트](../../docs/next_session_mlp_prompt.md)
 

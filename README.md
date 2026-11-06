@@ -1,6 +1,6 @@
 # Autonomous RL Lab
 
-[실험 목록](docs/experiment_index.md)에서 다음 계획과 이전 실험의 결과·검증 기록을 찾을 수 있다.
+[실험 목록](docs/experiment_index.md)에서 다음 계획과 이전 실험의 결과·검증 기록을 찾을 수 있다. [실험 이름과 원본 ID](docs/experiment_names.md)에는 CNN·MLP 조건별 이름과 실행 순서를 정리했다.
 
 장애물 미로에서 DQN 계열을 비교하고, 이후 예산 내 자율 연구로 확장하는 프로젝트.
 현재는 **Phase 1: 새 CNN DQN 기준 모델과 재현 가능한 실행 파이프라인**이다.

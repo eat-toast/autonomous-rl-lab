@@ -12,6 +12,8 @@ RTX 4060 CUDA worker 1개가 seed 0→1→2를 순차 실행한다. seed당 20,0
 
 추후 별도 후보는 채택 조건에 `sqrt(행 차이² + 열 차이²)`를 입력 하나로 추가하는 실험이다. 이번 범위는 MLP4까지다.
 
-- [적용 설정](results/config_MLP14-count.json) · [실행 프로토콜과 Git 복구 지점](results/protocol.json) · [지도 원본](results/maze_manifest.json)
-- [예산 원장](results/ledger.json) · [worker 로그와 체크포인트](results/runs/) · [실행 전 점검 로그](results/preflight.log)
-- [결과 보고서](results/report.md) · [비교 JSON](results/comparison.json) · [독립 검증](results/review.json) · [검증 사실](results/verified_facts.json)
+2026-11-07 08:15:02–08:16:36 KST에 RTX 4060에서 순차 실행했다. 세 seed가 각각 20,000스텝을 완료했다. 학습과 집계에는 94.11초를 사용했고 학습 재시도는 0회였다. 복구 지점은 `codex/mlp04-pre-execution` (`290d4a40d7b25997be1506bfb7e0959ca92d810f`)이다. 실행 당시 실제 Git 커밋과 변경 상태는 프로토콜에 기록했다.
+
+- [적용 설정](results/config_MLP14-count.json) · [실행 프로토콜](results/protocol.json) · [지도 원본](results/maze_manifest.json)
+- [예산 원장](results/ledger.json) · [실행 로그](results/execution.log) · [worker 로그와 체크포인트](results/runs/) · [실행 전 점검 로그](results/preflight.log)
+- [결과 보고서](results/report.md) · [비교 JSON](results/comparison.json) · [seed별 CSV](results/comparison.csv) · [독립 검증](results/review.json) · [검증 사실](results/verified_facts.json)

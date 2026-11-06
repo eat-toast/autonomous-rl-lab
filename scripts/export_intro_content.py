@@ -134,8 +134,10 @@ def main():
         yy=491+i*155
         d.rounded_rectangle((64,yy,1016,yy+115),radius=18,fill=PAPER)
         text(d,(93,yy+25),question,38,INK,True)
-    text(d,(64,1052),"성공과 실패, 보상 곡선과 이동 경로까지.",32,MUTED)
-    text(d,(64,1128),"다음 실험, 함께 지켜봐주세요.",44,TEAL,True)
+    # Keep the final copy well above the bottom footer so platform previews
+    # and carousel crops cannot clip the closing line.
+    text(d,(64,1018),"성공과 실패, 보상 곡선과 이동 경로까지.",32,MUTED)
+    text(d,(64,1080),"다음 실험, 함께 지켜봐주세요.",44,TEAL,True)
     im.save(args.output/"06_follow.png")
 
     (args.output/"verified_intro_facts.json").write_bytes(args.facts.read_bytes())
