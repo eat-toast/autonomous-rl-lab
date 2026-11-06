@@ -75,7 +75,7 @@ def mask_diagnostic(model, env_config, mazes):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--run", type=Path, default=ROOT / "runs/20261104T042433Z_2393292b")
-    parser.add_argument("--output", type=Path, default=ROOT / "diagnostics/20261104_failure_analysis")
+    parser.add_argument("--output", type=Path, default=ROOT / "diagnostics/DIAG-01/results")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     config = from_dict(read(args.run / "config.json"))

@@ -24,7 +24,7 @@ def read(path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--study", type=Path, default=ROOT / "studies/20261104_four_steps")
+    parser.add_argument("--study", type=Path, default=ROOT / "studies/CNN-02/results")
     parser.add_argument("--output", type=Path, default=ROOT / "exports/20261104_dqn_four_steps")
     args = parser.parse_args()
     protocol, comparison = validate_review(args.study)

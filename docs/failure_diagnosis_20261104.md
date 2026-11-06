@@ -85,7 +85,7 @@ A에서는 80개(0.133%)였다. 이동/충돌 음수 보상은 매번 있으므�
 
 `scripts/diagnose_failures.py`는 저장된 모델을 복원해 원래 평가와 지표/경로가 정확히 일치하는지 확인한다.
 그 후 순환과 Q값을 기록하고 마스크 진단을 별도 파일로 저장한다.
-최종 산출물: `diagnostics/20261104_failure_analysis_final/diagnosis.json`,
+최종 산출물: `diagnostics/DIAG-01/results/diagnosis.json`,
 `seed_*_masked_diagnostic.json`, `failure_paths.png`.
 초기 진단 스크립트의 inference tensor 수정 오류는 별도 실패 폴더의 error.json에 남겼고,
 수정 후 실행했다. 원본 학습·체크포인트·벤치마크 수치에는 영향을 주지 않았다.

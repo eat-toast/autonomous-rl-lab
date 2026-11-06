@@ -27,7 +27,7 @@ return은 탐색을 포함한 훈련 기록이다. 표의 훈련/검증 greedy �
 ## 독립 결과 검증과 콘텐츠
 
 결과 확인 서브에이전트가 summary/CSV/경로/체크포인트 메타데이터를 독립 대조했다.
-`studies/20261104_four_steps/review.json`과 `verified_facts.json`의 상태는
+`studies/CNN-02/results/review.json`과 `verified_facts.json`의 상태는
 `approved_for_dev_report`다. 새 최종 테스트 추론을 수행한 것은 아니다.
 게시물 생성기는 이 상태와 comparison/protocol SHA-256을 확인한 뒤 카드뉴스를 생성한다.
 인스타 작성 서브에이전트는 그 사실 파일을 받아 캡션과 게시 안내를 검토한다.

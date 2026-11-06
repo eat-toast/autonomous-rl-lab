@@ -1,5 +1,7 @@
 # Autonomous RL Lab
 
+[실험 목록](docs/experiment_index.md)에서 다음 계획과 이전 실험의 결과·검증 기록을 찾을 수 있다.
+
 장애물 미로에서 DQN 계열을 비교하고, 이후 예산 내 자율 연구로 확장하는 프로젝트.
 현재는 **Phase 1: 새 CNN DQN 기준 모델과 재현 가능한 실행 파이프라인**이다.
 기존 PC의 DQN은 참고 자료이며, 기존 성능을 재현했다고 주장하지 않는다.
@@ -115,7 +117,7 @@ python scripts/export_content.py --run runs/20261104T031358Z_d9a39f92 --output e
 `network.hidden_units`로 FC 너비를 지정할 수 있다. 기존 checkpoint는 기본 64로 복원된다.
 `evaluation.diagnose_training_fit=true`이면 마지막 checkpoint를 훈련 미로에서도 greedy 평가한다.
 
-승인된 실험은 [실험 프로토콜](docs/study_protocol.md)을 따른다.
+이전 4단계 개발 실험의 조건은 [4단계 프로토콜](docs/study_protocol.md)에 기록되어 있다.
 `python scripts/run_study.py`는 4조건 × 3seed를 순서대로 실행하며 결과에 따라 다음 기준을 선택한다.
 각 조건의 설정, 선택 근거, 원본 실행 경로, 비교 그림과 표를 `studies/`에 저장한다.
 

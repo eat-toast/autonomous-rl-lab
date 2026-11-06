@@ -7,8 +7,15 @@ datasets/
 .cache/
 .tools/
 exports/
-studies/
-diagnostics/
+# Track experiment entry points. Keep generated artifacts local.
+/studies/*
+!/studies/*/
+/studies/*/*
+!/studies/*/README.md
+/diagnostics/*
+!/diagnostics/*/
+/diagnostics/*/*
+!/diagnostics/*/README.md
 *.pt
 *.pth
 *.mp4

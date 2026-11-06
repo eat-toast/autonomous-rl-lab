@@ -8,7 +8,7 @@ from rl_lab.runner import run_experiment
 from rl_lab.storage import ROOT,utc_now,write_json,runtime_metadata,snapshot_source
 from rl_lab.plots import plot_rewards
 BASE=ROOT/'runs/20261104T042433Z_2393292b'
-STUDY=ROOT/'studies/20261104_methods_batch01'
+STUDY=ROOT/'studies/CNN-04/results'
 
 def read(p):return json.loads(Path(p).read_text(encoding='utf-8-sig'))
 def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()

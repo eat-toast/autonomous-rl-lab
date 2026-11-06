@@ -154,7 +154,7 @@ def write_report(folder, conditions, decisions):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=ROOT / "studies/20261104_four_steps")
+    parser.add_argument("--output", type=Path, default=ROOT / "studies/CNN-02/results")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--retry-run", type=Path)
     args = parser.parse_args()

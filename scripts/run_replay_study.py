@@ -90,7 +90,7 @@ def verify_pair(pause_run, clear_run):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=ROOT / "studies/20261104_replay_batch01")
+    parser.add_argument("--output", type=Path, default=ROOT / "studies/CNN-03/results")
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cuda")
     args = parser.parse_args()
     folder = args.output.resolve()
