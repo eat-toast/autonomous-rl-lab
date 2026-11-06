@@ -115,7 +115,7 @@ def classify(episode):
     return "other"
 
 
-def evaluate_policy(model, config, mazes, include_visited, capture=False):
+def evaluate_policy(model, config, mazes, include_visited, capture=False, choose=greedy_action):
     episodes = []
     model.eval()
     with torch.inference_mode():
@@ -127,7 +127,7 @@ def evaluate_policy(model, config, mazes, include_visited, capture=False):
             state = env.reset()
             for _ in range(config.env.max_steps):
                 obs = observation(maze.grid, env.position, (9, 9), visited, include_visited)
-                action = greedy_action(model, obs)
+                action = choose(model, obs)
                 observations.append(obs.tolist())
                 actions.append(action)
                 state, reward, terminated, truncated, info = env.step(action)
@@ -162,15 +162,16 @@ def evaluate_policy(model, config, mazes, include_visited, capture=False):
     return {"metrics": metrics, "episodes": episodes}
 
 
-def train_worker(stage, seed):
-    folder = STUDY / "runs" / f"{stage}_seed_{seed}"
+def train_worker(stage, seed, *, study=STUDY, raw=None, choose=greedy_action,
+                 explore=None, bootstrap=None):
+    folder = study / "runs" / f"{stage}_seed_{seed}"
     folder.mkdir(parents=True, exist_ok=False)
-    raw = make_config(stage)
+    raw = make_config(stage) if raw is None else raw
     config_raw = copy.deepcopy(raw)
     config_raw["algorithm"] = "dqn"
     config_raw["network"] = {"hidden_units": 64}
     config = from_dict(config_raw)
-    manifest = read(STUDY / "maze_manifest.json")
+    manifest = read(study / "maze_manifest.json")
     include_visited = stage == "MLP14"
     inputs = 14 if include_visited else 10
     device = torch.device("cuda")
@@ -196,7 +197,7 @@ def train_worker(stage, seed):
 
     def eval_at(step):
         nonlocal best_score, best_step
-        result = evaluate_policy(online, config, eval_pool, include_visited, capture=True)
+        result = evaluate_policy(online, config, eval_pool, include_visited, capture=True, choose=choose)
         row = {"step": step, "elapsed_seconds": time.monotonic()-started,
                "epsilon": max(.1, 1.0 - .9 * step / 16000), **result["metrics"]}
         history.append(row)
@@ -217,7 +218,9 @@ def train_worker(stage, seed):
                 "input_size": inputs, "parameters": parameter_count(online), "device": device_name,
                 "source_hashes": {"rl_lab/mlp01.py": sha(ROOT/"rl_lab/mlp01.py"),
                                   "scripts/run_mlp01.py": sha(ROOT/"scripts/run_mlp01.py")},
-                "maze_manifest_sha256": sha(STUDY/"maze_manifest.json")})
+                "maze_manifest_sha256": sha(study/"maze_manifest.json")})
+    step = 0
+    executed_steps = 0
     try:
         eval_at(0)
         with (folder / "training_episodes.csv").open("w", newline="", encoding="utf-8-sig") as stream:
@@ -229,9 +232,13 @@ def train_worker(stage, seed):
                     raise TimeoutError("seed soft wall-time limit of 300 seconds reached")
                 eps = max(.1, 1.0 - .9 * (step-1) / 16000)
                 obs = observation(env.maze.grid, env.position, (9, 9), visited, include_visited)
-                action = int(rng.integers(4)) if rng.random() < eps else greedy_action(online, obs)
+                if rng.random() < eps:
+                    action = int(rng.integers(4)) if explore is None else explore(rng, obs)
+                else:
+                    action = choose(online, obs)
                 old_position = env.position
                 next_state, reward, terminated, truncated, info = env.step(action)
+                executed_steps = step
                 if env.position != old_position:
                     visited.add(env.position)
                 next_obs = observation(env.maze.grid, env.position, (9, 9), visited, include_visited)
@@ -241,7 +248,9 @@ def train_worker(stage, seed):
                     s, a, r, ns, term = (x.to(device) for x in replay.sample(32))
                     q = online(s).gather(1, a[:, None]).squeeze(1)
                     with torch.no_grad():
-                        targets = r + .99 * (~term).float() * target(ns).max(1).values
+                        next_q = target(ns)
+                        continuation = next_q.max(1).values if bootstrap is None else bootstrap(next_q, ns, term)
+                        targets = r + .99 * (~term).float() * continuation
                     loss = torch.nn.functional.smooth_l1_loss(q, targets)
                     optimizer.zero_grad(set_to_none=True); loss.backward()
                     torch.nn.utils.clip_grad_norm_(online.parameters(), 10.0, error_if_nonfinite=True)
@@ -259,7 +268,8 @@ def train_worker(stage, seed):
                 if step % 500 == 0:
                     eval_at(step)
         final_validation = read(folder / "validation_20000.json")
-        train_eval = evaluate_policy(online, config, manifest["splits"]["train"], include_visited, capture=True)
+        train_eval = evaluate_policy(online, config, manifest["splits"]["train"], include_visited,
+                                     capture=True, choose=choose)
         write_json(folder / "final_training_evaluation.json", train_eval)
         write_json(folder / "summary.json", {"status": "completed", "stage": stage, "seed": seed,
                     "environment_steps": 20000, "optimizer_updates": optimizer_updates,
@@ -277,6 +287,7 @@ def train_worker(stage, seed):
     except Exception as exc:
         write_json(folder / "failure.json", {"status": "failed", "stage": stage, "seed": seed,
                     "error": str(exc), "traceback": traceback.format_exc(),
+                    "environment_steps": executed_steps,
                     "last_progress": read(folder/"progress.json") if (folder/"progress.json").exists() else None,
                     "elapsed_seconds": time.monotonic()-started})
         raise
