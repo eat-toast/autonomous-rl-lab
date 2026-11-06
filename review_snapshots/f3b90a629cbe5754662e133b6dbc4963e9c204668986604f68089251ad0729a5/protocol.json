@@ -1,0 +1,227 @@
+{
+  "study_id": "MLP-01",
+  "status": "completed",
+  "started_at_utc": "2026-11-06T03:26:44.000972+00:00",
+  "approval": "user-approved MLP10 and conditional MLP14; RTX 4060 CUDA worker=1",
+  "base_run_id": "20261104T075746Z_862a1f55",
+  "base_config_sha256": "1f8b31b3743269b57fcc3cf62428bf772b3cf057fed7ab3feb0294c1746e0e76",
+  "base_manifest_sha256": "f2ff03ac3978a04c869128ca0202288881e154f8b545a732c80fb439c3a978e9",
+  "train_maze_count": 16,
+  "validation_maze_count": 8,
+  "test_maze_count": 16,
+  "final_test_used": false,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "steps_per_seed": 20000,
+  "stage_step_cap": 60000,
+  "total_step_cap": 120000,
+  "max_retries": 0,
+  "soft_seconds_per_seed": 300,
+  "hard_seconds_per_seed": 330,
+  "max_elapsed_seconds": 3600,
+  "runtime": {
+    "python": "3.12.6",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "numpy": "2.4.3",
+      "matplotlib": "3.10.8",
+      "Pillow": "12.3.0"
+    },
+    "device": "cuda",
+    "accelerator": {
+      "gpu_name": "NVIDIA GeForce RTX 4060",
+      "cuda_build": "12.1",
+      "cudnn_version": 90100,
+      "gpu_total_memory_bytes": 8585216000,
+      "precision": "float32; TF32 and AMP disabled"
+    },
+    "torch_threads": 1,
+    "git_commit": "97e45e5c2ce017cfe70b997c41cf745ce7583333",
+    "git_status": "?? docs/next_session_experiments_prompt.md\n?? rl_lab/mlp01.py\n?? scripts/run_mlp01.py\n?? tests/test_mlp01.py",
+    "git_diff": "",
+    "created_at_utc": "2026-11-06T03:26:45.368681+00:00"
+  },
+  "conditions": {
+    "MLP10": {
+      "env": {
+        "size": 10,
+        "wall_probability": 0.2,
+        "max_steps": 100,
+        "step_reward": -0.01,
+        "collision_reward": -0.05,
+        "goal_reward": 1.0
+      },
+      "train": {
+        "method": "baseline",
+        "device": "cuda",
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "steps": 20000,
+        "max_seconds": 300,
+        "hard_timeout_seconds": 330,
+        "max_total_steps": 60000,
+        "replay_capacity": 2000,
+        "max_replay_mb": 256.0,
+        "batch_size": 32,
+        "learning_starts": 64,
+        "train_every": 4,
+        "target_update": 100,
+        "learning_rate": 0.001,
+        "gamma": 0.99,
+        "epsilon_start": 1.0,
+        "epsilon_end": 0.1,
+        "epsilon_decay_steps": 16000,
+        "gradient_clip": 10.0,
+        "replay_event_step": 0,
+        "replay_clear": false,
+        "replay_pause_steps": 0
+      },
+      "evaluation": {
+        "interval": 500,
+        "target_success_rate": 0.8,
+        "train_mazes": 16,
+        "validation_mazes": 8,
+        "test_mazes": 16,
+        "maze_seed": 20261104,
+        "diagnose_training_fit": false
+      },
+      "network": {
+        "hidden_units": 64,
+        "input_size": 10,
+        "architecture": "Linear(64)-ReLU-Linear(64)-ReLU-Linear(4)"
+      },
+      "algorithm": "mlp_dqn",
+      "hypothesis": "Can eight neighboring wall bits and normalized goal displacement support maze solving?",
+      "change_description": "New MLP DQN; no legal action mask; eight wall feelers + row/column goal delta."
+    },
+    "MLP14": {
+      "env": {
+        "size": 10,
+        "wall_probability": 0.2,
+        "max_steps": 100,
+        "step_reward": -0.01,
+        "collision_reward": -0.05,
+        "goal_reward": 1.0
+      },
+      "train": {
+        "method": "baseline",
+        "device": "cuda",
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "steps": 20000,
+        "max_seconds": 300,
+        "hard_timeout_seconds": 330,
+        "max_total_steps": 60000,
+        "replay_capacity": 2000,
+        "max_replay_mb": 256.0,
+        "batch_size": 32,
+        "learning_starts": 64,
+        "train_every": 4,
+        "target_update": 100,
+        "learning_rate": 0.001,
+        "gamma": 0.99,
+        "epsilon_start": 1.0,
+        "epsilon_end": 0.1,
+        "epsilon_decay_steps": 16000,
+        "gradient_clip": 10.0,
+        "replay_event_step": 0,
+        "replay_clear": false,
+        "replay_pause_steps": 0
+      },
+      "evaluation": {
+        "interval": 500,
+        "target_success_rate": 0.8,
+        "train_mazes": 16,
+        "validation_mazes": 8,
+        "test_mazes": 16,
+        "maze_seed": 20261104,
+        "diagnose_training_fit": false
+      },
+      "network": {
+        "hidden_units": 64,
+        "input_size": 14,
+        "architecture": "Linear(64)-ReLU-Linear(64)-ReLU-Linear(4)"
+      },
+      "algorithm": "mlp_dqn",
+      "hypothesis": "Does adding this-episode cardinal neighbor visitation help vs MLP10?",
+      "change_description": "MLP10 input plus four cardinal neighbor visited-this-episode bits; fresh initialization."
+    }
+  },
+  "code_hashes": {
+    "rl_lab/mlp01.py": "b73d1f3c8e39a019775ad43759159c93560fe1b5ba846cb36a383d9a25c739de",
+    "scripts/run_mlp01.py": "ad4baca2a1f908ec0daf0f7be82800d5051e7d3ce29fe8e93fd5301a9eca659a"
+  },
+  "manifest_hash": "cb44c011ed2a6fb7c0a405426401578247ee2049ce7eb117ae153af3fd1bc240",
+  "mlp10_results": [
+    {
+      "seed": 0,
+      "status": "completed",
+      "elapsed_seconds": 99.5789999999106,
+      "run_path": "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\studies\\MLP-01\\results\\runs\\MLP10_seed_0",
+      "return_code": 0
+    },
+    {
+      "seed": 1,
+      "status": "completed",
+      "elapsed_seconds": 89.4210000000894,
+      "run_path": "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\studies\\MLP-01\\results\\runs\\MLP10_seed_1",
+      "return_code": 0
+    },
+    {
+      "seed": 2,
+      "status": "completed",
+      "elapsed_seconds": 89.82800000021234,
+      "run_path": "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\studies\\MLP-01\\results\\runs\\MLP10_seed_2",
+      "return_code": 0
+    }
+  ],
+  "mlp14_entry_decision": {
+    "decision": "run_mlp14",
+    "mlp14_started": true,
+    "mlp10_last_checkpoint_validation_episodes": 24,
+    "two_cell_oscillation_failures_total": 20,
+    "two_cell_oscillation_failures_by_seed": {
+      "0": 8,
+      "1": 7,
+      "2": 5
+    },
+    "threshold_total": 6,
+    "threshold_seed_count": 2,
+    "reason": "both predefined thresholds met"
+  },
+  "mlp14_results": [
+    {
+      "seed": 0,
+      "status": "completed",
+      "elapsed_seconds": 75.93800000008196,
+      "run_path": "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\studies\\MLP-01\\results\\runs\\MLP14_seed_0",
+      "return_code": 0
+    },
+    {
+      "seed": 1,
+      "status": "completed",
+      "elapsed_seconds": 82.14000000013039,
+      "run_path": "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\studies\\MLP-01\\results\\runs\\MLP14_seed_1",
+      "return_code": 0
+    },
+    {
+      "seed": 2,
+      "status": "completed",
+      "elapsed_seconds": 79.51500000013039,
+      "run_path": "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\studies\\MLP-01\\results\\runs\\MLP14_seed_2",
+      "return_code": 0
+    }
+  ],
+  "elapsed_seconds": 518.5160000002943,
+  "finished_at_utc": "2026-11-06T03:35:22.482392+00:00"
+}

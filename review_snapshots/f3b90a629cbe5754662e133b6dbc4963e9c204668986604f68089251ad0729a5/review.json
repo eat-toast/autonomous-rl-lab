@@ -1,0 +1,120 @@
+{
+  "status": "approved_for_dev_report",
+  "reviewer": "results_review",
+  "reviewed_at_utc": "2026-11-06T03:43:50.872Z",
+  "comparison_sha256": "d2fc30419bfa807990cd04ae3ea546e326ac865020930e5f67809411e6e66b9d",
+  "protocol_sha256": "9f76fbbb2b6439a5cd80e89230546d388aaf59cae20d1a628ad5884d3d01a489",
+  "approved_run_ids": [
+    "MLP10",
+    "MLP14"
+  ],
+  "scope": {
+    "study_id": "MLP-01",
+    "stages": [
+      "MLP10",
+      "MLP14"
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "checkpoint": "latest.pt at 20,000 environment steps",
+    "validation_mazes": 8,
+    "mode": "read-only audit of original artifacts; only review.json and verified_facts.json created",
+    "excluded": [
+      "training/retraining",
+      "final-test evaluation",
+      "source/config/protocol/manifest/result mutation"
+    ]
+  },
+  "checks": [
+    {
+      "name": "conditions_and_manifest",
+      "status": "pass",
+      "detail": "Configs match protocol conditions. Both stages use the same 16 train, 8 validation and 16 test mazes, reward-v1, seeds 0/1/2, no action mask; manifest hash and per-maze hashes are consistent. MLP14 changes input_size 10→14 with fresh seeds; parameter counts 5124/5380.",
+      "evidence": [
+        "config_MLP10.json",
+        "config_MLP14.json",
+        "protocol.json",
+        "maze_manifest.json",
+        "runs/MLP10_seed_0/metadata.json",
+        "runs/MLP14_seed_0/metadata.json"
+      ]
+    },
+    {
+      "name": "stored_validation_trace_integrity",
+      "status": "pass",
+      "detail": "Independently reconstructed all 48 final validation episodes from stored maze, position and action records. All action transitions, collision flags, rewards, float32 observations (including MLP14 visited bits), episode counts, success/collision/failure-type metrics, mean success steps and success-only path efficiencies matched within 1e-6. Failure classification and MLP14 threshold used exactly the last 9 positions (8 moves).",
+      "evidence": [
+        "runs/MLP10_seed_0/validation_20000.json",
+        "runs/MLP10_seed_1/validation_20000.json",
+        "runs/MLP10_seed_2/validation_20000.json",
+        "runs/MLP14_seed_0/validation_20000.json",
+        "runs/MLP14_seed_1/validation_20000.json",
+        "runs/MLP14_seed_2/validation_20000.json",
+        "maze_manifest.json"
+      ]
+    },
+    {
+      "name": "mlp14_entry_gate",
+      "status": "pass",
+      "detail": "MLP10 final validation: 24 episodes; two-cell oscillation failures using the predefined 8-move tail = seed 0: 8, seed 1: 7, seed 2: 5, total 20. Both ≥6 total and ≥2 seeds thresholds pass; all three MLP10 seeds completed before MLP14.",
+      "evidence": [
+        "runs/MLP10_seed_0/validation_20000.json",
+        "runs/MLP10_seed_1/validation_20000.json",
+        "runs/MLP10_seed_2/validation_20000.json",
+        "mlp14_entry_decision.json"
+      ]
+    },
+    {
+      "name": "metrics_and_checkpoint_selection",
+      "status": "pass",
+      "detail": "Recomputed each final validation summary; primary checkpoint is latest.pt at 20,000, while reported intermediate best checkpoints remain secondary. Exploration training returns, final train-pool greedy and validation greedy remain separate. Final test unused.",
+      "evidence": [
+        "runs/MLP10_seed_*/summary.json",
+        "runs/MLP14_seed_*/summary.json",
+        "runs/MLP10_seed_*/validation_20000.json",
+        "runs/MLP14_seed_*/validation_20000.json",
+        "comparison.json",
+        "protocol.json"
+      ]
+    },
+    {
+      "name": "budget_and_execution",
+      "status": "pass",
+      "detail": "Six seeds completed; each used 20,000 env steps, 4,985 optimizer updates and 159,520 sampled replay items. Ledger totals 120,000/120,000 steps, 518.516 elapsed seconds/3,600 second cap, one CUDA worker, zero retries. Device metadata names NVIDIA GeForce RTX 4060.",
+      "evidence": [
+        "ledger.json",
+        "runs/MLP10_seed_*/summary.json",
+        "runs/MLP14_seed_*/summary.json",
+        "runs/MLP10_seed_*/metadata.json",
+        "runs/MLP14_seed_*/metadata.json"
+      ]
+    },
+    {
+      "name": "checkpoint_restore_and_independent_inference",
+      "status": "pass",
+      "detail": "This reviewer could not execute Python/PyTorch in the isolated process. The separate checkpoint_restore_audit.json supplies an independent CPU reconstruction and PyTorch restore for all six latest.pt checkpoints. Its checkpoint SHA-256 values match the files; all 48 final validation episodes match stored actions, paths, rewards and collision flags exactly and observations within 1e-7. Every checkpoint is step 20,000 with input size 10 or 14 as specified. The independently recorded MLP10 eight-move oscillation count is 20 (8/7/5).",
+      "evidence": [
+        "checkpoint_restore_audit.json",
+        "runs/MLP10_seed_0/latest.pt",
+        "runs/MLP10_seed_1/latest.pt",
+        "runs/MLP10_seed_2/latest.pt",
+        "runs/MLP14_seed_0/latest.pt",
+        "runs/MLP14_seed_1/latest.pt",
+        "runs/MLP14_seed_2/latest.pt"
+      ]
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "This is a fixed eight-maze development validation set across three policy seeds, not final held-out test performance. Final test was not used.",
+    "Three policy seeds and 24 evaluations per stage do not support broad maze-distribution or causal claims.",
+    "Training return includes epsilon exploration and differs from greedy training/validation success.",
+    "Path efficiency is conditional on successful validation episodes.",
+    "CNN results differ in both observation scope and model architecture and are reference-only.",
+    "This reviewer could not personally execute PyTorch due to its isolated process environment; the checkpoint restoration and replay were independently completed in the separate checkpoint_restore_audit.json."
+  ],
+  "approval_scope": "Approved for accurately qualified development-result reporting and local content preparation only; not final held-out test performance or causal evidence."
+}
