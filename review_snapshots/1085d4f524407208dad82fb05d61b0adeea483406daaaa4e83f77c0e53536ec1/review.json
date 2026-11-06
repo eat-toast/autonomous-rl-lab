@@ -1,0 +1,24 @@
+{
+  "study_id": "MLP-02",
+  "reviewer": "results_review",
+  "reviewed_at_utc": "2026-11-06T22:47:04.860810+00:00",
+  "protocol_sha256": "1d02c1fcefd65b892014584f2f6f87051112dc677e7c85c4b9648ea8efef342e",
+  "comparison_sha256": "cd789cccfe20c0f81bc3a5f28b81ebc51803a6b99a8890edc28602dbf4a1fb3d",
+  "status": "approved_for_dev_report",
+  "approved_run_ids": [
+    "MLP-01/MLP14",
+    "MLP-02/MLP14-mask"
+  ],
+  "review_elapsed_since_execution_started_seconds": 154.12829542160034,
+  "checkpoint_step": 20000,
+  "final_test_used": false,
+  "scope": "CPU restore of 6 final checkpoints; 48 validation and 96 train greedy episodes replayed.",
+  "checks": [
+    "paired config and manifest",
+    "runtime and ledger budgets",
+    "action/observation/path/reward traces",
+    "training exploration return and greedy metrics",
+    "paired validation outcomes and adoption rule"
+  ],
+  "limit": "One device, three paired seeds and eight previously used development validation mazes per seed."
+}

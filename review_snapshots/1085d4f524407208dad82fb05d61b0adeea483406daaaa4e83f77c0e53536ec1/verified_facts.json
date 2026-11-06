@@ -1,0 +1,279 @@
+{
+  "study_id": "MLP-02",
+  "reviewer": "results_review",
+  "reviewed_at_utc": "2026-11-06T22:47:04.860810+00:00",
+  "protocol_sha256": "1d02c1fcefd65b892014584f2f6f87051112dc677e7c85c4b9648ea8efef342e",
+  "comparison_sha256": "cd789cccfe20c0f81bc3a5f28b81ebc51803a6b99a8890edc28602dbf4a1fb3d",
+  "status": "approved_for_dev_report",
+  "approved_run_ids": [
+    "MLP-01/MLP14",
+    "MLP-02/MLP14-mask"
+  ],
+  "review_elapsed_since_execution_started_seconds": 154.12829542160034,
+  "checkpoint_step": 20000,
+  "final_test_used": false,
+  "scope": "CPU restore of 6 final checkpoints; 48 validation and 96 train greedy episodes replayed.",
+  "checks": [
+    "paired config and manifest",
+    "runtime and ledger budgets",
+    "action/observation/path/reward traces",
+    "training exploration return and greedy metrics",
+    "paired validation outcomes and adoption rule"
+  ],
+  "limit": "One device, three paired seeds and eight previously used development validation mazes per seed.",
+  "conditions": {
+    "MLP-01/MLP14": {
+      "success_rate_mean": 0.7916666666666666,
+      "success_rate_sample_sd": 0.14433756729740643,
+      "success_rate_range": [
+        0.625,
+        0.875
+      ],
+      "success_rates": [
+        0.875,
+        0.625,
+        0.875
+      ],
+      "successes_by_seed": [
+        7,
+        5,
+        7
+      ],
+      "validation_episodes_by_seed": [
+        8,
+        8,
+        8
+      ],
+      "failure_types_by_seed": [
+        {
+          "two_cell_oscillation": 1,
+          "stationary_collision": 0,
+          "other_with_collision": 0,
+          "other": 0
+        },
+        {
+          "two_cell_oscillation": 1,
+          "stationary_collision": 2,
+          "other_with_collision": 0,
+          "other": 0
+        },
+        {
+          "two_cell_oscillation": 1,
+          "stationary_collision": 0,
+          "other_with_collision": 0,
+          "other": 0
+        }
+      ],
+      "collision_actions_by_seed": [
+        0,
+        160,
+        0
+      ],
+      "success_path_efficiency_by_seed": [
+        0.9428571428571428,
+        0.92,
+        0.9571428571428572
+      ]
+    },
+    "MLP-02/MLP14-mask": {
+      "success_rate_mean": 0.7916666666666666,
+      "success_rate_sample_sd": 0.07216878364870322,
+      "success_rate_range": [
+        0.75,
+        0.875
+      ],
+      "success_rates": [
+        0.75,
+        0.75,
+        0.875
+      ],
+      "successes_by_seed": [
+        6,
+        6,
+        7
+      ],
+      "validation_episodes_by_seed": [
+        8,
+        8,
+        8
+      ],
+      "failure_types_by_seed": [
+        {
+          "two_cell_oscillation": 2,
+          "stationary_collision": 0,
+          "other_with_collision": 0,
+          "other": 0
+        },
+        {
+          "two_cell_oscillation": 2,
+          "stationary_collision": 0,
+          "other_with_collision": 0,
+          "other": 0
+        },
+        {
+          "two_cell_oscillation": 1,
+          "stationary_collision": 0,
+          "other_with_collision": 0,
+          "other": 0
+        }
+      ],
+      "collision_actions_by_seed": [
+        0,
+        0,
+        0
+      ],
+      "success_path_efficiency_by_seed": [
+        0.9666666666666667,
+        0.925,
+        0.9383116883116883
+      ]
+    }
+  },
+  "paired_validation": [
+    {
+      "seed": 0,
+      "maze_hash": "c320d665180be7c6e81494f567eb675e22058a4e47e1475f03f373663882f797",
+      "baseline": "success",
+      "mask": "two_cell_oscillation"
+    },
+    {
+      "seed": 0,
+      "maze_hash": "0296bff060dea70599b7d7717e7b13af5d080643c02e4a7b3f714ee90f2d0fd5",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 0,
+      "maze_hash": "0c27a58e9d1ac59e0daeb18743b9eef4439f42a26d82ee40b1fbcce220d7ea09",
+      "baseline": "two_cell_oscillation",
+      "mask": "two_cell_oscillation"
+    },
+    {
+      "seed": 0,
+      "maze_hash": "77ff42ea5a02becc1b2c71c8303c90db7170aa3bc209804152dfc46136d36715",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 0,
+      "maze_hash": "acd22df7daa2dce9e2070fb3afd6dadbcd6b926891d56a2c6f5d517b70e2cbbc",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 0,
+      "maze_hash": "6cba00113aad8efd3cab96a67f87470133a3090e2fd92b74d52dac2fd9a285dd",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 0,
+      "maze_hash": "90712ed3b87d76cc7cabc1ad7f38b44787cbed40ae3b0f24a261435355966077",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 0,
+      "maze_hash": "29dbde0c1eab4da2092479b8dcf9e5c8502b500f9fa57d3039f9bddbdfba931a",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 1,
+      "maze_hash": "c320d665180be7c6e81494f567eb675e22058a4e47e1475f03f373663882f797",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 1,
+      "maze_hash": "0296bff060dea70599b7d7717e7b13af5d080643c02e4a7b3f714ee90f2d0fd5",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 1,
+      "maze_hash": "0c27a58e9d1ac59e0daeb18743b9eef4439f42a26d82ee40b1fbcce220d7ea09",
+      "baseline": "success",
+      "mask": "two_cell_oscillation"
+    },
+    {
+      "seed": 1,
+      "maze_hash": "77ff42ea5a02becc1b2c71c8303c90db7170aa3bc209804152dfc46136d36715",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 1,
+      "maze_hash": "acd22df7daa2dce9e2070fb3afd6dadbcd6b926891d56a2c6f5d517b70e2cbbc",
+      "baseline": "stationary_collision",
+      "mask": "success"
+    },
+    {
+      "seed": 1,
+      "maze_hash": "6cba00113aad8efd3cab96a67f87470133a3090e2fd92b74d52dac2fd9a285dd",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 1,
+      "maze_hash": "90712ed3b87d76cc7cabc1ad7f38b44787cbed40ae3b0f24a261435355966077",
+      "baseline": "two_cell_oscillation",
+      "mask": "two_cell_oscillation"
+    },
+    {
+      "seed": 1,
+      "maze_hash": "29dbde0c1eab4da2092479b8dcf9e5c8502b500f9fa57d3039f9bddbdfba931a",
+      "baseline": "stationary_collision",
+      "mask": "success"
+    },
+    {
+      "seed": 2,
+      "maze_hash": "c320d665180be7c6e81494f567eb675e22058a4e47e1475f03f373663882f797",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 2,
+      "maze_hash": "0296bff060dea70599b7d7717e7b13af5d080643c02e4a7b3f714ee90f2d0fd5",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 2,
+      "maze_hash": "0c27a58e9d1ac59e0daeb18743b9eef4439f42a26d82ee40b1fbcce220d7ea09",
+      "baseline": "two_cell_oscillation",
+      "mask": "success"
+    },
+    {
+      "seed": 2,
+      "maze_hash": "77ff42ea5a02becc1b2c71c8303c90db7170aa3bc209804152dfc46136d36715",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 2,
+      "maze_hash": "acd22df7daa2dce9e2070fb3afd6dadbcd6b926891d56a2c6f5d517b70e2cbbc",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 2,
+      "maze_hash": "6cba00113aad8efd3cab96a67f87470133a3090e2fd92b74d52dac2fd9a285dd",
+      "baseline": "success",
+      "mask": "success"
+    },
+    {
+      "seed": 2,
+      "maze_hash": "90712ed3b87d76cc7cabc1ad7f38b44787cbed40ae3b0f24a261435355966077",
+      "baseline": "success",
+      "mask": "two_cell_oscillation"
+    },
+    {
+      "seed": 2,
+      "maze_hash": "29dbde0c1eab4da2092479b8dcf9e5c8502b500f9fa57d3039f9bddbdfba931a",
+      "baseline": "success",
+      "mask": "success"
+    }
+  ],
+  "decision": "retain_baseline"
+}
