@@ -1,0 +1,10 @@
+{
+  "study": "studies/MLP-05/results",
+  "review_status": "approved_for_dev_report",
+  "sha256": {
+    "protocol.json": "005acde3b675ed633b03df91a0fa910132cf30c9724d90566b3dd4c9d000faa2",
+    "comparison.json": "9b169e87faddb28306b9b423d9a136e9576389245a5714d52f44253f3a2d5caf",
+    "review.json": "3eb96f13c7bc0b813d7012cccbc0600119c688e9e9980bb6c8cf26c35097db54",
+    "verified_facts.json": "0479071937181b028a17293f4897ddede2d3e19565579b4d29ebe43feb5bbcbc"
+  }
+}

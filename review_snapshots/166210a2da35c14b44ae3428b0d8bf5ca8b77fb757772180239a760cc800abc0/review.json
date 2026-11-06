@@ -1,0 +1,26 @@
+{
+  "study_id": "MLP-05",
+  "reviewer": "coordinator using independent CPU replay implementation",
+  "reviewed_at_utc": "2026-11-06T23:32:54.284387+00:00",
+  "protocol_sha256": "005acde3b675ed633b03df91a0fa910132cf30c9724d90566b3dd4c9d000faa2",
+  "comparison_sha256": "9b169e87faddb28306b9b423d9a136e9576389245a5714d52f44253f3a2d5caf",
+  "status": "approved_for_dev_report",
+  "approved_run_ids": [
+    "MLP-04/MLP14-count",
+    "MLP-05/MLP14-count-mask"
+  ],
+  "review_elapsed_since_execution_started_seconds": 115.29434537887573,
+  "checkpoint_step": 20000,
+  "final_test_used": false,
+  "scope": "CPU restore of 6 final checkpoints; 48 validation and 96 train greedy episodes replayed.",
+  "checks": [
+    "paired config and manifest, including per-maze geometry and shortest paths",
+    "archived runtime source, Git recovery, worker provenance and sequential CUDA budget",
+    "action/observation/path/reward traces",
+    "forced visit-count and replay probe",
+    "training exploration return and greedy metrics",
+    "full evaluation schedule and intermediate best validation metrics",
+    "paired validation outcomes and adoption rule"
+  ],
+  "limit": "One device, three paired seeds and eight previously used development validation mazes per seed."
+}
