@@ -1,0 +1,56 @@
+{
+  "env": {
+    "size": 10,
+    "wall_probability": 0.2,
+    "max_steps": 100,
+    "step_reward": -0.01,
+    "collision_reward": -0.05,
+    "goal_reward": 1.0
+  },
+  "train": {
+    "method": "baseline",
+    "device": "cuda",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "steps": 20000,
+    "max_seconds": 300,
+    "hard_timeout_seconds": 330,
+    "max_total_steps": 60000,
+    "replay_capacity": 2000,
+    "max_replay_mb": 256.0,
+    "batch_size": 32,
+    "learning_starts": 64,
+    "train_every": 4,
+    "target_update": 100,
+    "learning_rate": 0.001,
+    "gamma": 0.99,
+    "epsilon_start": 1.0,
+    "epsilon_end": 0.1,
+    "epsilon_decay_steps": 16000,
+    "gradient_clip": 10.0,
+    "replay_event_step": 0,
+    "replay_clear": false,
+    "replay_pause_steps": 0
+  },
+  "evaluation": {
+    "interval": 500,
+    "target_success_rate": 0.8,
+    "train_mazes": 16,
+    "validation_mazes": 8,
+    "test_mazes": 16,
+    "maze_seed": 20261104,
+    "diagnose_training_fit": false
+  },
+  "network": {
+    "hidden_units": 64,
+    "input_size": 14,
+    "architecture": "Linear(64)-ReLU-Linear(64)-ReLU-Linear(4)"
+  },
+  "algorithm": "mlp_dqn",
+  "hypothesis": "Do capped arrival counts distinguish repeated two-cell visits for longer?",
+  "change_description": "Replace four cardinal neighbor visit bits with min(actual episode arrivals, 3) / 3. Fresh initialization.",
+  "observation_mode": "neighbor_visit_count_capped_3"
+}

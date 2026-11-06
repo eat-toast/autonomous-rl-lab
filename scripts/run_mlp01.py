@@ -11,6 +11,7 @@ import subprocess
 import sys
 import time
 import traceback
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -115,24 +116,37 @@ def classify(episode):
     return "other"
 
 
-def evaluate_policy(model, config, mazes, include_visited, capture=False, choose=greedy_action):
+def new_visit_history(position, visit_counts):
+    return Counter({position: 1}) if visit_counts else {position}
+
+
+def record_arrival(visited, position, previous_position, visit_counts):
+    if position != previous_position:
+        if visit_counts:
+            visited[position] += 1
+        else:
+            visited.add(position)
+
+
+def evaluate_policy(model, config, mazes, include_visited, capture=False, choose=greedy_action,
+                    *, visit_counts=False):
     episodes = []
     model.eval()
     with torch.inference_mode():
         for raw in mazes:
             maze = Maze.from_dict(raw)
             env = MazeEnv(config.env, maze)
-            visited = {env.position}
             path, actions, observations, rewards, collisions = [env.position], [], [], [], []
             state = env.reset()
+            visited = new_visit_history(env.position, visit_counts)
             for _ in range(config.env.max_steps):
-                obs = observation(maze.grid, env.position, (9, 9), visited, include_visited)
+                obs = observation(maze.grid, env.position, (9, 9), visited, include_visited,
+                                  visit_counts=visit_counts)
                 action = choose(model, obs)
                 observations.append(obs.tolist())
                 actions.append(action)
                 state, reward, terminated, truncated, info = env.step(action)
-                if env.position != path[-1]:
-                    visited.add(env.position)
+                record_arrival(visited, env.position, path[-1], visit_counts)
                 path.append(env.position)
                 rewards.append(float(reward))
                 collisions.append(bool(info["collision"]))
@@ -163,16 +177,18 @@ def evaluate_policy(model, config, mazes, include_visited, capture=False, choose
 
 
 def train_worker(stage, seed, *, study=STUDY, raw=None, choose=greedy_action,
-                 explore=None, bootstrap=None):
+                 explore=None, bootstrap=None, worker_started=None):
     folder = study / "runs" / f"{stage}_seed_{seed}"
     folder.mkdir(parents=True, exist_ok=False)
     raw = make_config(stage) if raw is None else raw
     config_raw = copy.deepcopy(raw)
+    config_raw.pop("observation_mode", None)
     config_raw["algorithm"] = "dqn"
     config_raw["network"] = {"hidden_units": 64}
     config = from_dict(config_raw)
     manifest = read(study / "maze_manifest.json")
-    include_visited = stage == "MLP14"
+    visit_counts = raw.get("observation_mode") == "neighbor_visit_count_capped_3"
+    include_visited = stage == "MLP14" or visit_counts
     inputs = 14 if include_visited else 10
     device = torch.device("cuda")
     if not torch.cuda.is_available():
@@ -184,11 +200,12 @@ def train_worker(stage, seed, *, study=STUDY, raw=None, choose=greedy_action,
     train_pool = [Maze.from_dict(m) for m in manifest["splits"]["train"]]
     eval_pool = manifest["splits"]["validation"]
     env = MazeEnv(config.env, train_pool[int(rng.integers(len(train_pool)))])
-    state = env.reset(); visited = {env.position}; episode_return = 0.0; episode_collisions = 0
+    state = env.reset(); visited = new_visit_history(env.position, visit_counts); episode_return = 0.0; episode_collisions = 0
     episode_rows, history = [], []
     optimizer_updates, completed_episodes, started = 0, 0, time.monotonic()
     best_score, best_step = (-1.0, -1.0), None
     device_name = torch.cuda.get_device_name(0)
+    budget_started = started if worker_started is None else worker_started
 
     def save_checkpoint(step):
         torch.save({"schema_version": 1, "stage": stage, "seed": seed, "step": step,
@@ -197,7 +214,8 @@ def train_worker(stage, seed, *, study=STUDY, raw=None, choose=greedy_action,
 
     def eval_at(step):
         nonlocal best_score, best_step
-        result = evaluate_policy(online, config, eval_pool, include_visited, capture=True, choose=choose)
+        result = evaluate_policy(online, config, eval_pool, include_visited, capture=True, choose=choose,
+                                 visit_counts=visit_counts)
         row = {"step": step, "elapsed_seconds": time.monotonic()-started,
                "epsilon": max(.1, 1.0 - .9 * step / 16000), **result["metrics"]}
         history.append(row)
@@ -227,11 +245,12 @@ def train_worker(stage, seed, *, study=STUDY, raw=None, choose=greedy_action,
             writer = csv.DictWriter(stream, fieldnames=["episode", "end_step", "maze_seed", "steps", "return", "success", "collisions"])
             writer.writeheader()
             for step in range(1, 20001):
-                elapsed = time.monotonic() - started
+                elapsed = time.monotonic() - budget_started
                 if elapsed >= 300:
                     raise TimeoutError("seed soft wall-time limit of 300 seconds reached")
                 eps = max(.1, 1.0 - .9 * (step-1) / 16000)
-                obs = observation(env.maze.grid, env.position, (9, 9), visited, include_visited)
+                obs = observation(env.maze.grid, env.position, (9, 9), visited, include_visited,
+                                  visit_counts=visit_counts)
                 if rng.random() < eps:
                     action = int(rng.integers(4)) if explore is None else explore(rng, obs)
                 else:
@@ -239,9 +258,9 @@ def train_worker(stage, seed, *, study=STUDY, raw=None, choose=greedy_action,
                 old_position = env.position
                 next_state, reward, terminated, truncated, info = env.step(action)
                 executed_steps = step
-                if env.position != old_position:
-                    visited.add(env.position)
-                next_obs = observation(env.maze.grid, env.position, (9, 9), visited, include_visited)
+                record_arrival(visited, env.position, old_position, visit_counts)
+                next_obs = observation(env.maze.grid, env.position, (9, 9), visited, include_visited,
+                                       visit_counts=visit_counts)
                 replay.add(obs, action, reward, next_obs, terminated)
                 state = next_state; episode_return += reward; episode_collisions += int(info["collision"])
                 if step >= 64 and step % 4 == 0 and replay.count >= 32:
@@ -264,13 +283,15 @@ def train_worker(stage, seed, *, study=STUDY, raw=None, choose=greedy_action,
                            "collisions": episode_collisions}
                     episode_rows.append(row); writer.writerow(row); stream.flush()
                     env = MazeEnv(config.env, train_pool[int(rng.integers(len(train_pool)))])
-                    state = env.reset(); visited = {env.position}; episode_return = 0.0; episode_collisions = 0
+                    state = env.reset(); visited = new_visit_history(env.position, visit_counts); episode_return = 0.0; episode_collisions = 0
                 if step % 500 == 0:
                     eval_at(step)
         final_validation = read(folder / "validation_20000.json")
         train_eval = evaluate_policy(online, config, manifest["splits"]["train"], include_visited,
-                                     capture=True, choose=choose)
+                                     capture=True, choose=choose, visit_counts=visit_counts)
         write_json(folder / "final_training_evaluation.json", train_eval)
+        if worker_started is not None and time.monotonic() - budget_started >= 300:
+            raise TimeoutError("seed soft wall-time limit of 300 seconds reached")
         write_json(folder / "summary.json", {"status": "completed", "stage": stage, "seed": seed,
                     "environment_steps": 20000, "optimizer_updates": optimizer_updates,
                     "processed_samples": replay.samples, "training_time_seconds": time.monotonic()-started,

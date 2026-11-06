@@ -11,14 +11,18 @@ FEELER_DIRECTIONS = ((-1, 0), (-1, 1), (0, 1), (1, 1),
 CARDINAL_DIRECTIONS = ACTIONS  # north, east, south, west; matches action indices
 
 
-def observation(grid, position, goal, visited, include_visited=False):
+def observation(grid, position, goal, visited, include_visited=False, *, visit_counts=False):
     """Return float32 wall bits, normalized goal delta, and optional neighbor visits."""
     n = int(grid.shape[0])
     row, col = position
     features = [float(not (0 <= row + dr < n and 0 <= col + dc < n) or
                        bool(grid[row + dr, col + dc])) for dr, dc in FEELER_DIRECTIONS]
     features.extend(((goal[0] - row) / 9.0, (goal[1] - col) / 9.0))
-    if include_visited:
+    if visit_counts:
+        features.extend(min(visited.get((row + dr, col + dc), 0), 3) / 3
+                        if features[direction * 2] == 0 else 0.0
+                        for direction, (dr, dc) in enumerate(CARDINAL_DIRECTIONS))
+    elif include_visited:
         features.extend(float((row + dr, col + dc) in visited)
                         if 0 <= row + dr < n and 0 <= col + dc < n else 0.0
                         for dr, dc in CARDINAL_DIRECTIONS)
