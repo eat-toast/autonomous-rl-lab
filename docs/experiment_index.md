@@ -3,13 +3,21 @@
 새 세션에서는 **다음 계획 → 직전 결과 → 해당 계획서** 순으로 읽으면 된다.
 이 목록은 계획서, 원본 결과, 검증 기록의 위치를 연결한다. 각 실험의 조건과 예산은 개별 문서에서 확인한다.
 
-## 다음 계획
+## 최근 계획 및 실행
 
 | ID | 계획 | 실행 | 다음 판단 |
 |---|---|---|---|
-| MLP-01 | [더듬이 MLP10 → 조건부 MLP14](mlp_feelers_study_plan.md) | 계획 작성 완료 · 실행 승인 대기 | MLP10의 마지막 검증 24회 중 두 칸 왕복 실패가 6회 이상이고 2개 이상 seed에서 나타나면 MLP14로 진행 |
+| MLP-01 | [더듬이 MLP10 → 조건부 MLP14](mlp_feelers_study_plan.md) | MLP10 3/3·MLP14 3/3 완료 · 독립 검증 승인 | 후속 학습은 새 계획과 승인 필요 |
 
 [MLP-01 폴더](../studies/MLP-01/README.md) · [새 세션용 실행 프롬프트](next_session_mlp_prompt.md)
+
+결과 연결: [프로토콜](../studies/MLP-01/results/protocol.json) · [보고서](../studies/MLP-01/results/report.md) ·
+[비교 JSON](../studies/MLP-01/results/comparison.json) · [seed별 CSV](../studies/MLP-01/results/comparison.csv) ·
+[독립 검토](../studies/MLP-01/results/review.json) · [검증 사실](../studies/MLP-01/results/verified_facts.json) ·
+[체크포인트 복원 감사](../studies/MLP-01/results/checkpoint_restore_audit.json) ·
+[경로 분류 보정 기록](../studies/MLP-01/results/classification_correction.json)
+· [인스타그램용 검증 사실·재생 근거](../studies/MLP-01/results/instagram_handoff.md)
+· [전체 벽시계 기록](../studies/MLP-01/results/workflow_timing.json)
 
 MLP-01의 출발점은 CUDA 방법 비교에서 관찰한 왕복이다. 합법 행동 mask로 충돌은 피했지만,
 저장 경로를 대조한 결과 실패 14건 모두 두 칸을 왕복했다. MLP10은 주변 벽과 출구 좌표 차이를
