@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MLP-01 · 2화 편집 초안</title>
+<style>
+:root{--paper:#f5f5ec;--ink:#172925;--muted:#415953;--rule:#c5d2c8;--teal:#006d5e;--mint:#d8ebe0;--dark:#142b27;--lime:#c9f487;--rust:#a63826;--peach:#f6ded2}
+*{box-sizing:border-box}body{margin:0;background:#dde5dd;color:var(--ink);font-family:"Malgun Gothic",sans-serif;word-break:keep-all}
+.toolbar{max-width:1080px;margin:25px auto;padding:14px 20px;background:white;border-radius:12px;font-size:16px}
+.toolbar button{font:inherit;border:0;background:var(--teal);color:white;padding:8px 12px;border-radius:6px;cursor:pointer}
+.cards{display:grid;gap:28px;justify-items:center;margin:0 12px 28px}.card{container-type:inline-size;position:relative;width:min(100%,1080px);aspect-ratio:4/5;background:var(--paper);overflow:hidden}
+.canvas{position:absolute;inset:0;padding:4.6cqw 5.93cqw;background-image:radial-gradient(var(--rule) .08cqw,transparent .08cqw);background-size:2.5cqw 2.5cqw;display:flex;flex-direction:column}
+.cover{background:var(--dark);color:var(--paper);--rule:#4a6c61;--teal:var(--lime);--muted:#a8c6b9}
+header,footer{display:flex;justify-content:space-between;align-items:center;border-color:var(--rule);border-style:solid;border-width:0;font-family:Consolas,monospace;letter-spacing:.04em}
+header{border-bottom-width:.17cqw;padding-bottom:1.8cqw;font-size:2.55cqw}footer{position:absolute;left:5.93cqw;right:5.93cqw;bottom:5cqw;border-top-width:.17cqw;padding-top:2.55cqw;justify-content:flex-end;gap:.65cqw}
+footer i{width:1.45cqw;height:.55cqw;border-radius:.4cqw;background:var(--rule)}footer .on{background:var(--teal)}
+.eyebrow{font-size:2.65cqw;color:var(--teal);font-weight:bold;margin:3.4cqw 0 2.6cqw}h1,h2,h3,p,figure{margin:0}h1{font-size:7.9cqw;line-height:1.23;letter-spacing:-.035em;margin:2.6cqw 0 9cqw}h2{font-size:6cqw;line-height:1.15;letter-spacing:-.04em}h3{font-size:3.6cqw;line-height:1.35}.sub{font-size:3.05cqw;color:var(--muted);margin-top:2.2cqw;line-height:1.45}.body{margin-top:4.9cqw;display:grid;gap:3cqw;font-size:3.15cqw;line-height:1.5}
+.panel{background:white;border:.16cqw solid var(--rule);border-radius:1.8cqw;padding:2.6cqw}.mint{background:var(--mint);border-color:var(--mint)}.peach{background:var(--peach);border-color:var(--peach)}.dark{background:var(--dark);border-color:var(--dark);color:white}
+.tag{display:inline-block;border-radius:.9cqw;background:var(--mint);color:var(--teal);font-size:2.35cqw;font-weight:bold;padding:.35cqw 1.15cqw}.tag.warm{color:var(--rust);background:var(--peach)}.tag.white{background:white}
+.rows{display:grid;gap:1.15cqw}.row{display:flex;gap:1.3cqw;align-items:center}.split{display:grid;grid-template-columns:1fr 1fr;gap:4cqw;align-items:center}.covergrid{grid-template-columns:63% 1fr;gap:5cqw;align-items:start}.covergrid aside{padding-top:3cqw;font-weight:bold;line-height:1.65}.covergrid small{display:block;color:var(--muted);font-size:2.7cqw}.covergrid hr{border:0;border-top:.15cqw solid var(--rule);margin:5cqw 0 2cqw}
+.map{display:block;width:100%;aspect-ratio:1;--floor:#fffefa;--walls:#172925;--grid:#c5d2c8;--start:#006d5e;--goal:#172925;--symbol:#fff}.cover .map{--floor:#1d3832;--walls:#466157;--grid:#577067;--start:#c9f487;--goal:#f5f5ec;--symbol:#142b27}
+.map .floor{fill:var(--floor)}.map .walls{fill:var(--walls)}.map .grid{fill:none;stroke:var(--grid);stroke-width:.07}.map .start{fill:var(--start)}.map .goal{fill:var(--goal)}.map text{fill:var(--symbol);font:700 .48px sans-serif;text-anchor:middle}
+.legend{font-size:2.65cqw;line-height:1.6}.legend b{font-size:2.9cqw}.legend .key{display:inline-grid;place-items:center;color:white;background:var(--ink);width:3.6cqw;height:3.6cqw;border-radius:.45cqw}.legend .s{background:var(--teal)}.legend .empty{background:white;border:1px solid var(--rule)}
+.obs{display:grid;grid-template-columns:repeat(3,1fr);gap:.75cqw}.obs div{background:var(--mint);border-radius:.8cqw;text-align:center;padding:.32cqw}.obs .now{background:var(--teal);color:white}.obs b{display:block;font-size:3.4cqw;line-height:1.1}.obs span{font-size:2.25cqw}.inputs{display:grid;grid-template-columns:repeat(10,1fr);gap:.55cqw;text-align:center;font-size:2cqw}.inputs div{background:var(--mint);border-radius:.8cqw;padding:.6cqw 0}.inputs div:nth-last-child(-n+2){background:var(--peach)}.inputs b{display:block;font-size:3.1cqw}.formula{font-size:2.7cqw}.formula b{display:block;font-size:3.15cqw}.small{font-size:2.45cqw;color:var(--muted)}.note{font-size:2.8cqw;color:var(--muted)}
+.net{display:grid;grid-template-columns:1fr .15fr 1fr .15fr 1fr .15fr 1fr;align-items:center;gap:.3cqw;text-align:center;margin-top:2cqw}.node{border-radius:1.8cqw;background:var(--mint);padding:2.6cqw 0;color:var(--ink);font-weight:bold}.node.edge{background:var(--teal);color:white}.node strong{display:block;font-size:8.6cqw;line-height:1.35}.node small{font-size:2.5cqw}.arrow{color:var(--teal);font-size:3.5cqw;font-weight:bold}.actions{font-size:4.7cqw;font-weight:bold;margin-bottom:1.5cqw}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3cqw}.stat b{display:block;font-size:7.2cqw;line-height:1.2;color:var(--teal)}.stat span,.reward span{display:block;font-weight:bold}.stat small{font-size:2.3cqw}.budget{display:flex;align-items:center;gap:5cqw;font-weight:bold}.budget b{font-size:7.2cqw;color:var(--lime)}.reward b{font-size:4.7cqw}.eval{gap:2.2cqw}.eval .panel{display:grid;gap:.9cqw;font-size:3.1cqw}.eval strong{color:var(--teal)}.eval .total{border-top:.15cqw solid var(--rule);margin-top:.8cqw;padding-top:1.2cqw}
+.atlas{display:grid;grid-template-columns:repeat(4,1fr);gap:1.35cqw 2.2cqw;margin-top:3.2cqw}.atlas figure{padding:.55cqw .55cqw .15cqw;background:#fffefa;border:.12cqw solid var(--rule);border-radius:.65cqw}.atlas .map{width:14.1cqw;height:14.1cqw;margin:auto}.atlas figcaption{font-size:1.9cqw;text-align:center;white-space:nowrap}.atlas figcaption b{color:var(--teal);margin-right:.5cqw}.atlas.eight{gap:4cqw 2.2cqw}.atlas.eight .map{width:100%;height:auto}.atlas-legend{font-size:2.35cqw;color:var(--muted);margin-top:2.1cqw}
+.editing [data-editable]:focus{outline:2px dashed #b25b34;outline-offset:4px}.editing [data-editable]:hover{box-shadow:0 0 0 1px #b25b34}
+@page{size:1080px 1350px;margin:0}@media print{body{background:white}.toolbar{display:none}.cards{display:block;margin:0}.card{width:1080px;break-after:page;print-color-adjust:exact;-webkit-print-color-adjust:exact}.card:last-child{break-after:auto}}
+
+.map{--route:#006d5e}.map.warmroute{--route:#a63826}.cover .map.warmroute{--route:#ffad8f}
+.travel{fill:none;stroke:var(--route);stroke-width:.12;stroke-linecap:round}.head{fill:var(--route)}
+.cover h1{font-size:7.35cqw}.compact{gap:2.05cqw}.case{padding:1.55cqw}.case figcaption{line-height:1.25;margin-bottom:1.2cqw}.case figcaption b{font-size:3.3cqw;display:block}.case figcaption small{font-size:2.1cqw;color:var(--muted)}.case p{margin-top:1.15cqw;font-size:2.7cqw}.case p b{color:var(--rust)}
+.bigstat strong{display:block;font-size:10cqw;line-height:1.1;color:var(--rust)}.bigstat h3{margin:.9cqw 0}
+.tail{display:grid;grid-template-columns:repeat(8,minmax(0,1fr) 3.65cqw) minmax(0,1fr);gap:.2cqw;align-items:center}.point{background:var(--peach);text-align:center;padding:1.2cqw .2cqw;border-radius:.7cqw;line-height:1.25}.point.here{background:var(--mint)}.point b,.point span,.point small{display:block}.point small,.point span{font-size:2.35cqw}.point b{font-size:1.95cqw;margin:.4cqw 0;white-space:nowrap}.move{font-size:2.25cqw;color:var(--rust);font-weight:bold;text-align:center;line-height:1.05}.move b{display:block;font-size:3cqw}
+.ab{display:grid;grid-template-columns:1fr .25fr 1fr;align-items:center;text-align:center;gap:1cqw}.ab div{background:var(--mint);border-radius:1cqw;padding:1.25cqw}.ab b,.ab span{display:block}.ab b{font-size:6cqw}.ab span{font-size:2.65cqw}.ab strong{color:var(--teal);font-size:4cqw}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:.75cqw}.four b{background:var(--mint);padding:1cqw;text-align:center;border-radius:.8cqw;color:var(--teal)}
+.pair{gap:2.5cqw;align-items:stretch}.pair h3{font-size:6cqw}.pair p{font-size:2.75cqw}.chart{display:grid;gap:1.75cqw}.barrow{display:grid;grid-template-columns:9.6cqw 1fr;align-items:center;gap:1cqw}.barrow>b{font-size:2.6cqw}.track{height:2.8cqw;background:#edf0ea;position:relative;margin:.55cqw 5.6cqw .55cqw 0}.track span{position:absolute;left:calc(100% + 1cqw);top:-.55cqw;font-size:2.5cqw;white-space:nowrap}.bar{width:var(--value);height:100%}.bar.basic{background:var(--rust)}.bar.visit{background:var(--teal)}.scale{display:flex;justify-content:space-between;margin:0 5cqw 0 10.6cqw;font-size:2.1cqw;color:var(--muted)}
+.success-cases{gap:1.15cqw;font-size:2.8cqw;line-height:1.3}.success-cases .case .map{width:21.5cqw;height:21.5cqw;margin:auto}.success-cases .case p{font-size:2.45cqw}.success-cases .note{font-size:2.6cqw}.success-cases .panel.rows{padding:1.95cqw;gap:.7cqw}.same-maze .case .map{width:35.5cqw;height:35.5cqw;margin:auto}
+.sequence{color:var(--teal);font-weight:bold;font-family:"Malgun Gothic",sans-serif;letter-spacing:.01em;white-space:nowrap;font-size:2.55cqw}
+</style>
+</head>
+<body>
+<div class="toolbar"><button id="edit" type="button">문구 편집</button> <button id="save" type="button">수정한 HTML 저장</button> <span>편집을 켜면 카드 문구를 클릭해 고칠 수 있습니다.</span></div>
+<main class="cards">
+<article class="card cover" aria-label="1장"><div class="canvas">
+      <header><span>MLP-01 / MAZE LAB</span><span>EP.02 / 01–10</span></header>
+      <p class="eyebrow">01 / 실제 실험과 결과</p><h1>같은 미로에서<br>두 모델은 어디로 갔을까?</h1>
+      <div class="body split covergrid"><svg class="map warmroute" viewBox="-.05 -.05 10.1 10.1" role="img" aria-label="지도 시드 20271104의 10×10 미로 · 실제 100행동 경로">
+      <rect class="floor" width="10" height="10"/><path class="walls" d="M3 0h1v1h-1zM9 1h1v1h-1zM4 2h1v1h-1zM2 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM7 4h1v1h-1zM6 5h1v1h-1zM0 6h1v1h-1zM3 6h1v1h-1zM3 7h1v1h-1zM7 7h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM7 8h1v1h-1zM2 9h1v1h-1z"/><path class="grid" d="M0 0v10 M0 0h10 M1 0v10 M0 1h10 M2 0v10 M0 2h10 M3 0v10 M0 3h10 M4 0v10 M0 4h10 M5 0v10 M0 5h10 M6 0v10 M0 6h10 M7 0v10 M0 7h10 M8 0v10 M0 8h10 M9 0v10 M0 9h10 M10 0v10 M0 10h10"/>
+      <path class="travel" d="M0.640 0.630L1.340 0.630"/><polygon class="head" points="1.340,0.630 1.120,0.760 1.120,0.500"/><path class="travel" d="M1.360 0.370L0.660 0.370"/><polygon class="head" points="0.660,0.370 0.880,0.240 0.880,0.500"/>
+      <circle class="start" cx=".5" cy=".5" r=".35"/><text x=".5" y=".68">S</text>
+      <circle class="goal" cx="9.5" cy="9.5" r=".35"/><text x="9.5" y="9.68">G</text>
+    </svg><aside><small>FIELD NOTES</small>세 번의 성공<br>두 칸 왕복<br>방문 정보 4개<hr><small>10 × 10<br>고정 개발 지도</small></aside></div>
+      <footer aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></footer></div></article>
+<article class="card" aria-label="2장"><div class="canvas">
+      <header><span>MLP-01 / MAZE LAB</span><span>EP.02 / 02–10</span></header>
+      <p class="eyebrow">02 / 기본 관측의 성공 사례</p><h2>성공한 세 경로</h2>
+      <p class="sub">기본 관측 · 학습 시드 2 · 마지막 20,000스텝 모델</p><div class="body compact success-cases"><div class="three"><figure class="panel case">
+  <figcaption><b>지도 03</b><small>지도 시드 20271106</small></figcaption><svg class="map warmroute" viewBox="-.05 -.05 10.1 10.1" role="img" aria-label="지도 시드 20271106의 10×10 미로 · 실제 18행동 경로">
+      <rect class="floor" width="10" height="10"/><path class="walls" d="M1 0h1v1h-1zM6 0h1v1h-1zM0 2h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM4 3h1v1h-1zM7 3h1v1h-1zM9 3h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM9 4h1v1h-1zM9 5h1v1h-1zM1 6h1v1h-1zM3 8h1v1h-1zM9 8h1v1h-1zM2 9h1v1h-1zM6 9h1v1h-1z"/><path class="grid" d="M0 0v10 M0 0h10 M1 0v10 M0 1h10 M2 0v10 M0 2h10 M3 0v10 M0 3h10 M4 0v10 M0 4h10 M5 0v10 M0 5h10 M6 0v10 M0 6h10 M7 0v10 M0 7h10 M8 0v10 M0 8h10 M9 0v10 M0 9h10 M10 0v10 M0 10h10"/>
+      <path class="travel" d="M0.500 0.640L0.500 1.340"/><polygon class="head" points="0.500,1.340 0.370,1.120 0.630,1.120"/><path class="travel" d="M0.640 1.500L1.340 1.500"/><polygon class="head" points="1.340,1.500 1.120,1.630 1.120,1.370"/><path class="travel" d="M1.640 1.500L2.340 1.500"/><polygon class="head" points="2.340,1.500 2.120,1.630 2.120,1.370"/><path class="travel" d="M2.640 1.500L3.340 1.500"/><polygon class="head" points="3.340,1.500 3.120,1.630 3.120,1.370"/><path class="travel" d="M3.640 1.500L4.340 1.500"/><polygon class="head" points="4.340,1.500 4.120,1.630 4.120,1.370"/><path class="travel" d="M4.640 1.500L5.340 1.500"/><polygon class="head" points="5.340,1.500 5.120,1.630 5.120,1.370"/><path class="travel" d="M5.500 1.640L5.500 2.340"/><polygon class="head" points="5.500,2.340 5.370,2.120 5.630,2.120"/><path class="travel" d="M5.500 2.640L5.500 3.340"/><polygon class="head" points="5.500,3.340 5.370,3.120 5.630,3.120"/><path class="travel" d="M5.500 3.640L5.500 4.340"/><polygon class="head" points="5.500,4.340 5.370,4.120 5.630,4.120"/><path class="travel" d="M5.500 4.640L5.500 5.340"/><polygon class="head" points="5.500,5.340 5.370,5.120 5.630,5.120"/><path class="travel" d="M5.500 5.640L5.500 6.340"/><polygon class="head" points="5.500,6.340 5.370,6.120 5.630,6.120"/><path class="travel" d="M5.640 6.500L6.340 6.500"/><polygon class="head" points="6.340,6.500 6.120,6.630 6.120,6.370"/><path class="travel" d="M6.500 6.640L6.500 7.340"/><polygon class="head" points="6.500,7.340 6.370,7.120 6.630,7.120"/><path class="travel" d="M6.640 7.500L7.340 7.500"/><polygon class="head" points="7.340,7.500 7.120,7.630 7.120,7.370"/><path class="travel" d="M7.640 7.500L8.340 7.500"/><polygon class="head" points="8.340,7.500 8.120,7.630 8.120,7.370"/><path class="travel" d="M8.500 7.640L8.500 8.340"/><polygon class="head" points="8.500,8.340 8.370,8.120 8.630,8.120"/><path class="travel" d="M8.500 8.640L8.500 9.340"/><polygon class="head" points="8.500,9.340 8.370,9.120 8.630,9.120"/><path class="travel" d="M8.640 9.500L9.340 9.500"/><polygon class="head" points="9.340,9.500 9.120,9.630 9.120,9.370"/>
+      <circle class="start" cx=".5" cy=".5" r=".35"/><text x=".5" y=".68">S</text>
+      <circle class="goal" cx="9.5" cy="9.5" r=".35"/><text x="9.5" y="9.68">G</text>
+    </svg>
+  <p><b>18행동 성공</b><br>최단 18행동</p>
+</figure><figure class="panel case">
+  <figcaption><b>지도 06</b><small>지도 시드 20271109</small></figcaption><svg class="map warmroute" viewBox="-.05 -.05 10.1 10.1" role="img" aria-label="지도 시드 20271109의 10×10 미로 · 실제 18행동 경로">
+      <rect class="floor" width="10" height="10"/><path class="walls" d="M1 0h1v1h-1zM2 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM9 0h1v1h-1zM6 1h1v1h-1zM9 1h1v1h-1zM0 2h1v1h-1zM5 2h1v1h-1zM9 2h1v1h-1zM2 3h1v1h-1zM5 3h1v1h-1zM5 4h1v1h-1zM7 4h1v1h-1zM9 4h1v1h-1zM2 5h1v1h-1zM4 5h1v1h-1zM6 5h1v1h-1zM2 6h1v1h-1zM4 6h1v1h-1zM9 7h1v1h-1zM0 9h1v1h-1zM2 9h1v1h-1z"/><path class="grid" d="M0 0v10 M0 0h10 M1 0v10 M0 1h10 M2 0v10 M0 2h10 M3 0v10 M0 3h10 M4 0v10 M0 4h10 M5 0v10 M0 5h10 M6 0v10 M0 6h10 M7 0v10 M0 7h10 M8 0v10 M0 8h10 M9 0v10 M0 9h10 M10 0v10 M0 10h10"/>
+      <path class="travel" d="M0.500 0.640L0.500 1.340"/><polygon class="head" points="0.500,1.340 0.370,1.120 0.630,1.120"/><path class="travel" d="M0.640 1.500L1.340 1.500"/><polygon class="head" points="1.340,1.500 1.120,1.630 1.120,1.370"/><path class="travel" d="M1.500 1.640L1.500 2.340"/><polygon class="head" points="1.500,2.340 1.370,2.120 1.630,2.120"/><path class="travel" d="M1.500 2.640L1.500 3.340"/><polygon class="head" points="1.500,3.340 1.370,3.120 1.630,3.120"/><path class="travel" d="M1.500 3.640L1.500 4.340"/><polygon class="head" points="1.500,4.340 1.370,4.120 1.630,4.120"/><path class="travel" d="M1.640 4.500L2.340 4.500"/><polygon class="head" points="2.340,4.500 2.120,4.630 2.120,4.370"/><path class="travel" d="M2.640 4.500L3.340 4.500"/><polygon class="head" points="3.340,4.500 3.120,4.630 3.120,4.370"/><path class="travel" d="M3.500 4.640L3.500 5.340"/><polygon class="head" points="3.500,5.340 3.370,5.120 3.630,5.120"/><path class="travel" d="M3.500 5.640L3.500 6.340"/><polygon class="head" points="3.500,6.340 3.370,6.120 3.630,6.120"/><path class="travel" d="M3.500 6.640L3.500 7.340"/><polygon class="head" points="3.500,7.340 3.370,7.120 3.630,7.120"/><path class="travel" d="M3.640 7.500L4.340 7.500"/><polygon class="head" points="4.340,7.500 4.120,7.630 4.120,7.370"/><path class="travel" d="M4.640 7.500L5.340 7.500"/><polygon class="head" points="5.340,7.500 5.120,7.630 5.120,7.370"/><path class="travel" d="M5.500 7.640L5.500 8.340"/><polygon class="head" points="5.500,8.340 5.370,8.120 5.630,8.120"/><path class="travel" d="M5.640 8.500L6.340 8.500"/><polygon class="head" points="6.340,8.500 6.120,8.630 6.120,8.370"/><path class="travel" d="M6.640 8.500L7.340 8.500"/><polygon class="head" points="7.340,8.500 7.120,8.630 7.120,8.370"/><path class="travel" d="M7.640 8.500L8.340 8.500"/><polygon class="head" points="8.340,8.500 8.120,8.630 8.120,8.370"/><path class="travel" d="M8.640 8.500L9.340 8.500"/><polygon class="head" points="9.340,8.500 9.120,8.630 9.120,8.370"/><path class="travel" d="M9.500 8.640L9.500 9.340"/><polygon class="head" points="9.500,9.340 9.370,9.120 9.630,9.120"/>
+      <circle class="start" cx=".5" cy=".5" r=".35"/><text x=".5" y=".68">S</text>
+      <circle class="goal" cx="9.5" cy="9.5" r=".35"/><text x="9.5" y="9.68">G</text>
+    </svg>
+  <p><b>18행동 성공</b><br>최단 18행동</p>
+</figure><figure class="panel case">
+  <figcaption><b>지도 08</b><small>지도 시드 20271111</small></figcaption><svg class="map warmroute" viewBox="-.05 -.05 10.1 10.1" role="img" aria-label="지도 시드 20271111의 10×10 미로 · 실제 18행동 경로">
+      <rect class="floor" width="10" height="10"/><path class="walls" d="M5 0h1v1h-1zM2 2h1v1h-1zM2 3h1v1h-1zM6 3h1v1h-1zM7 3h1v1h-1zM2 4h1v1h-1zM6 4h1v1h-1zM7 5h1v1h-1zM1 6h1v1h-1zM5 6h1v1h-1zM8 6h1v1h-1zM0 7h1v1h-1zM6 7h1v1h-1zM3 8h1v1h-1zM0 9h1v1h-1z"/><path class="grid" d="M0 0v10 M0 0h10 M1 0v10 M0 1h10 M2 0v10 M0 2h10 M3 0v10 M0 3h10 M4 0v10 M0 4h10 M5 0v10 M0 5h10 M6 0v10 M0 6h10 M7 0v10 M0 7h10 M8 0v10 M0 8h10 M9 0v10 M0 9h10 M10 0v10 M0 10h10"/>
+      <path class="travel" d="M0.500 0.640L0.500 1.340"/><polygon class="head" points="0.500,1.340 0.370,1.120 0.630,1.120"/><path class="travel" d="M0.640 1.500L1.340 1.500"/><polygon class="head" points="1.340,1.500 1.120,1.630 1.120,1.370"/><path class="travel" d="M1.640 1.500L2.340 1.500"/><polygon class="head" points="2.340,1.500 2.120,1.630 2.120,1.370"/><path class="travel" d="M2.640 1.500L3.340 1.500"/><polygon class="head" points="3.340,1.500 3.120,1.630 3.120,1.370"/><path class="travel" d="M3.500 1.640L3.500 2.340"/><polygon class="head" points="3.500,2.340 3.370,2.120 3.630,2.120"/><path class="travel" d="M3.500 2.640L3.500 3.340"/><polygon class="head" points="3.500,3.340 3.370,3.120 3.630,3.120"/><path class="travel" d="M3.500 3.640L3.500 4.340"/><polygon class="head" points="3.500,4.340 3.370,4.120 3.630,4.120"/><path class="travel" d="M3.640 4.500L4.340 4.500"/><polygon class="head" points="4.340,4.500 4.120,4.630 4.120,4.370"/><path class="travel" d="M4.640 4.500L5.340 4.500"/><polygon class="head" points="5.340,4.500 5.120,4.630 5.120,4.370"/><path class="travel" d="M5.500 4.640L5.500 5.340"/><polygon class="head" points="5.500,5.340 5.370,5.120 5.630,5.120"/><path class="travel" d="M5.640 5.500L6.340 5.500"/><polygon class="head" points="6.340,5.500 6.120,5.630 6.120,5.370"/><path class="travel" d="M6.500 5.640L6.500 6.340"/><polygon class="head" points="6.500,6.340 6.370,6.120 6.630,6.120"/><path class="travel" d="M6.640 6.500L7.340 6.500"/><polygon class="head" points="7.340,6.500 7.120,6.630 7.120,6.370"/><path class="travel" d="M7.500 6.640L7.500 7.340"/><polygon class="head" points="7.500,7.340 7.370,7.120 7.630,7.120"/><path class="travel" d="M7.640 7.500L8.340 7.500"/><polygon class="head" points="8.340,7.500 8.120,7.630 8.120,7.370"/><path class="travel" d="M8.640 7.500L9.340 7.500"/><polygon class="head" points="9.340,7.500 9.120,7.630 9.120,7.370"/><path class="travel" d="M9.500 7.640L9.500 8.340"/><polygon class="head" points="9.500,8.340 9.370,8.120 9.630,8.120"/><path class="travel" d="M9.500 8.640L9.500 9.340"/><polygon class="head" points="9.500,9.340 9.370,9.120 9.630,9.120"/>
+      <circle class="start" cx=".5" cy=".5" r=".35"/><text x=".5" y=".68">S</text>
+      <circle class="goal" cx="9.5" cy="9.5" r=".35"/><text x="9.5" y="9.68">G</text>
+    </svg>
+  <p><b>18행동 성공</b><br>최단 18행동</p>
+</figure></div><p class="small">S 시작 · G 출구 · 진한 칸 벽 · 화살표 실제 이동 방향</p>
+         <div class="panel rows"><h3>세 경로 모두 최단 길이</h3>
+         <p>평가에서는 무작위 탐색을 끄고, 매번 점수가 가장 높은 행동을 골랐습니다(ε = 0). 같은 모델·지도·출발점이면 재생 경로도 같습니다.</p></div>
+         <p class="note">최단 길이는 이 세 사례의 결과입니다. 다른 학습 시드나 새 미로에서 성공할 확률은 이 사례만으로 알 수 없습니다.</p></div>
+      <footer aria-hidden="true"><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></footer></div></article>
+<article class="card" aria-label="3장"><div class="canvas">
+      <header><span>MLP-01 / MAZE LAB</span><span>EP.02 / 03–10</span></header>
+      <p class="eyebrow">03 / 기본 관측의 전체 결과</p><h2>전체 24번 중 3번 성공</h2>
+      <p class="sub">고정 개발 지도 8개 · 20,000스텝까지 학습한 모델</p><div class="body"><div class="three">
+         <div class="panel stat"><span>학습 시드 0</span><b>0/8</b><small>출구 도착</small></div><div class="panel stat"><span>학습 시드 1</span><b>0/8</b><small>출구 도착</small></div><div class="panel stat"><span>학습 시드 2</span><b>3/8</b><small>출구 도착</small></div></div>
+         <div class="panel peach bigstat"><strong>12.5%</strong><h3>시드 3개의 평균 성공률</h3></div>
+         <p class="note">세 성공은 모두 학습 시드 2에서 나왔습니다. 나머지 21번 중에는 어떤 실패가 많았을까요?</p></div>
+      <footer aria-hidden="true"><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></footer></div></article>
+<article class="card" aria-label="4장"><div class="canvas">
+      <header><span>MLP-01 / MAZE LAB</span><span>EP.02 / 04–10</span></header>
+      <p class="eyebrow">04 / 실패 집계와 후속 실험 기준</p><h2>두 칸 왕복이 20번</h2>
+      <p class="sub">기본 관측 · 전체 평가 24번 중</p><div class="body compact"><div class="panel peach bigstat"><strong>20/24회</strong><h3>마지막 8번 이동이 두 칸 왕복인 실패</h3></div>
+         <div class="three"><div class="panel stat"><span>학습 시드 0</span><b>8회</b><small>두 칸 왕복 실패</small></div><div class="panel stat"><span>학습 시드 1</span><b>7회</b><small>두 칸 왕복 실패</small></div><div class="panel stat"><span>학습 시드 2</span><b>5회</b><small>두 칸 왕복 실패</small></div></div>
+         <div class="panel mint rows"><h3>미리 정한 기준 충족</h3><p>24번 중 6번 이상이고, 학습 시드 2개 이상에서 나타나면 ‘방문 추가’를 실행합니다.</p></div></div>
+      <footer aria-hidden="true"><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></footer></div></article>
+<article class="card" aria-label="5장"><div class="canvas">
+      <header><span>MLP-01 / MAZE LAB</span><span>EP.02 / 05–10</span></header>
+      <p class="eyebrow">05 / 저장된 마지막 이동</p><h2>A와 B 사이를 반복</h2>
+      <p class="sub">기본 관측 · 학습 시드 0 · 개발 검증 지도 01</p><div class="body"><div class="panel mint rows"><h3>시작 칸 A ↔ 바로 오른쪽 칸 B</h3><p>동쪽·서쪽으로 번갈아 총 100번 움직였지만 출구에 닿지 못했습니다.</p></div>
+         <div class="panel rows"><h3>마지막 8번 이동의 위치 9개</h3>
+         <p class="small">숫자는 해당 위치에 도착했을 때까지의 행동 수입니다.</p>
+         <div class="tail"><div class="point here"><small>92</small><b>(0, 0)</b><span>A</span></div><span class="move">동<b aria-hidden="true">→</b></span><div class="point"><small>93</small><b>(0, 1)</b><span>B</span></div><span class="move">서<b aria-hidden="true">→</b></span><div class="point here"><small>94</small><b>(0, 0)</b><span>A</span></div><span class="move">동<b aria-hidden="true">→</b></span><div class="point"><small>95</small><b>(0, 1)</b><span>B</span></div><span class="move">서<b aria-hidden="true">→</b></span><div class="point here"><small>96</small><b>(0, 0)</b><span>A</span></div><span class="move">동<b aria-hidden="true">→</b></span><div class="point"><small>97</small><b>(0, 1)</b><span>B</span></div><span class="move">서<b aria-hidden="true">→</b></span><div class="point here"><small>98</small><b>(0, 0)</b><span>A</span></div><span class="move">동<b aria-hidden="true">→</b></span><div class="point"><small>99</small><b>(0, 1)</b><span>B</span></div><span class="move">서<b aria-hidden="true">→</b></span><div class="point here"><small>100</small><b>(0, 0)</b><span>A</span></div></div>
+         </div>
+         <p class="note">실패한 시도의 끝에서 위치 두 곳이 번갈아 나오는지 확인했습니다.</p></div>
+      <footer aria-hidden="true"><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></footer></div></article>
+<article class="card" aria-label="6장"><div class="canvas">
+      <header><span>MLP-01 / MAZE LAB</span><span>EP.02 / 06–10</span></header>
+      <p class="eyebrow">06 / 방문 정보를 추가한 이유</p><h2>방금 밟은 칸을 알려주면?</h2>
+      <p class="sub">두 칸 왕복을 보고 세운 가설</p><div class="body"><div class="panel rows"><h3>예시 · A → B로 이동한 직후</h3>
+         <div class="ab"><div><b>A</b><span>방금 밟은 칸</span></div><strong>→</strong><div><b>B</b><span>현재 칸</span></div></div>
+         <p>B에서 왼쪽 이웃 A의 방문값은 1입니다.</p></div>
+         <div class="panel mint rows"><h3>가설</h3><p>밟은 칸과 아직 밟지 않은 칸을 구별할 수 있으면, 되돌아갈지 다른 방향을 시도할지 판단하는 데 쓸 수 있지 않을까?</p></div>
+         <p class="note">방문값은 입력에 추가되는 정보입니다. 밟았던 칸으로 이동하는 행동도 여전히 선택할 수 있습니다.</p></div>
+      <footer aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i></footer></div></article>
+<article class="card" aria-label="7장"><div class="canvas">
+      <header><span>MLP-01 / MAZE LAB</span><span>EP.02 / 07–10</span></header>
+      <p class="eyebrow">07 / 방문 추가의 입력과 학습</p><h2>이웃 네 방향에 한 값씩</h2>
+      <p class="sub">기본 관측 10개 + 방문 여부 4개 = 입력 14개</p><div class="body compact"><div class="panel rows"><h3>추가 입력 순서</h3>
+         <div class="four"><b>상 ↑</b><b>우 →</b><b>하 ↓</b><b>좌 ←</b></div>
+         <p>이번 시도에서 해당 이웃을 밟았으면 1, 밟지 않았으면 0.</p></div>
+         <div class="panel dark rows"><h3>14 → 64 → 64 → 4</h3><p>은닉층과 출력 구조는 같고, 입력이 4개 늘었습니다.</p></div>
+         <div class="panel mint rows"><h3>같은 DQN 방식으로 처음부터 학습</h3><p>같은 훈련 지도와 학습 시드로 각각 20,000 환경 스텝을 학습했습니다.</p></div></div>
+      <footer aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i></footer></div></article>
+<article class="card" aria-label="8장"><div class="canvas">
+      <header><span>MLP-01 / MAZE LAB</span><span>EP.02 / 08–10</span></header>
+      <p class="eyebrow">08 / 조건별 평가 결과</p><h2>같은 개발 지도에서 비교</h2>
+      <p class="sub">각 시드에서 8개 지도 평가 · 20,000스텝까지 학습한 모델</p><div class="body compact"><div class="panel rows"><div class="row"><span class="tag warm">기본 관측</span><span class="tag">방문 추가</span></div>
+      <div class="chart"><div class="barrow"><b>시드 0</b><div>
+  <div class="track"><div class="bar basic" style="--value:0.0%"></div><span>0/8</span></div>
+  <div class="track"><div class="bar visit" style="--value:87.5%"></div><span>7/8</span></div>
+</div></div><div class="barrow"><b>시드 1</b><div>
+  <div class="track"><div class="bar basic" style="--value:0.0%"></div><span>0/8</span></div>
+  <div class="track"><div class="bar visit" style="--value:62.5%"></div><span>5/8</span></div>
+</div></div><div class="barrow"><b>시드 2</b><div>
+  <div class="track"><div class="bar basic" style="--value:37.5%"></div><span>3/8</span></div>
+  <div class="track"><div class="bar visit" style="--value:87.5%"></div><span>7/8</span></div>
+</div></div><div class="scale"><span>0</span><span>4</span><span>8개 성공</span></div></div></div>
+      <div class="split pair"><div class="panel peach"><p>기본 관측 평균</p><h3>12.5%</h3></div>
+      <div class="panel mint"><p>방문 추가 평균</p><h3>79.2%</h3></div></div></div>
+      <footer aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i></footer></div></article>
+<article class="card" aria-label="9장"><div class="canvas">
+      <header><span>MLP-01 / MAZE LAB</span><span>EP.02 / 09–10</span></header>
+      <p class="eyebrow">09 / 같은 지도 실제 경로</p><h2>한 지도, 두 경로</h2>
+      <p class="sub">학습 시드 0 · 개발 검증 지도 01 · 지도 시드 20271104</p><div class="body compact same-maze"><div class="split pair">
+         <figure class="panel case"><figcaption><b>기본 관측</b><small>총 100행동 · 실패</small></figcaption><svg class="map warmroute" viewBox="-.05 -.05 10.1 10.1" role="img" aria-label="지도 시드 20271104의 10×10 미로 · 실제 100행동 경로">
+      <rect class="floor" width="10" height="10"/><path class="walls" d="M3 0h1v1h-1zM9 1h1v1h-1zM4 2h1v1h-1zM2 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM7 4h1v1h-1zM6 5h1v1h-1zM0 6h1v1h-1zM3 6h1v1h-1zM3 7h1v1h-1zM7 7h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM7 8h1v1h-1zM2 9h1v1h-1z"/><path class="grid" d="M0 0v10 M0 0h10 M1 0v10 M0 1h10 M2 0v10 M0 2h10 M3 0v10 M0 3h10 M4 0v10 M0 4h10 M5 0v10 M0 5h10 M6 0v10 M0 6h10 M7 0v10 M0 7h10 M8 0v10 M0 8h10 M9 0v10 M0 9h10 M10 0v10 M0 10h10"/>
+      <path class="travel" d="M0.640 0.630L1.340 0.630"/><polygon class="head" points="1.340,0.630 1.120,0.760 1.120,0.500"/><path class="travel" d="M1.360 0.370L0.660 0.370"/><polygon class="head" points="0.660,0.370 0.880,0.240 0.880,0.500"/>
+      <circle class="start" cx=".5" cy=".5" r=".35"/><text x=".5" y=".68">S</text>
+      <circle class="goal" cx="9.5" cy="9.5" r=".35"/><text x="9.5" y="9.68">G</text>
+    </svg></figure>
+         <figure class="panel case"><figcaption><b>방문 추가</b><small>총 30행동 · 성공</small></figcaption><svg class="map" viewBox="-.05 -.05 10.1 10.1" role="img" aria-label="지도 시드 20271104의 10×10 미로 · 실제 30행동 경로">
+      <rect class="floor" width="10" height="10"/><path class="walls" d="M3 0h1v1h-1zM9 1h1v1h-1zM4 2h1v1h-1zM2 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM7 4h1v1h-1zM6 5h1v1h-1zM0 6h1v1h-1zM3 6h1v1h-1zM3 7h1v1h-1zM7 7h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM7 8h1v1h-1zM2 9h1v1h-1z"/><path class="grid" d="M0 0v10 M0 0h10 M1 0v10 M0 1h10 M2 0v10 M0 2h10 M3 0v10 M0 3h10 M4 0v10 M0 4h10 M5 0v10 M0 5h10 M6 0v10 M0 6h10 M7 0v10 M0 7h10 M8 0v10 M0 8h10 M9 0v10 M0 9h10 M10 0v10 M0 10h10"/>
+      <path class="travel" d="M0.500 0.640L0.500 1.340"/><polygon class="head" points="0.500,1.340 0.370,1.120 0.630,1.120"/><path class="travel" d="M0.500 1.640L0.500 2.340"/><polygon class="head" points="0.500,2.340 0.370,2.120 0.630,2.120"/><path class="travel" d="M0.500 2.640L0.500 3.340"/><polygon class="head" points="0.500,3.340 0.370,3.120 0.630,3.120"/><path class="travel" d="M0.500 3.640L0.500 4.340"/><polygon class="head" points="0.500,4.340 0.370,4.120 0.630,4.120"/><path class="travel" d="M0.500 4.640L0.500 5.340"/><polygon class="head" points="0.500,5.340 0.370,5.120 0.630,5.120"/><path class="travel" d="M0.640 5.500L1.340 5.500"/><polygon class="head" points="1.340,5.500 1.120,5.630 1.120,5.370"/><path class="travel" d="M1.500 5.640L1.500 6.340"/><polygon class="head" points="1.500,6.340 1.370,6.120 1.630,6.120"/><path class="travel" d="M1.640 6.500L2.340 6.500"/><polygon class="head" points="2.340,6.500 2.120,6.630 2.120,6.370"/><path class="travel" d="M2.370 6.640L2.370 7.340"/><polygon class="head" points="2.370,7.340 2.240,7.120 2.500,7.120"/><path class="travel" d="M2.360 7.370L1.660 7.370"/><polygon class="head" points="1.660,7.370 1.880,7.240 1.880,7.500"/><path class="travel" d="M1.370 7.640L1.370 8.340"/><polygon class="head" points="1.370,8.340 1.240,8.120 1.500,8.120"/><path class="travel" d="M1.370 8.640L1.370 9.340"/><polygon class="head" points="1.370,9.340 1.240,9.120 1.500,9.120"/><path class="travel" d="M1.360 9.370L0.660 9.370"/><polygon class="head" points="0.660,9.370 0.880,9.240 0.880,9.500"/><path class="travel" d="M0.640 9.630L1.340 9.630"/><polygon class="head" points="1.340,9.630 1.120,9.760 1.120,9.500"/><path class="travel" d="M1.630 9.360L1.630 8.660"/><polygon class="head" points="1.630,8.660 1.760,8.880 1.500,8.880"/><path class="travel" d="M1.630 8.360L1.630 7.660"/><polygon class="head" points="1.630,7.660 1.760,7.880 1.500,7.880"/><path class="travel" d="M1.640 7.630L2.340 7.630"/><polygon class="head" points="2.340,7.630 2.120,7.760 2.120,7.500"/><path class="travel" d="M2.630 7.360L2.630 6.660"/><polygon class="head" points="2.630,6.660 2.760,6.880 2.500,6.880"/><path class="travel" d="M2.500 6.360L2.500 5.660"/><polygon class="head" points="2.500,5.660 2.630,5.880 2.370,5.880"/><path class="travel" d="M2.640 5.500L3.340 5.500"/><polygon class="head" points="3.340,5.500 3.120,5.630 3.120,5.370"/><path class="travel" d="M3.640 5.500L4.340 5.500"/><polygon class="head" points="4.340,5.500 4.120,5.630 4.120,5.370"/><path class="travel" d="M4.500 5.640L4.500 6.340"/><polygon class="head" points="4.500,6.340 4.370,6.120 4.630,6.120"/><path class="travel" d="M4.500 6.640L4.500 7.340"/><polygon class="head" points="4.500,7.340 4.370,7.120 4.630,7.120"/><path class="travel" d="M4.500 7.640L4.500 8.340"/><polygon class="head" points="4.500,8.340 4.370,8.120 4.630,8.120"/><path class="travel" d="M4.500 8.640L4.500 9.340"/><polygon class="head" points="4.500,9.340 4.370,9.120 4.630,9.120"/><path class="travel" d="M4.640 9.500L5.340 9.500"/><polygon class="head" points="5.340,9.500 5.120,9.630 5.120,9.370"/><path class="travel" d="M5.640 9.500L6.340 9.500"/><polygon class="head" points="6.340,9.500 6.120,9.630 6.120,9.370"/><path class="travel" d="M6.640 9.500L7.340 9.500"/><polygon class="head" points="7.340,9.500 7.120,9.630 7.120,9.370"/><path class="travel" d="M7.640 9.500L8.340 9.500"/><polygon class="head" points="8.340,9.500 8.120,9.630 8.120,9.370"/><path class="travel" d="M8.640 9.500L9.340 9.500"/><polygon class="head" points="9.340,9.500 9.120,9.630 9.120,9.370"/>
+      <circle class="start" cx=".5" cy=".5" r=".35"/><text x=".5" y=".68">S</text>
+      <circle class="goal" cx="9.5" cy="9.5" r=".35"/><text x="9.5" y="9.68">G</text>
+    </svg></figure></div>
+         <p class="small">S 시작 · G 출구 · 진한 칸 벽 · 화살표 실제 이동 방향</p><p class="small">겹친 이동은 한 번만 그렸습니다. 기본 관측은 동·서 각각 50번 움직였습니다.</p>
+         <div class="panel rows"><h3>방문 추가의 실제 행동 순서</h3><p class="sequence">↓↓↓↓↓ →↓→↓← ↓↓←→↑ ↑→↑↑→ →↓↓↓↓ →→→→→</p></div></div>
+      <footer aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i></footer></div></article>
+<article class="card" aria-label="10장"><div class="canvas">
+      <header><span>MLP-01 / MAZE LAB</span><span>EP.02 / 10–10</span></header>
+      <p class="eyebrow">10 / 결과를 읽는 범위</p><h2>어디까지 말할 수 있을까?</h2>
+      <p class="sub">고정 개발 지도와 학습 시드에서 관찰한 결과</p><div class="body compact">
+         <div class="panel mint rows"><h3>관찰한 범위</h3><p>각 조건에서 학습 시드 3개를 사용했고, 같은 고정 개발 지도 8개에서 평가했습니다.</p></div>
+         <div class="panel rows"><h3>후속 조건의 실행 기준</h3><p>‘방문 추가’는 ‘기본 관측’의 두 칸 왕복 실패가 사전 기준을 충족한 뒤 실행했습니다.</p></div>
+         <div class="panel rows"><h3>원인과 일반화는 추가 검증이 필요</h3><p>관측된 차이만으로 방문 정보가 성공률 상승의 원인이라고 단정할 수 없습니다. 최종 테스트 지도 16개는 이번 실험에서 미사용입니다.</p></div></div>
+      <footer aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i></footer></div></article>
+</main>
+<script>
+const editButton=document.querySelector('#edit');
+const editable=document.querySelectorAll('h1,h2,h3,p,.eyebrow,.tag,.inputs div,figcaption,.node,.stat,.budget,.reward,.actions,.legend,.covergrid aside,.point,.ab div,.four b,.track span,.barrow>b');
+editable.forEach(el=>el.dataset.editable='');
+function setEditing(on){
+  document.body.classList.toggle('editing',on);
+  editable.forEach(el=>el.contentEditable=String(on));
+  editButton.textContent=on?'편집 종료':'문구 편집';
+}
+editButton.onclick=()=>setEditing(!document.body.classList.contains('editing'));
+document.querySelector('#save').onclick=()=>{
+  setEditing(false);
+  const url=URL.createObjectURL(new Blob(['<!doctype html>\n'+document.documentElement.outerHTML],{type:'text/html;charset=utf-8'}));
+  const link=document.createElement('a');
+  link.href=url;
+  link.download='MLP-01_EP02_편집본.html';
+  link.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+</script>
+</body>
+</html>
