@@ -1,0 +1,10 @@
+{
+  "study": "studies/20261104_methods_batch01",
+  "review_status": "approved_for_dev_report",
+  "sha256": {
+    "protocol.json": "c793a0be2f6a9628163c93eef631dfd25f442ed9bce834ec16ff622ecde057ac",
+    "comparison.json": "ceb3a1652e110bf6e51d8e48ef36ba95c4f97b09860edbd3300b3f11da9a22a6",
+    "review.json": "d80926ef4928a1d05fc0c1edd15a0399442b9c8e94a955bd75030e8583b090b1",
+    "verified_facts.json": "ae50af75bdfa3c1cbae6fd3502eeee0925dd2c82c2761e176d819117d958b9db"
+  }
+}

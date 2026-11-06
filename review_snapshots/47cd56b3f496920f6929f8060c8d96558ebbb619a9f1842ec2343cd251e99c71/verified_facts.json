@@ -1,0 +1,565 @@
+{
+  "status": "approved_for_dev_report",
+  "reviewer": "independent_results_review_subagent",
+  "reviewed_at_utc": "2026-11-06T02:42:04.276591+00:00",
+  "comparison_sha256": "ceb3a1652e110bf6e51d8e48ef36ba95c4f97b09860edbd3300b3f11da9a22a6",
+  "protocol_sha256": "c793a0be2f6a9628163c93eef631dfd25f442ed9bce834ec16ff622ecde057ac",
+  "approved_run_ids": [
+    "20261104T042433Z_2393292b",
+    "20261104T075746Z_862a1f55",
+    "20261104T080359Z_e8d76fbd",
+    "20261104T081014Z_417d4752",
+    "20261104T081639Z_844370e8",
+    "20261104T082257Z_e0aaa23c",
+    "20261104T082921Z_1787b1f6",
+    "20261104T084344Z_96ef76d9",
+    "20261104T084954Z_bd3b8005",
+    "20261104T085550Z_d964e64b",
+    "20261104T090424Z_c1afbc42"
+  ],
+  "facts": [
+    {
+      "condition": "B_CPU_reference",
+      "run_id": "20261104T042433Z_2393292b",
+      "reference_only": true,
+      "device": "cpu",
+      "validation_success_by_seed": [
+        0.0,
+        0.375,
+        0.0
+      ],
+      "validation_success_mean": 0.125,
+      "validation_success_sample_sd": 0.21650635094610965,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042433Z_2393292b\\seed_0\\latest_validation.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042433Z_2393292b\\seed_1\\latest_validation.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T042433Z_2393292b\\seed_2\\latest_validation.json"
+      ]
+    },
+    {
+      "condition": "B_CUDA",
+      "run_id": "20261104T075746Z_862a1f55",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.25,
+        0.0,
+        0.0
+      ],
+      "validation_success_mean": 0.08333333333333333,
+      "validation_success_sample_sd": 0.14433756729740643,
+      "seed_details": [
+        {
+          "seed": 0,
+          "validation_success": 0.25,
+          "training_greedy_success": 0.5,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "b76aa588f70edfdfdfbb4204b947187c472af754430df92c073625829ac74aef"
+        },
+        {
+          "seed": 1,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.0625,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "ba67c0fc8aa0a586d5c665c5e4c3dd4ca2fa22fa8f182ddeaaa84ec5d8977867"
+        },
+        {
+          "seed": 2,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.0625,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "a0408d7cfd8894ff134c872fdbc08c2d1cc46a084925398de1c4825b512aff23"
+        }
+      ],
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T075746Z_862a1f55\\config.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T075746Z_862a1f55\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T075746Z_862a1f55\\summary.json"
+      ],
+      "information_difference": null,
+      "interpretation_scope": "Repeated development validation on 8 fixed geometries; 24 episodes are not 24 distinct maps."
+    },
+    {
+      "condition": "success",
+      "run_id": "20261104T080359Z_e8d76fbd",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.25,
+        0.0,
+        0.0
+      ],
+      "validation_success_mean": 0.08333333333333333,
+      "validation_success_sample_sd": 0.14433756729740643,
+      "seed_details": [
+        {
+          "seed": 0,
+          "validation_success": 0.25,
+          "training_greedy_success": 0.3125,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "d103a19089ff450663b40c72fb0fa65135159d6291140089624fffb4956d91c5"
+        },
+        {
+          "seed": 1,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.625,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "e5de0854a1e106d140351a6d83ea3558516c48c3a9dcfbe57a922e5e5ba9cea9"
+        },
+        {
+          "seed": 2,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.0625,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "8c4265f4c7dd1b146e08b000a98bef79ca7a197ffeef994839e4e1b853770798"
+        }
+      ],
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T080359Z_e8d76fbd\\config.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T080359Z_e8d76fbd\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T080359Z_e8d76fbd\\summary.json"
+      ],
+      "information_difference": null,
+      "interpretation_scope": "Repeated development validation on 8 fixed geometries; 24 episodes are not 24 distinct maps."
+    },
+    {
+      "condition": "per",
+      "run_id": "20261104T081014Z_417d4752",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.0,
+        0.0,
+        0.125
+      ],
+      "validation_success_mean": 0.041666666666666664,
+      "validation_success_sample_sd": 0.07216878364870322,
+      "seed_details": [
+        {
+          "seed": 0,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.0625,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "c544bbe55521050d19bee384b30884079f4be958683b412e0e2119250959c9a5"
+        },
+        {
+          "seed": 1,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.0,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "50d59427b8103f56f7790c9288130896d68bd427c5c4305fd0100abc4adf6f43"
+        },
+        {
+          "seed": 2,
+          "validation_success": 0.125,
+          "training_greedy_success": 0.0,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "dc14fe1d2d646b39b022dddee816c9f32c976d81f1a5fc8b6aebc13bdb0fbabd"
+        }
+      ],
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T081014Z_417d4752\\config.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T081014Z_417d4752\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T081014Z_417d4752\\summary.json"
+      ],
+      "information_difference": null,
+      "interpretation_scope": "Repeated development validation on 8 fixed geometries; 24 episodes are not 24 distinct maps."
+    },
+    {
+      "condition": "nstep",
+      "run_id": "20261104T081639Z_844370e8",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.125,
+        0.0,
+        0.0
+      ],
+      "validation_success_mean": 0.041666666666666664,
+      "validation_success_sample_sd": 0.07216878364870322,
+      "seed_details": [
+        {
+          "seed": 0,
+          "validation_success": 0.125,
+          "training_greedy_success": 0.1875,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "3aaef1cfb3aa1168cfcb825124418ef23a689d84b1e6b71e7407fe6f11f499ce"
+        },
+        {
+          "seed": 1,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.1875,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "d9afa185b919f8812337b46bd2b283ef75d037efa1f0946222027cc13190aa43"
+        },
+        {
+          "seed": 2,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.125,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "b70f685722601bbd69cdb7fa9e43c4d664a4625d8e8de3d4f178a4d6fec4cea3"
+        }
+      ],
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T081639Z_844370e8\\config.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T081639Z_844370e8\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T081639Z_844370e8\\summary.json"
+      ],
+      "information_difference": null,
+      "interpretation_scope": "Repeated development validation on 8 fixed geometries; 24 episodes are not 24 distinct maps."
+    },
+    {
+      "condition": "double",
+      "run_id": "20261104T082257Z_e0aaa23c",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.125,
+        0.125,
+        0.0
+      ],
+      "validation_success_mean": 0.08333333333333333,
+      "validation_success_sample_sd": 0.07216878364870322,
+      "seed_details": [
+        {
+          "seed": 0,
+          "validation_success": 0.125,
+          "training_greedy_success": 0.25,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "18ce02ce655e5e65b03e2bef54529dd38b1788e524a60f5958db0d07641807a2"
+        },
+        {
+          "seed": 1,
+          "validation_success": 0.125,
+          "training_greedy_success": 0.375,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "73574a43b51e073d855aec673837baa17ccc722586f7fb94ee9995e258347a9e"
+        },
+        {
+          "seed": 2,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.0,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "b560fbc75d2075119ca1f6e2ad6e478c0c16adcaf0607cf59c32b2afcaf4fe57"
+        }
+      ],
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T082257Z_e0aaa23c\\config.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T082257Z_e0aaa23c\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T082257Z_e0aaa23c\\summary.json"
+      ],
+      "information_difference": null,
+      "interpretation_scope": "Repeated development validation on 8 fixed geometries; 24 episodes are not 24 distinct maps."
+    },
+    {
+      "condition": "mask",
+      "run_id": "20261104T082921Z_1787b1f6",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.75,
+        0.5,
+        0.0
+      ],
+      "validation_success_mean": 0.4166666666666667,
+      "validation_success_sample_sd": 0.3818813079129867,
+      "seed_details": [
+        {
+          "seed": 0,
+          "validation_success": 0.75,
+          "training_greedy_success": 0.625,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "b8490228315e04c5eb738cf2cfa91c0361643cb949481539c1dabeffdaac516f"
+        },
+        {
+          "seed": 1,
+          "validation_success": 0.5,
+          "training_greedy_success": 0.9375,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "769352e280206dc973cfe37d3e419a2e385c66c3b36b23502c5f84fe1b6d37bf"
+        },
+        {
+          "seed": 2,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.25,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "48f07a39bf95f98a984889f509a9ff721ab256561c2db1f9c7d39d3e75058972"
+        }
+      ],
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T082921Z_1787b1f6\\config.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T082921Z_1787b1f6\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T082921Z_1787b1f6\\summary.json"
+      ],
+      "information_difference": "Wall/boundary action rules applied to exploration, greedy and targets",
+      "interpretation_scope": "Repeated development validation on 8 fixed geometries; 24 episodes are not 24 distinct maps."
+    },
+    {
+      "condition": "train64",
+      "run_id": "20261104T084344Z_96ef76d9",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.0,
+        0.0,
+        0.125
+      ],
+      "validation_success_mean": 0.041666666666666664,
+      "validation_success_sample_sd": 0.07216878364870322,
+      "seed_details": [
+        {
+          "seed": 0,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.0,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "b6763708d1a3cba853e7f63fa5bc9b9b2389c69d11661c1cce8de1609c6698ee"
+        },
+        {
+          "seed": 1,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.078125,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "e1b83c833299069537148ee11c0305f8b05b90bce6d00873a0a7e9a80e388d7c"
+        },
+        {
+          "seed": 2,
+          "validation_success": 0.125,
+          "training_greedy_success": 0.484375,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "9a92a34b2865fe4b4608eefffcbf766e4a5abe2bae6083875ace1320423806dc"
+        }
+      ],
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T084344Z_96ef76d9\\config.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T084344Z_96ef76d9\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T084344Z_96ef76d9\\summary.json"
+      ],
+      "information_difference": null,
+      "interpretation_scope": "Repeated development validation on 8 fixed geometries; 24 episodes are not 24 distinct maps."
+    },
+    {
+      "condition": "batch64",
+      "run_id": "20261104T084954Z_bd3b8005",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "validation_success_mean": 0.0,
+      "validation_success_sample_sd": 0.0,
+      "seed_details": [
+        {
+          "seed": 0,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.0625,
+          "optimizer_updates": 4985,
+          "processed_samples": 319040,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "ab0b47a31ac25e175c1692079d386a5a140e58948b7f72798e584cbf19d16d99"
+        },
+        {
+          "seed": 1,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.0625,
+          "optimizer_updates": 4985,
+          "processed_samples": 319040,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "26454c1ec7e998c06aabcd76f1da1ef8f3bd02f5508c50777f383a1eeed94eb2"
+        },
+        {
+          "seed": 2,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.25,
+          "optimizer_updates": 4985,
+          "processed_samples": 319040,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "deaa80d2d9a5be366e6ed9ea3d5c0040c6ca99d5bbdff87dbeb7ff101b78f8b0"
+        }
+      ],
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T084954Z_bd3b8005\\config.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T084954Z_bd3b8005\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T084954Z_bd3b8005\\summary.json"
+      ],
+      "information_difference": null,
+      "interpretation_scope": "Repeated development validation on 8 fixed geometries; 24 episodes are not 24 distinct maps."
+    },
+    {
+      "condition": "every2",
+      "run_id": "20261104T085550Z_d964e64b",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.25,
+        0.0,
+        0.125
+      ],
+      "validation_success_mean": 0.125,
+      "validation_success_sample_sd": 0.125,
+      "seed_details": [
+        {
+          "seed": 0,
+          "validation_success": 0.25,
+          "training_greedy_success": 0.6875,
+          "optimizer_updates": 9969,
+          "processed_samples": 319008,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "60308e1f8543d79f7c7493ec05b57ca5116e5387aa81fa1ecda5531f09274526"
+        },
+        {
+          "seed": 1,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.0,
+          "optimizer_updates": 9969,
+          "processed_samples": 319008,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "4be909738d874198970abb534643fc3b5fb8698cf041282f935a9019d0905d62"
+        },
+        {
+          "seed": 2,
+          "validation_success": 0.125,
+          "training_greedy_success": 0.625,
+          "optimizer_updates": 9969,
+          "processed_samples": 319008,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "ab54f5676154f6281d00c7b7b7bff13451eb898fb681e723b3776e0a053dc534"
+        }
+      ],
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T085550Z_d964e64b\\config.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T085550Z_d964e64b\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T085550Z_d964e64b\\summary.json"
+      ],
+      "information_difference": null,
+      "interpretation_scope": "Repeated development validation on 8 fixed geometries; 24 episodes are not 24 distinct maps."
+    },
+    {
+      "condition": "target500",
+      "run_id": "20261104T090424Z_c1afbc42",
+      "checkpoint": "latest.pt",
+      "checkpoint_steps": 20000,
+      "n_policy_seeds": 3,
+      "n_validation_mazes": 8,
+      "validation_episode_count": 24,
+      "validation_success_by_seed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "validation_success_mean": 0.0,
+      "validation_success_sample_sd": 0.0,
+      "seed_details": [
+        {
+          "seed": 0,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.25,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "f35b17159b9556de6945d23d57f2547872e61f569a2094ba289f4a16d8bd91dc"
+        },
+        {
+          "seed": 1,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.0625,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "4e9c066e75cf2bde1c745ceef5f29e29219853207ab5e3827a24726fc931c822"
+        },
+        {
+          "seed": 2,
+          "validation_success": 0.0,
+          "training_greedy_success": 0.25,
+          "optimizer_updates": 4985,
+          "processed_samples": 159520,
+          "training_environment_steps": 20000,
+          "checkpoint_sha256": "d4d5976ab32c2d205d06f28b560e54756ee98e59153a4d2b0bcd0bb7b37e6793"
+        }
+      ],
+      "evidence": [
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T090424Z_c1afbc42\\config.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T090424Z_c1afbc42\\mazes.json",
+        "C:\\Users\\toastls93\\OneDrive - BigHit Entertainment Co.,Ltd\\문서\\ChatGPT\\강화학습\\runs\\20261104T090424Z_c1afbc42\\summary.json"
+      ],
+      "information_difference": null,
+      "interpretation_scope": "Repeated development validation on 8 fixed geometries; 24 episodes are not 24 distinct maps."
+    }
+  ],
+  "final_test_used": false,
+  "no_cards_or_upload": true
+}

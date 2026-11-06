@@ -1,0 +1,138 @@
+{
+  "status": "approved_for_dev_report",
+  "reviewer": "independent_results_review_subagent",
+  "reviewed_at_utc": "2026-11-06T02:42:04.276591+00:00",
+  "comparison_sha256": "ceb3a1652e110bf6e51d8e48ef36ba95c4f97b09860edbd3300b3f11da9a22a6",
+  "protocol_sha256": "c793a0be2f6a9628163c93eef631dfd25f442ed9bce834ec16ff622ecde057ac",
+  "approved_run_ids": [
+    "20261104T042433Z_2393292b",
+    "20261104T075746Z_862a1f55",
+    "20261104T080359Z_e8d76fbd",
+    "20261104T081014Z_417d4752",
+    "20261104T081639Z_844370e8",
+    "20261104T082257Z_e0aaa23c",
+    "20261104T082921Z_1787b1f6",
+    "20261104T084344Z_96ef76d9",
+    "20261104T084954Z_bd3b8005",
+    "20261104T085550Z_d964e64b",
+    "20261104T090424Z_c1afbc42"
+  ],
+  "checks": [
+    {
+      "condition": "B_CPU_reference",
+      "historical_cpu_reference_recomputed": true,
+      "excluded_from_selection": true
+    },
+    {
+      "condition": "B_CUDA",
+      "source_archive": "passed",
+      "final_checkpoints_cpu_restored": 3,
+      "train_validation_paths_returns_and_metrics": "passed",
+      "git_commit": "55259679e94a3a57f9094c93ae8993cb6a4f58e0",
+      "recorded_git_status": "?? docs/next_session_experiments_prompt.md\n?? scripts/verify_methods_study.py",
+      "worker_concurrency": 1
+    },
+    {
+      "condition": "success",
+      "source_archive": "passed",
+      "final_checkpoints_cpu_restored": 3,
+      "train_validation_paths_returns_and_metrics": "passed",
+      "git_commit": "55259679e94a3a57f9094c93ae8993cb6a4f58e0",
+      "recorded_git_status": "?? docs/next_session_experiments_prompt.md\n?? scripts/verify_methods_study.py",
+      "worker_concurrency": 1
+    },
+    {
+      "condition": "per",
+      "source_archive": "passed",
+      "final_checkpoints_cpu_restored": 3,
+      "train_validation_paths_returns_and_metrics": "passed",
+      "git_commit": "55259679e94a3a57f9094c93ae8993cb6a4f58e0",
+      "recorded_git_status": "?? docs/next_session_experiments_prompt.md\n?? scripts/verify_methods_study.py",
+      "worker_concurrency": 1
+    },
+    {
+      "condition": "nstep",
+      "source_archive": "passed",
+      "final_checkpoints_cpu_restored": 3,
+      "train_validation_paths_returns_and_metrics": "passed",
+      "git_commit": "55259679e94a3a57f9094c93ae8993cb6a4f58e0",
+      "recorded_git_status": "?? docs/next_session_experiments_prompt.md\n?? scripts/verify_methods_study.py",
+      "worker_concurrency": 1
+    },
+    {
+      "condition": "double",
+      "source_archive": "passed",
+      "final_checkpoints_cpu_restored": 3,
+      "train_validation_paths_returns_and_metrics": "passed",
+      "git_commit": "55259679e94a3a57f9094c93ae8993cb6a4f58e0",
+      "recorded_git_status": "?? docs/next_session_experiments_prompt.md\n?? scripts/verify_methods_study.py",
+      "worker_concurrency": 1
+    },
+    {
+      "condition": "mask",
+      "source_archive": "passed",
+      "final_checkpoints_cpu_restored": 3,
+      "train_validation_paths_returns_and_metrics": "passed",
+      "git_commit": "55259679e94a3a57f9094c93ae8993cb6a4f58e0",
+      "recorded_git_status": "?? docs/next_session_experiments_prompt.md\n?? scripts/verify_methods_study.py",
+      "worker_concurrency": 1
+    },
+    {
+      "condition": "train64",
+      "source_archive": "passed",
+      "final_checkpoints_cpu_restored": 3,
+      "train_validation_paths_returns_and_metrics": "passed",
+      "git_commit": "55259679e94a3a57f9094c93ae8993cb6a4f58e0",
+      "recorded_git_status": "?? docs/next_session_experiments_prompt.md\n?? scripts/verify_methods_study.py",
+      "worker_concurrency": 1
+    },
+    {
+      "condition": "batch64",
+      "source_archive": "passed",
+      "final_checkpoints_cpu_restored": 3,
+      "train_validation_paths_returns_and_metrics": "passed",
+      "git_commit": "55259679e94a3a57f9094c93ae8993cb6a4f58e0",
+      "recorded_git_status": "?? docs/next_session_experiments_prompt.md\n?? scripts/verify_methods_study.py",
+      "worker_concurrency": 1
+    },
+    {
+      "condition": "every2",
+      "source_archive": "passed",
+      "final_checkpoints_cpu_restored": 3,
+      "train_validation_paths_returns_and_metrics": "passed",
+      "git_commit": "55259679e94a3a57f9094c93ae8993cb6a4f58e0",
+      "recorded_git_status": "?? docs/next_session_experiments_prompt.md\n?? scripts/verify_methods_study.py",
+      "worker_concurrency": 1
+    },
+    {
+      "condition": "target500",
+      "source_archive": "passed",
+      "final_checkpoints_cpu_restored": 3,
+      "train_validation_paths_returns_and_metrics": "passed",
+      "git_commit": "55259679e94a3a57f9094c93ae8993cb6a4f58e0",
+      "recorded_git_status": "?? docs/next_session_experiments_prompt.md\n?? scripts/verify_methods_study.py",
+      "worker_concurrency": 1
+    },
+    {
+      "budget": "passed",
+      "actual_training_steps_including_failed_attempts": 600000,
+      "reserved_steps": 600000,
+      "retries": 0,
+      "experiment_wall_seconds": 4353.780999999959,
+      "resumed_at_utc": "2026-11-06T02:38:57.754526+00:00",
+      "inactive_between_execution_and_resumption_seconds": 149318.075468,
+      "resumed_active_wall_seconds_through_check": 186.522065,
+      "execution_plus_resumed_active_wall_seconds_through_check": 4540.303064999959
+    }
+  ],
+  "errors": [],
+  "restoration_device": "cpu",
+  "independent_restoration_environment_steps": 72646,
+  "review_wall_seconds": 6.313000000081956,
+  "limitations": [
+    "CPU restoration is an independent rollout; CUDA training equality is checked from original metadata and summaries.",
+    "Development validation is repeatedly reused; small differences do not establish generalization or causation.",
+    "Mask changes information use; batch64 and train_every2 change computation.",
+    "No final-test rollout or model selection was performed by the reviewer."
+  ]
+}

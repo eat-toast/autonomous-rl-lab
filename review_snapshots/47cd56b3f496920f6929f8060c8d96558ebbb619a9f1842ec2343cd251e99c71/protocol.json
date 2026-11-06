@@ -1,0 +1,81 @@
+{
+  "status": "completed",
+  "started_at_utc": "2026-11-04T07:57:45.896266+00:00",
+  "source_protocol": "docs/methods_study_protocol_20261104.md",
+  "reference_run_id": "20261104T042433Z_2393292b",
+  "reference_manifest_sha256": "f2ff03ac3978a04c869128ca0202288881e154f8b545a732c80fb439c3a978e9",
+  "planned_training_steps": 600000,
+  "maximum_including_recovery": 620000,
+  "max_wall_seconds": 10800,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "conditions": [
+    "B_CUDA",
+    "success",
+    "per",
+    "nstep",
+    "double",
+    "mask",
+    "train64",
+    "batch64",
+    "every2",
+    "target500"
+  ],
+  "workers": 1,
+  "device": "cuda",
+  "final_test_used": false,
+  "runtime": {
+    "python": "3.12.6",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "numpy": "2.4.3",
+      "matplotlib": "3.10.8",
+      "Pillow": "12.3.0"
+    },
+    "device": "cuda",
+    "accelerator": {
+      "gpu_name": "NVIDIA GeForce RTX 4060",
+      "cuda_build": "12.1",
+      "cudnn_version": 90100,
+      "gpu_total_memory_bytes": 8585216000,
+      "precision": "float32; TF32 and AMP disabled"
+    },
+    "torch_threads": 1,
+    "git_commit": "55259679e94a3a57f9094c93ae8993cb6a4f58e0",
+    "git_status": "?? docs/next_session_experiments_prompt.md\n?? scripts/verify_methods_study.py",
+    "git_diff": "",
+    "created_at_utc": "2026-11-04T07:57:46.251190+00:00"
+  },
+  "condition_runs": {
+    "B_CUDA": "20261104T075746Z_862a1f55",
+    "success": "20261104T080359Z_e8d76fbd",
+    "per": "20261104T081014Z_417d4752",
+    "nstep": "20261104T081639Z_844370e8",
+    "double": "20261104T082257Z_e0aaa23c",
+    "mask": "20261104T082921Z_1787b1f6",
+    "train64": "20261104T084344Z_96ef76d9",
+    "batch64": "20261104T084954Z_bd3b8005",
+    "every2": "20261104T085550Z_d964e64b",
+    "target500": "20261104T090424Z_c1afbc42"
+  },
+  "frozen_training_source_hashes": {
+    "rl_lab\\config.py": "72d2a947b058ab3f41c8511f551ce4eb325fb2e7d853db6bd9d6aa946800a3c0",
+    "rl_lab\\dqn.py": "858e2a03fa89c5ca16bc4a4403167f29e43f2e3c4481c8e86bfb1b87f430492e",
+    "rl_lab\\evaluation.py": "34261d5473a8b21c3b7b7c4d1b908e8916464038731457f678f7a1d74d9e554d",
+    "rl_lab\\maze.py": "0391545cad4dd4f39118c0c443e5232aae5d31a253a33840b0024adebb7bd27b",
+    "rl_lab\\methods.py": "740dc3ee340e208201b6796770a44a355551dd73010447ccbb84655450bdef99",
+    "rl_lab\\plots.py": "d91abc20331009ce3d25aa96f1f1c74a9433886d9f49452404fb534594b24144",
+    "rl_lab\\runner.py": "0b4052e0ae1b9caf61a0a4a4bcc6bb1193bc266127ee5fbea6652292ee45097b",
+    "rl_lab\\storage.py": "77468b19db8f5d690416102af50a8c700263cd4b1f8b3d998dbfaaae551391bc",
+    "rl_lab\\train.py": "049e05e9c4a87849d1d6542661ddb92d0ba981128dced582f40e77b23721f91c",
+    "rl_lab\\__init__.py": "dda28b12060b512442e1290921552145e54192beadebc428bcd0315ef007dc64",
+    "rl_lab\\__main__.py": "c46a0e63c83f6baf05d135bbb0e4edf1dbdcf3d7b46aaabb4cbe6dbccdb43f19"
+  },
+  "finished_at_utc": "2026-11-04T09:10:19.679058+00:00",
+  "elapsed_seconds": 4353.780999999959,
+  "selected_condition": "mask"
+}
