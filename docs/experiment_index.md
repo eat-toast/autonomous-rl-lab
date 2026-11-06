@@ -7,7 +7,7 @@
 
 | ID | 계획 | 실행 | 다음 판단 |
 |---|---|---|---|
-| MLP-02 | [MLP14에 벽 방향 제외 적용](mlp14_action_mask_plan.md) | seed 3/3 완료 · 독립 검증 통과 · [원본 연결](../studies/MLP-02/README.md) | 양쪽 19/24, 충돌 160→0회, 왕복 실패 3→5건. 사전 채택 기준 미달 |
+| MLP-03 | [MLP-03-벽방향제외](../studies/MLP-03/README.md) · [계획](mlp14_action_mask_plan.md) | seed 3/3 완료 · 독립 검증 통과 · [원본 묶음 MLP-02](../studies/MLP-02/README.md) | MLP2와 MLP3 모두 19/24, 충돌 160→0회, 왕복 실패 3→5건. 사전 채택 기준 미달, MLP2 유지 |
 | MLP-01 | [더듬이 MLP10 → 조건부 MLP14](mlp_feelers_study_plan.md) | MLP10 3/3·MLP14 3/3 완료 · 독립 검증 승인 | 후속 학습은 새 계획과 승인 필요 |
 
 [MLP-01 폴더](../studies/MLP-01/README.md) · [새 세션용 실행 프롬프트](next_session_mlp_prompt.md)
