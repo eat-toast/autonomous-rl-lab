@@ -42,7 +42,8 @@
 음원 페이지와 라이선스를 사용 시점에 확인하고 URL·작가·취득일·파일 해시·발췌 구간·음량·페이드를 기록한다.
 무음 영상은 보존하고 음악 적용본을 별도로 만든다. 이번 설정은 첫 11초, -20 LUFS 정규화 목표, 마지막 0.7초 페이드아웃이다.
 음악 적용 스크립트는 `studies/MLP-01/scripts/add_pixel_reel_music.py`, 출력·근거는 해당 게시물의 `pixel_music_v1/`에 있다.
-원본 음원의 단독 재배포를 피하고 Git에는 제작 코드·문서만 추적한다. 청음과 음량은 최종 사용자 미리보기에서 확인한다.
+원본 음원의 단독 재배포를 피하고 Git에는 제작 코드·문서만 추적한다. 청음과 음량은 담당자가 확인하고 최종 사용자 미리보기로 전달한다.
+음악 작업 전체는 인스타그램 담당 소관이다. [공용 음악 목록](instagram_music_library.md)을 먼저 읽고 `assets/instagram/audio/<ID>/`의 원본을 재사용한다. 기존 게시물의 제작 근거는 이동하지 않는다.
 
 - 첫 렌더: `studies/MLP-01/scripts/render_pixel_reel.py`.
 - 사용자 피드백 편집: `studies/MLP-01/scripts/trim_pixel_reel.py`.

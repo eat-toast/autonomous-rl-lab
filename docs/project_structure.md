@@ -21,6 +21,7 @@
 | `configs/` | 여러 실험에 재사용하는 기본 설정과 실행 점검 설정 |
 | `docs/` | 공통 연구 규칙, 구조 계약, 실험 목록·이름표, 콘텐츠 규격과 연재 기획 |
 | `agents/` | 역할별 작업·인계 지침 |
+| `assets/instagram/audio/` | 여러 게시물에서 재사용하는 공용 음원 원본·취득 메타데이터. 로컬 보존하며 Git 제외. 관리 목록은 docs/instagram_music_library.md |
 | `.codex/` | 프로젝트의 Codex 설정과 에이전트 정의 |
 
 루트에는 `AGENTS.md`, `README.md`, 의존성 목록과 Git 설정 파일 등 프로젝트 전체의 진입점만 둔다.

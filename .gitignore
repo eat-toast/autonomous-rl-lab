@@ -6,6 +6,7 @@ runs/
 datasets/
 .cache/
 .tools/
+/assets/instagram/audio/
 exports/
 # Track experiment entry points. Keep generated artifacts local.
 /studies/*

@@ -1,6 +1,6 @@
 """Mix the user-selected Pixabay track into the approved 11-second edit."""
 from pathlib import Path
-import sys, subprocess, json, hashlib, shutil
+import sys, subprocess, json, hashlib
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT/'.tools')); sys.path.insert(0,str(ROOT))
 import imageio_ffmpeg
@@ -9,8 +9,9 @@ validate_review(ROOT/'studies/MLP-01/results')
 commit=commit_review(ROOT/'studies/MLP-01/results')
 base=ROOT/'studies/MLP-01/exports/instagram_MLP-01_EP02'
 out=base/'pixel_music_v1'; out.mkdir(exist_ok=True)
-audio=out/'reganati-chillcalming-chiptune-loop-527182.mp3'
-shutil.copy2(Path.home()/'Downloads'/audio.name,audio)
+audio=ROOT/'assets/instagram/audio/pixabay-527182/reganati-chillcalming-chiptune-loop-527182.mp3'
+if not audio.is_file():
+    raise FileNotFoundError('Instagram audio library missing pixabay-527182; see docs/instagram_music_library.md')
 video=out/'pixel_maze_with_music.mp4'
 ff=imageio_ffmpeg.get_ffmpeg_exe()
 filters='atrim=start=0:end=11,asetpts=PTS-STARTPTS,loudnorm=I=-20:TP=-2:LRA=7,afade=t=in:st=0:d=0.08,afade=t=out:st=10.3:d=0.7'
