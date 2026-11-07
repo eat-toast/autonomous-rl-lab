@@ -6,4 +6,22 @@
 
 로컬 원본은 [프로토콜](results/protocol.json), [실행 원장](results/ledger.json), [결과 보고서](results/report.md), [비교 데이터](results/comparison.json), [체크포인트 복원 감사](results/checkpoint_restore_audit.json), [검증 기록](results/review.json)에서 볼 수 있다. 각 seed의 학습·평가 원본과 체크포인트는 `results/runs/`에 보존한다.
 
-[Git 검증본](../../review_snapshots/1085d4f524407208dad82fb05d61b0adeea483406daaaa4e83f77c0e53536ec1/verified_facts.json)은 커밋 `cce5a724094348787e9a5272a1415692b5468fc6`에 보존했다.
+[Git 검증본](reviews/snapshots/1085d4f524407208dad82fb05d61b0adeea483406daaaa4e83f77c0e53536ec1/verified_facts.json)은 커밋 `cce5a724094348787e9a5272a1415692b5468fc6`에 보존했다.
+
+## 자료 위치 · 2026-11-08 구조 이전
+
+- [실행 원본·로그·체크포인트](runs/)
+- [집계·프로토콜·검증 원본](results/)
+- [실험 전용 도구](scripts/)
+- [검증 보존본](reviews/)
+
+원본 JSON·로그·검증본 내부의 과거 경로는 그대로 보존했다.
+[전체 이전표](../../docs/path_migrations.json)와 아래 대응표로 현재 위치를 찾는다.
+
+| 이전 경로 | 현재 위치 |
+|---|---|
+| `studies/MLP-02/results/runs` | `runs` |
+| `review_snapshots/1085d4f524407208dad82fb05d61b0adeea483406daaaa4e83f77c0e53536ec1` | `reviews/snapshots/1085d4f524407208dad82fb05d61b0adeea483406daaaa4e83f77c0e53536ec1` |
+| `scripts/run_mlp02.py` | `scripts/run_mlp02.py` |
+| `scripts/report_mlp02.py` | `scripts/report_mlp02.py` |
+| `scripts/verify_mlp02.py` | `scripts/verify_mlp02.py` |

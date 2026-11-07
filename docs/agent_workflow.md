@@ -49,7 +49,7 @@ python scripts/commit_review.py --study studies/CNN-02/results
 ```
 
 `review.json`이 있어야 실행된다. 해당 study에 존재하는 `protocol.json`, `comparison.json`,
-`review.json`, `verified_facts.json`을 원본 그대로 `review_snapshots/<내용 해시>/`에 복사하고,
+`review.json`, `verified_facts.json`을 원본 그대로 `studies/<ID>/reviews/snapshots/<내용 해시>/`에 복사하고,
 출처·검증 상태·SHA-256을 적은 `manifest.json`과 함께 로컬 Git 커밋에 보존한다.
 원본 결과와 모델은 기존 위치에 유지한다. 통과하지 않은 검토도 실제 상태로 기록하며,
 이 커밋만으로 게시물 제작이 허용되지는 않는다.
@@ -58,14 +58,14 @@ python scripts/commit_review.py --study studies/CNN-02/results
 커밋 실패 시 콘텐츠 인계를 진행하지 않는다. 코드는 자동으로 일괄 커밋하지 않는다.
 코드·설정 변경의 실험 전 복구 커밋은 기존 규칙대로 별도로 만든다. push는 수행하지 않는다.
 
-`scripts/export_study_content.py`는 두 검토 기록의 통과 상태, comparison/protocol 해시,
+`studies/CNN-02/scripts/export_study_content.py`는 두 검토 기록의 통과 상태, comparison/protocol 해시,
 run ID를 검사한 뒤 이 훅을 자동 호출한다. 커밋 성공 뒤에만 출력 폴더를 만들고,
 `provenance.json`에 `review_commit`을 기록한다. 다른 제작 도구나 직접 제작 시에는
 조정자가 위 명령의 성공을 확인하고 커밋 해시를 콘텐츠 담당에게 넘긴다.
 이는 역할 사이의 워크플로 훅이며 `.git/hooks`나 Codex 전역 설정을 변경하지 않는다.
 
 이 문서는 인계에 필요한 정보와 책임을 정한다. 현재 실험에서는 검증 담당이 `review.json`과
-`verified_facts.json`을 별도 파일로 작성한다. `scripts/export_study_content.py`는 검증 상태와
+`verified_facts.json`을 별도 파일로 작성한다. `studies/CNN-02/scripts/export_study_content.py`는 검증 상태와
 원본 comparison/protocol의 해시가 일치할 때에만 게시물을 생성한다. 이 게이트 외에 전 과정의
 자동 상태 전이, 자동 에이전트 호출, 데이터베이스나 메시지 큐를 구현한 것은 아니다.
 protocol·config·metadata·원본 결과와 각 담당자의 검토 경로는 조정자가 연결한다.
@@ -82,8 +82,8 @@ protocol·config·metadata·원본 결과와 각 담당자의 검토 경로는 �
 - 인스타그램 공개 업로드는 요청된 목적지와 범위 안에서 Chrome의 Computer Use로만 진행한다. 주소·계정·대상 게시물을
   확인할 수 없는 경우 작업을 중단하고 기존 게시물을 유지한다. 업로드 전 검수와 단일 정식 업로드본 유지 규칙은
   [인스타 역할 지침](../agents/instagram.md)을 따른다.
-- 인스타 담당은 게시 전 초안과 최종본을 `exports/<게시물 ID>/`에 모은다. 게시 완료와 공개 검수 뒤에는
-  회차별 작업 폴더와 중복 파일을 정리하고 `exports/<게시물 ID>.zip` 하나만 남긴다.
+- 인스타 담당은 게시 전 초안과 최종본을 `studies/<주관 실험 ID>/exports/<게시물 ID>/`에 모은다. 게시 완료와 공개 검수 뒤에는
+  회차별 작업 폴더와 중복 파일을 정리하고 `studies/<주관 실험 ID>/exports/<게시물 ID>.zip` 하나만 남긴다.
 
 ## 실험별 계획 확인
 

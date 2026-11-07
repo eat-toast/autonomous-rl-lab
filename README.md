@@ -6,6 +6,12 @@
 현재는 **Phase 1: 새 CNN DQN 기준 모델과 재현 가능한 실행 파이프라인**이다.
 기존 PC의 DQN은 참고 자료이며, 기존 성능을 재현했다고 주장하지 않는다.
 
+## 자료 구조
+
+실험별 계획·전용 도구·실행 원본·결과·진단·검증·콘텐츠는 `studies/<ID>/`에 모은다.
+[구조 계약](docs/project_structure.md)과 [경로 이전표](docs/path_migrations.json)를 참고한다.
+공통 도구는 루트 `scripts/`, 공통 구현은 `rl_lab/`에 있다.
+
 ## 환경과 고정 규칙
 
 - Python 3.12 + PyTorch. 기본 설정은 CPU 1 thread이며 `train.device`로 CUDA를 선택할 수 있다.
@@ -34,7 +40,7 @@
 .\scripts\lab.ps1 evaluate -Checkpoint 'runs\<run-id>\seed_0\latest.pt'
 
 # Phase 1 검토 후 수동 실행할 수 있는 3-seed 짧은 설정 (자동 실행하지 않음)
-.\scripts\lab.ps1 train -Config configs/phase1_three_seeds.json
+.\scripts\lab.ps1 train -Config studies/CNN-01/configs/phase1_three_seeds.json
 
 # 최종 선택이 끝난 뒤에만 실행. 같은 run/seed는 1회만 허용.
 .\scripts\lab.ps1 evaluate -Checkpoint 'runs\<run-id>\seed_0\best.pt' -FinalTest
@@ -46,7 +52,7 @@
 
 ## 결과
 
-각 실행은 `runs/<UTC시각_UUID>/`를 새로 만들고 기존 결과를 덮어쓰지 않는다.
+각 실행은 해당 study의 `runs/<UTC시각_UUID>/`를 새로 만들고 기존 결과를 덮어쓰지 않는다.
 
 | 파일 | 내용 |
 |---|---|
@@ -62,7 +68,7 @@
 | `learning_curve.png`, `path_comparison.png` | 학습 곡선과 A* 대비 이동 경로 |
 | `research_notes.json` | 결론 범위·다음 실험 제안. 현재 자동 AI 가설 생성은 아님 |
 
-`runs/`와 모델 파일은 로컬에 보존하고 Git에 올리지 않는다.
+`studies/<ID>/runs/`와 모델 파일은 로컬에 보존하고 Git에 올리지 않는다.
 명시적으로 파일을 삭제하지 않는 한 실패 결과도 보존한다.
 재현하려면 snapshot을 별도 폴더에 풀고 기록된 패키지 버전과 `config.json`으로 다시 실행한다.
 다른 OS/하드웨어/PyTorch 버전의 bit 단위 동일성은 보장하지 않는다.
@@ -93,14 +99,14 @@ GitHub `origin`은 `https://github.com/eat-toast/autonomous-rl-lab.git`이다.
 3개 seed × 2,000스텝의 짧은 DQN 예비 실험과 실제 평가 기록을 기반으로
 카드뉴스 5장(1080×1350), 무음 MP4(1080×1920, 16초), 캡션을 생성했다.
 실험 결과는 [예비 실험 보고서](studies/CNN-01/pilot_content_report.md)를 참고한다.
-최종 파일은 `exports/20261104_dqn_pilot_final/`에 있다.
+최종 파일은 `studies/CNN-01/exports/Instagram_DQN_20261104.zip`에 있다.
 
 재생성하려면 영상 패키지를 프로젝트 전용 폴더에 설치하고 별도 출력 폴더를 지정한다.
 아래의 `python`은 실행 스크립트가 사용하는 실제 Python 경로로 바꿀 수 있다.
 
 ```powershell
 python -m pip install --target .tools --no-deps -r requirements-content.txt
-python scripts/export_content.py --run runs/20261104T031358Z_d9a39f92 --output exports/new_export
+python scripts/export_content.py --run studies/CNN-01/runs/20261104T031358Z_d9a39f92 --output studies/CNN-01/exports/new_export
 ```
 
 이 exporter는 해당 예비 실험의 편집 템플릿이다. 다른 조건/결과의 게시물을 만들 때에는
@@ -118,7 +124,7 @@ python scripts/export_content.py --run runs/20261104T031358Z_d9a39f92 --output e
 `evaluation.diagnose_training_fit=true`이면 마지막 checkpoint를 훈련 미로에서도 greedy 평가한다.
 
 이전 4단계 개발 실험의 조건은 [4단계 프로토콜](studies/CNN-02/study_protocol.md)에 기록되어 있다.
-`python scripts/run_study.py`는 4조건 × 3seed를 순서대로 실행하며 결과에 따라 다음 기준을 선택한다.
+`python studies/CNN-02/scripts/run_study.py`는 4조건 × 3seed를 순서대로 실행하며 결과에 따라 다음 기준을 선택한다.
 각 조건의 설정, 선택 근거, 원본 실행 경로, 비교 그림과 표를 `studies/`에 저장한다.
 
 ## 세 역할의 에이전트 협업
@@ -127,22 +133,22 @@ python scripts/export_content.py --run runs/20261104T031358Z_d9a39f92 --output e
 [에이전트 작업 흐름](docs/agent_workflow.md)과 `agents/`에 각 역할의 입력·출력·권한을 기록했다.
 실험 담당의 원본을 검증 담당이 확인한 뒤 게시물 담당에게 넘긴다.
 
-4단계 실험의 게시물 생성기는 `scripts/export_study_content.py`다.
+4단계 실험의 게시물 생성기는 `studies/CNN-02/scripts/export_study_content.py`다.
 `verified_facts.json`의 통과 상태와 comparison/protocol 해시를 확인한 경우만 파일을 생성한다.
 결과 검증 뒤에는 `python scripts/commit_review.py --study <study 경로>`로 검증 자료를
-`review_snapshots/`에 보존하고 로컬 Git 커밋을 만든다. 4단계 게시물 생성기는 이 훅을
+`studies/<ID>/reviews/snapshots/`에 보존하고 로컬 Git 커밋을 만든다. 4단계 게시물 생성기는 이 훅을
 자동 호출하며 커밋 실패 시 제작을 중단한다. 같은 자료는 기존 커밋을 재사용하고 push하지 않는다.
 이는 현재 작업의 역할 분리와 게시물 생성 게이트이며, chat 밖에서 상시 실행되는 무인 서비스나
 별도 Codex 맞춤 에이전트 등록·스케줄러를 제공하는 것은 아니다.
 
 ## 실패 경로 진단
 
-[실패 진단 보고서](diagnostics/DIAG-01/failure_diagnosis_20261104.md)에 제자리/왕복 순환, 훈련·검증 격차,
+[실패 진단 보고서](studies/CNN-02/diagnostics/DIAG-01/failure_diagnosis_20261104.md)에 제자리/왕복 순환, 훈련·검증 격차,
 재학습 없는 유효 행동 마스크 진단을 기록했다. 마스크 진단은 평가 정책을 바꾼 별도 확인이며
 기존 벤치마크 결과로 대체하지 않는다.
 
 ```powershell
-python scripts/diagnose_failures.py --output diagnostics/new_diagnosis
+python studies/CNN-02/scripts/diagnose_failures.py --output studies/CNN-02/diagnostics/new_diagnosis
 ```
 
 원본 결과를 변경하거나 최종 테스트를 평가하지 않는다.
@@ -151,8 +157,8 @@ python scripts/diagnose_failures.py --output diagnostics/new_diagnosis
 
 - [현재 실험 상세 스펙](studies/CNN-02/current_experiment_spec_20261104.md): 지도 분리, 모델, Replay, 학습/평가 절차.
 - [기법별 실험 후보](docs/experiment_candidates_20261104.md): 버퍼 clear/용량/PER/n-step 등 기대 효과와 trade-off, 대조 설계. 새 학습을 실행한 목록은 아니다.
-- `exports/instagram_01_maze_intro/`: 지도·규칙·현재 CNN DQN·향후 알고리즘 계획을 소개하는 카드 6장과 캡션.
-- `exports/Instagram_01_maze_intro_20261104.zip`: 1회차 게시용 파일 묶음. 성능 수치는 소개 회차에서 제외했다.
+- `studies/CNN-00/exports/instagram_01_maze_intro/`: 지도·규칙·현재 CNN DQN·향후 알고리즘 계획을 소개하는 카드 6장과 캡션.
+- `studies/CNN-00/exports/instagram_01_maze_intro/`: 소개 게시물 제작 자료. 성능 수치는 소개 회차에서 제외했다.
 
-`scripts/export_intro_content.py`는 결과 확인 담당의 `approved_for_intro` 사실 파일과 훈련 예시 지도
+`studies/CNN-00/scripts/export_intro_content.py`는 결과 확인 담당의 `approved_for_intro` 사실 파일과 훈련 예시 지도
 해시를 확인해 소개 이미지를 생성한다. 캡션은 게시물 담당이 별도로 검토하며 공개 업로드는 하지 않는다.

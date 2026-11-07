@@ -9,9 +9,22 @@ datasets/
 exports/
 # Track experiment entry points. Keep generated artifacts local.
 /studies/*
+!/studies/README.md
 !/studies/*/
 /studies/*/*
 !/studies/*/README.md
+!/studies/*/*.md
+!/studies/*/configs/
+!/studies/*/scripts/
+!/studies/*/tests/
+!/studies/*/reviews/
+!/studies/*/diagnostics/
+/studies/*/diagnostics/**
+!/studies/*/diagnostics/*/
+!/studies/*/diagnostics/*/*.md
+# Preserve locally generated historical exporters without promoting them to supported tools.
+/studies/CNN-02/scripts/export_study_assets.py
+/studies/MLP-01/scripts/render_mlp01_carousels.py
 /diagnostics/*
 !/diagnostics/*/
 /diagnostics/*/*

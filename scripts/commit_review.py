@@ -50,7 +50,16 @@ def commit_review(study, root=ROOT):
                 "sha256": {name: hashlib.sha256(data).hexdigest() for name, data in payload.items()}}
     manifest_bytes = (json.dumps(manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     identity = hashlib.sha256(manifest_bytes).hexdigest()
-    snapshot = root / "review_snapshots" / identity
+    owner = study.parent if study.name == "results" else study
+    snapshot = owner / "reviews" / "snapshots" / identity
+    # A layout migration preserves historical manifests and their identities byte-for-byte.
+    for previous in (owner / "reviews" / "snapshots").glob("*/manifest.json"):
+        recorded = json.loads(previous.read_text(encoding="utf-8"))
+        if recorded.get("sha256") == manifest["sha256"] and recorded.get("review_status") == status:
+            manifest_bytes = previous.read_bytes()
+            identity = previous.parent.name
+            snapshot = previous.parent
+            break
     payload["manifest.json"] = manifest_bytes
     paths = [(snapshot / name).relative_to(root).as_posix() for name in payload]
     # Never sweep another task's staged work into this commit.
@@ -66,7 +75,7 @@ def commit_review(study, root=ROOT):
         else:
             with target.open("xb") as stream:
                 stream.write(data)
-    git(root, "add", "--", *paths)
+    git(root, "add", "-f", "--", *paths)
     if git(root, "diff", "--cached", "--name-only", "--", *paths):
         git(root, "commit", "--only", "-m", f"research: preserve independent review {identity[:12]}", "--", *paths)
     commit = git(root, "log", "-1", "--format=%H", "--", *paths)

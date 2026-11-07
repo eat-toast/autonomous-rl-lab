@@ -15,7 +15,7 @@ def main():
     commands = parser.add_subparsers(dest="command", required=True)
     train = commands.add_parser("train", help="Run a bounded DQN experiment")
     train.add_argument("--config", default="configs/smoke.json")
-    train.add_argument("--output", default="runs")
+    train.add_argument("--output", default="studies/CNN-00/runs")
     worker = commands.add_parser("_worker", help=argparse.SUPPRESS)
     worker.add_argument("--run", required=True)
     worker.add_argument("--seed", type=int, required=True)
@@ -31,7 +31,8 @@ def main():
         from .train import train_seed
         summary = train_seed(args.run, args.seed)
         return 0 if summary["status"] == "completed" else 1
-    checkpoint = Path(args.checkpoint).resolve()
+    from .paths import resolve_legacy_path
+    checkpoint = resolve_legacy_path(args.checkpoint).resolve()
     # Load only this project's trusted local checkpoints; never arbitrary Internet files.
     payload = torch.load(checkpoint, map_location="cpu", weights_only=True)
     config = from_dict(payload["config"])

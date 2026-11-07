@@ -33,7 +33,7 @@ return은 탐색을 포함한 훈련 기록이다. 표의 훈련/검증 greedy �
 인스타 작성 서브에이전트는 그 사실 파일을 받아 캡션과 게시 안내를 검토한다.
 
 카드뉴스·보상 그래프·결과표·캡션은 `exports/20261104_dqn_four_steps/`에 보존한다.
-ZIP은 `exports/Instagram_DQN_four_steps_20261104.zip`이다. 공개 업로드는 하지 않았다.
+ZIP은 `studies/CNN-02/exports/Instagram_DQN_four_steps_20261104.zip`이다. 공개 업로드는 하지 않았다.
 
 ## 오류와 예산
 

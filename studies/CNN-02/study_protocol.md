@@ -29,7 +29,7 @@ replay 2,000개, CPU 1 thread. 오류/실패/시간 제한 결과는 보존한�
 보상 곡선의 마지막 미완료 에피소드는 합산하지 않는다.
 return 상승이 목표 도달을 의미하지 않을 수 있으므로 greedy 성공률과 함께 해석한다.
 
-실행: `python scripts/run_study.py`
+실행: `python studies/CNN-02/scripts/run_study.py`
 결과: `studies/CNN-02/results/`, 개별 run은 `runs/`에 보존.
 
 ## 저장 오류 복구 기록

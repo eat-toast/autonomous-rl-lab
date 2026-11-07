@@ -40,4 +40,4 @@ MLP2·MLP3·MLP4의 입력은 모두 14개다. MLP4를 후속 기준으로 채�
 | **CNN-19-갱신주기2** | CNN-04 / `every2` | 4→2스텝마다 학습 갱신 |
 | **CNN-20-타깃주기500** | CNN-04 / `target500` | 타깃 복사 주기 100→500스텝 |
 
-CNN 표의 원본 묶음 `CNN-04`는 CUDA 후보 비교 전체를 가리킨다. 표시 이름 `CNN-04-탐색연장`은 그 비교에서 CPU 참고로 사용한 앞선 조건이다. [DIAG-01](../diagnostics/DIAG-01/failure_diagnosis_20261104.md)은 이 CPU 체크포인트의 평가 진단으로, CNN 조건 번호를 부여하지 않는다.
+CNN 표의 원본 묶음 `CNN-04`는 CUDA 후보 비교 전체를 가리킨다. 표시 이름 `CNN-04-탐색연장`은 그 비교에서 CPU 참고로 사용한 앞선 조건이다. [DIAG-01](../studies/CNN-02/diagnostics/DIAG-01/failure_diagnosis_20261104.md)은 이 CPU 체크포인트의 평가 진단으로, CNN 조건 번호를 부여하지 않는다.

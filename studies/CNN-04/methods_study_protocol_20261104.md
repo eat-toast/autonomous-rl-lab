@@ -2,7 +2,7 @@
 
 사용자 승인: 10조건 × seed 0·1·2 × 20,000 = 600,000 새 훈련 환경 스텝.
 기존 studies/CNN-02/study_protocol.md 및 replay 실험은 완료 기록으로 보존한다. 이 파일이 이번 실행에 적용된다.
-기존 B_CPU runs/20261104T042433Z_2393292b는 참고 행이고 선택 대상이 아니다.
+기존 B_CPU studies/CNN-02/runs/20261104T042433Z_2393292b는 참고 행이고 선택 대상이 아니다.
 
 고정: B 원본 config/실제 mazes.json, 10×10, reward-v1/observation-v1, CNN16→32 FC64 210212개,
 train16/validation8/test16, Adam .001, gamma .99, replay2000, batch32, learning_starts64,
@@ -62,5 +62,5 @@ train64는 원래 train16 순서를 유지하고 train seed 구간의 다음 후
 실패 원본/로그/source snapshot/commit/config/지도hash 보존. 실패 조건도 표에 남기고 독립후보 진행.
 구현/단위검증 시간·작은 테스트 환경스텝은 연구 실행 예산과 별도 기록. CUDA 불가시 CPU대체 없음.
 실행 전 Git tag/commit 및 dirty상태/source/config/manifest hash 기록; 활성 학습 코드·설정 수정 금지.
-독립 검증 담당은 scripts/verify_methods_study.py와 review/facts 파일만 소유, 실험 원본 수정 금지.
+독립 검증 담당은 studies/CNN-04/scripts/verify_methods_study.py와 review/facts 파일만 소유, 실험 원본 수정 금지.
 콘텐츠 인계는 검증된 사실 및 comparison/protocol SHA256까지; 카드제작/업로드 없음.

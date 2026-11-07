@@ -69,6 +69,11 @@ def snapshot_source(run_dir):
     for directory in ("rl_lab", "tests", "configs", "docs", "scripts"):
         paths.extend(p for p in (ROOT / directory).rglob("*")
                      if p.is_file() and p.suffix in (".py", ".json", ".md", ".ps1"))
+    for study in (ROOT / "studies").glob("*"):
+        paths.extend(study.glob("*.md"))
+        for directory in ("scripts", "configs", "tests"):
+            paths.extend(p for p in (study / directory).rglob("*")
+                         if p.is_file() and p.suffix in (".py", ".json", ".ps1"))
     manifest = {}
     with zipfile.ZipFile(run_dir / "source_snapshot.zip", "w", zipfile.ZIP_DEFLATED) as archive:
         for path in sorted(set(paths)):

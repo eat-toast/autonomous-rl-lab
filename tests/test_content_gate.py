@@ -6,7 +6,9 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from scripts.export_study_content import main
+from scripts.study_modules import load
+_export_study = load("CNN-02", "export_study_content")
+main = _export_study.main
 
 
 class ContentGateTests(unittest.TestCase):
@@ -53,8 +55,8 @@ class ContentGateTests(unittest.TestCase):
             protocol = {"provisional_selected_run": "base"}
             output = folder / "output"
             with patch.object(sys, "argv", ["export", "--study", str(folder), "--output", str(output)]), \
-                 patch("scripts.export_study_content.validate_review", return_value=(protocol, {"conditions": rows})), \
-                 patch("scripts.export_study_content.commit_review", side_effect=RuntimeError("Git commit failed")):
+                 patch.object(_export_study, "validate_review", return_value=(protocol, {"conditions": rows})), \
+                 patch.object(_export_study, "commit_review", side_effect=RuntimeError("Git commit failed")):
                 with self.assertRaisesRegex(RuntimeError, "Git commit failed"):
                     main()
             self.assertFalse(output.exists())

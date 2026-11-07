@@ -9,3 +9,19 @@ MLP4의 14개 입력과 방문 횟수 min(count, 3) / 3을 유지하고, [MLP3�
 제안하는 채택 기준은 개발 검증 21/24 이상, 어느 seed도 MLP4보다 낮지 않음, 충돌 0회, 왕복 실패 2건 이하이다. 기준 미달이면 MLP4를 유지하고 미완료 seed가 있으면 판정을 보류한다. 실행 전 벽·경계 제외와 막다른 길, 탐색·greedy·타깃의 일관성을 점검한다. 실행과 독립 검증 자료를 보존한다.
 
 제안 예산은 RTX 4060 worker 1개, seed 0→1→2 순차, seed당 20,000스텝(총 60,000), soft 300초/hard 330초, 실행·집계·독립 검증 합계 30분, 재시도 0회다.
+
+## 자료 위치 · 2026-11-08 구조 이전
+
+- [실행 원본·로그·체크포인트](runs/)
+- [집계·프로토콜·검증 원본](results/)
+- [실험 전용 도구](scripts/)
+- [검증 보존본](reviews/)
+
+원본 JSON·로그·검증본 내부의 과거 경로는 그대로 보존했다.
+[전체 이전표](../../docs/path_migrations.json)와 아래 대응표로 현재 위치를 찾는다.
+
+| 이전 경로 | 현재 위치 |
+|---|---|
+| `studies/MLP-05/results/runs` | `runs` |
+| `review_snapshots/166210a2da35c14b44ae3428b0d8bf5ca8b77fb757772180239a760cc800abc0` | `reviews/snapshots/166210a2da35c14b44ae3428b0d8bf5ca8b77fb757772180239a760cc800abc0` |
+| `scripts/run_mlp05.py` | `scripts/run_mlp05.py` |

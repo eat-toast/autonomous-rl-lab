@@ -5,7 +5,7 @@
 
 - run: `20261104T031358Z_d9a39f92`
 - 학습 코드 커밋: `5ab60867b2b8beb5c3bb017d0d5419a52c2b6e00`
-- 설정: `configs/phase1_three_seeds.json`
+- 설정: `studies/CNN-01/configs/phase1_three_seeds.json`
 - seed 0/1/2, 각 2,000 환경 스텝, 10×10, 최대 에피소드 길이 100.
 - 같은 훈련 미로 16개, 같은 검증 미로 8개. 최종 테스트 16개는 평가하지 않았다.
 - 각 seed 마지막 checkpoint의 검증 성공 0/8.
