@@ -9,6 +9,9 @@
 |---|---|---|
 | 1화 | 사용자 지정 9장 ZIP 확인. ZIP 내 검수 기록에 공개 게시 확인이 있음. 이번에 공개 페이지 재검수는 하지 않음 | studies/MLP-01/exports/instagram_MLP-01/MLP-01_EP01_upload.zip 내부 caption.txt, upload_preflight.md |
 | 2화 기존 초안 | 비교 10장 HTML이 있으나 재기획 반영 전. 기획 지시서는 인계 가능으로 정리됨. 실제 HTML은 새 지시서 반영 전 | studies/MLP-01/exports/instagram_MLP-01_EP02/README.md, EP02_editable.html |
+| 2화 영상 스타일 시안 v1 | 픽셀 게임형 18초 무음 이전본. 사용자 스타일 채택 후 v2로 길이 수정, 이전본 보존·미게시 | studies/MLP-01/exports/instagram_MLP-01_EP02/pixel_pilot_v1/README.md |
+| 2화 영상 스타일 v2 | 사용자 스타일 채택. 앞뒤 정지 구간 축소한 11초 무음 수정본 검수 완료·미게시. 공통 제작법과 담당 지침 연결 완료. v1은 이전본으로 보존 | studies/MLP-01/exports/instagram_MLP-01_EP02/pixel_pilot_v2/README.md |
+| 2화 음악 적용본 | 사용자 선택한 Reganati 배경음 적용·디코딩 통과. 11초, 끝 0.7초 페이드, 청음 피드백 대기·미게시. 다음 음악은 Eternal Arcade로 기록 | studies/MLP-01/exports/instagram_MLP-01_EP02/pixel_music_v1/README.md |
 | 후속 화 기존 자료 | EP03 이름의 로컬 초안이 있음. 공개 회차 번호 확정의 근거가 아님 | studies/MLP-01/exports/instagram_MLP-01_EP03/README.md |
 
 ## 기존 제작·게시 정보 인계
