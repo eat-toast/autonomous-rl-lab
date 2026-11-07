@@ -72,6 +72,11 @@ ID는 [실험 이름과 원본 ID](experiment_names.md)를 따른다. 폴더의 
 여러 실험을 다루는 게시물은 연재 제작 지시서에 주관 study와 모든 근거 study를 기록하고,
 주관 study의 `exports/` 한 곳에서 관리한다.
 
+연재 기획은 김작가가 `docs/series/README.md`와 `docs/series/episodes/`에서만 관리한다.
+제작·게시·보관 상태 및 정식 파일 위치의 입구는 인스타그램 담당의
+`docs/instagram_publications.md`다. 실제 파일·정식 ZIP과 상세 제작·검수 기록은
+인스타그램 담당이 주관 study의 `exports/`에서 관리하며 김작가는 이를 복제·복원·정리하지 않는다.
+
 ## 현재 배치와 과거 기록
 
 루트의 `runs/`, `diagnostics/`, `review_snapshots/`, `exports/`는 소속 study 아래로 이전했다.
