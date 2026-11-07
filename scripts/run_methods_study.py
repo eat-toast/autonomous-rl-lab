@@ -128,7 +128,7 @@ def main():
     fd=os.open(lock,os.O_CREAT|os.O_EXCL|os.O_WRONLY);os.write(fd,str(os.getpid()).encode());os.close(fd)
     started=time.monotonic();ledger=[];reserved=0;retried=False;conditions=[('B_CPU_reference',BASE)]
     original=read(BASE/'mazes.json');plans=plan()
-    protocol={'status':'running','started_at_utc':utc_now(),'source_protocol':'docs/methods_study_protocol_20261104.md','reference_run_id':BASE.name,'reference_manifest_sha256':digest(BASE/'mazes.json'),'planned_training_steps':600000,'maximum_including_recovery':620000,'max_wall_seconds':10800,'seeds':[0,1,2],'conditions':[l for l,_ in plans],'workers':1,'device':'cuda','final_test_used':False,'runtime':runtime_metadata('cuda'),'condition_runs':{}}
+    protocol={'status':'running','started_at_utc':utc_now(),'source_protocol':'studies/CNN-04/methods_study_protocol_20261104.md','reference_run_id':BASE.name,'reference_manifest_sha256':digest(BASE/'mazes.json'),'planned_training_steps':600000,'maximum_including_recovery':620000,'max_wall_seconds':10800,'seeds':[0,1,2],'conditions':[l for l,_ in plans],'workers':1,'device':'cuda','final_test_used':False,'runtime':runtime_metadata('cuda'),'condition_runs':{}}
     snapshot_source(STUDY)
     freeze={str(p.relative_to(ROOT)):digest(p) for p in (ROOT/'rl_lab').glob('*.py')}
     protocol['frozen_training_source_hashes']=freeze

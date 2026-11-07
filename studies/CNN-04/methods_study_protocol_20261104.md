@@ -1,7 +1,7 @@
 # CUDA DQN 주요 후보 후속 프로토콜 — 2026-11-04
 
 사용자 승인: 10조건 × seed 0·1·2 × 20,000 = 600,000 새 훈련 환경 스텝.
-기존 docs/study_protocol.md 및 replay 실험은 완료 기록으로 보존한다. 이 파일이 이번 실행에 적용된다.
+기존 studies/CNN-02/study_protocol.md 및 replay 실험은 완료 기록으로 보존한다. 이 파일이 이번 실행에 적용된다.
 기존 B_CPU runs/20261104T042433Z_2393292b는 참고 행이고 선택 대상이 아니다.
 
 고정: B 원본 config/실제 mazes.json, 10×10, reward-v1/observation-v1, CNN16→32 FC64 210212개,

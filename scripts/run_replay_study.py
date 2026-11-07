@@ -121,7 +121,7 @@ def main():
     plan = [("S_single", single), ("R_buffer10k", larger), ("P_pause", pause), ("F_clear", clear)]
     protocol = {"status": "running", "created_at_utc": utc_now(), "reference_run": BASE.name,
                 "reference_manifest_sha256": digest(BASE / "mazes.json"),
-                "source_protocol": "docs/replay_study_protocol_20261104.md",
+                "source_protocol": "studies/CNN-03/replay_study_protocol_20261104.md",
                 "conditions": [label for label, _ in plan], "seeds": [0, 1, 2],
                 "planned_training_steps": 240000, "maximum_including_recovery": 260000,
                 "max_wall_seconds": 3600, "workers": workers, "threads_per_worker": 1,

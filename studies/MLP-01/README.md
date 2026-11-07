@@ -2,7 +2,7 @@
 
 원본 묶음 ID는 `MLP-01`이다. 원본 조건 `MLP10`과 `MLP14`는 각각 **MLP-01-기본관측**과 **MLP-02-이웃방문**을 가리킨다.
 
-[실험 목록](../../docs/experiment_index.md) · [계획서](../../docs/mlp_feelers_study_plan.md) · [새 세션용 프롬프트](../../docs/next_session_mlp_prompt.md)
+[실험 목록](../../docs/experiment_index.md) · [계획서](mlp_feelers_study_plan.md) · [새 세션용 프롬프트](next_session_mlp_prompt.md)
 
 계획서는 보존한다. 승인된 MLP-01 실행은 [프로토콜](results/protocol.json)과 [보고서](results/report.md)에 기록했다.
 예산은 [원장](results/ledger.json), seed별 원본·체크포인트·재생 자료는 `results/runs/`에 있다.

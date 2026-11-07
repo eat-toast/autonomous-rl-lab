@@ -9,7 +9,7 @@
 ## 환경과 고정 규칙
 
 - Python 3.12 + PyTorch. 기본 설정은 CPU 1 thread이며 `train.device`로 CUDA를 선택할 수 있다.
-- Replay 첫 묶음은 RTX 4060에서 조건별로 순차 실행한다. 기존 CPU 결과와의 비교에는 장치 차이를 기록한다. [실험 프로토콜](docs/replay_study_protocol_20261104.md)을 참고한다.
+- Replay 첫 묶음은 RTX 4060에서 조건별로 순차 실행한다. 기존 CPU 결과와의 비교에는 장치 차이를 기록한다. [실험 프로토콜](studies/CNN-03/replay_study_protocol_20261104.md)을 참고한다.
 - N×N 미로, 3채널 전체 지도(벽·에이전트·목표), 상하좌우 4개 행동.
 - 일반 이동 -0.01, 충돌 -0.05, 목표 +1.0. 코인 없음.
 - CNN 2층 + FC 64 + Q값 4개. 미로 크기마다 별도 모델을 학습한다.
@@ -92,7 +92,7 @@ GitHub `origin`은 `https://github.com/eat-toast/autonomous-rl-lab.git`이다.
 
 3개 seed × 2,000스텝의 짧은 DQN 예비 실험과 실제 평가 기록을 기반으로
 카드뉴스 5장(1080×1350), 무음 MP4(1080×1920, 16초), 캡션을 생성했다.
-실험 결과는 [예비 실험 보고서](docs/pilot_content_report.md)를 참고한다.
+실험 결과는 [예비 실험 보고서](studies/CNN-01/pilot_content_report.md)를 참고한다.
 최종 파일은 `exports/20261104_dqn_pilot_final/`에 있다.
 
 재생성하려면 영상 패키지를 프로젝트 전용 폴더에 설치하고 별도 출력 폴더를 지정한다.
@@ -117,7 +117,7 @@ python scripts/export_content.py --run runs/20261104T031358Z_d9a39f92 --output e
 `network.hidden_units`로 FC 너비를 지정할 수 있다. 기존 checkpoint는 기본 64로 복원된다.
 `evaluation.diagnose_training_fit=true`이면 마지막 checkpoint를 훈련 미로에서도 greedy 평가한다.
 
-이전 4단계 개발 실험의 조건은 [4단계 프로토콜](docs/study_protocol.md)에 기록되어 있다.
+이전 4단계 개발 실험의 조건은 [4단계 프로토콜](studies/CNN-02/study_protocol.md)에 기록되어 있다.
 `python scripts/run_study.py`는 4조건 × 3seed를 순서대로 실행하며 결과에 따라 다음 기준을 선택한다.
 각 조건의 설정, 선택 근거, 원본 실행 경로, 비교 그림과 표를 `studies/`에 저장한다.
 
@@ -137,7 +137,7 @@ python scripts/export_content.py --run runs/20261104T031358Z_d9a39f92 --output e
 
 ## 실패 경로 진단
 
-[실패 진단 보고서](docs/failure_diagnosis_20261104.md)에 제자리/왕복 순환, 훈련·검증 격차,
+[실패 진단 보고서](diagnostics/DIAG-01/failure_diagnosis_20261104.md)에 제자리/왕복 순환, 훈련·검증 격차,
 재학습 없는 유효 행동 마스크 진단을 기록했다. 마스크 진단은 평가 정책을 바꾼 별도 확인이며
 기존 벤치마크 결과로 대체하지 않는다.
 
@@ -149,7 +149,7 @@ python scripts/diagnose_failures.py --output diagnostics/new_diagnosis
 
 ## 현재 스펙·실험 후보·인스타 소개 회차
 
-- [현재 실험 상세 스펙](docs/current_experiment_spec_20261104.md): 지도 분리, 모델, Replay, 학습/평가 절차.
+- [현재 실험 상세 스펙](studies/CNN-02/current_experiment_spec_20261104.md): 지도 분리, 모델, Replay, 학습/평가 절차.
 - [기법별 실험 후보](docs/experiment_candidates_20261104.md): 버퍼 clear/용량/PER/n-step 등 기대 효과와 trade-off, 대조 설계. 새 학습을 실행한 목록은 아니다.
 - `exports/instagram_01_maze_intro/`: 지도·규칙·현재 CNN DQN·향후 알고리즘 계획을 소개하는 카드 6장과 캡션.
 - `exports/Instagram_01_maze_intro_20261104.zip`: 1회차 게시용 파일 묶음. 성능 수치는 소개 회차에서 제외했다.

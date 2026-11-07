@@ -7,7 +7,7 @@
 프로젝트 폴더:
 `C:\Users\toastls93\OneDrive - BigHit Entertainment Co.,Ltd\문서\ChatGPT\강화학습`
 
-`AGENTS.md`, `docs/design.md`, `docs/study_protocol.md`, `docs/experiment_candidates_20261104.md`, `docs/replay_study_protocol_20261104.md`, `docs/agent_workflow.md`, `agents/experiment.md`, `agents/results_review.md`, `agents/instagram.md`를 읽어줘.
+`AGENTS.md`, `docs/design.md`, `studies/CNN-02/study_protocol.md`, `docs/experiment_candidates_20261104.md`, `studies/CNN-03/replay_study_protocol_20261104.md`, `docs/agent_workflow.md`, `agents/experiment.md`, `agents/results_review.md`, `agents/instagram.md`를 읽어줘.
 
 기존 `study_protocol.md`는 완료된 4단계 실험의 기록이다. 그 기록을 덮어쓰지 말고 이번 요청의 후속 프로토콜을 새 파일로 작성해서 적용해줘. 현재 Git·코드·실행 중인 프로세스·원본 설정을 먼저 확인하고 중복 실행하지 마.
 

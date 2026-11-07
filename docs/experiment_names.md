@@ -19,8 +19,8 @@ MLP2·MLP3·MLP4의 입력은 모두 14개다. MLP4를 후속 기준으로 채�
 
 | 표시 이름 | 원본 묶음 / 조건 | 조건 특징 |
 |---|---|---|
-| **CNN-01-실행점검** | CNN-00 / [기본 smoke](phase1_report.md) | 512스텝 실행과 복원 확인 |
-| **CNN-02-예비학습** | CNN-01 / [3 seed 예비 학습](pilot_content_report.md) | seed당 2,000스텝 |
+| **CNN-01-실행점검** | CNN-00 / [기본 smoke](../studies/CNN-00/phase1_report.md) | 512스텝 실행과 복원 확인 |
+| **CNN-02-예비학습** | CNN-01 / [3 seed 예비 학습](../studies/CNN-01/pilot_content_report.md) | seed당 2,000스텝 |
 | **CNN-03-학습량확대** | [CNN-02](../studies/CNN-02/README.md) / `A` | 20,000스텝 |
 | **CNN-04-탐색연장** | CNN-02 / `B` · `B_CPU_reference` | 탐색 감소 기간 16,000스텝, CPU |
 | **CNN-05-학습률감소** | CNN-02 / `C` | 학습률 0.0003 |
@@ -40,4 +40,4 @@ MLP2·MLP3·MLP4의 입력은 모두 14개다. MLP4를 후속 기준으로 채�
 | **CNN-19-갱신주기2** | CNN-04 / `every2` | 4→2스텝마다 학습 갱신 |
 | **CNN-20-타깃주기500** | CNN-04 / `target500` | 타깃 복사 주기 100→500스텝 |
 
-CNN 표의 원본 묶음 `CNN-04`는 CUDA 후보 비교 전체를 가리킨다. 표시 이름 `CNN-04-탐색연장`은 그 비교에서 CPU 참고로 사용한 앞선 조건이다. [DIAG-01](failure_diagnosis_20261104.md)은 이 CPU 체크포인트의 평가 진단으로, CNN 조건 번호를 부여하지 않는다.
+CNN 표의 원본 묶음 `CNN-04`는 CUDA 후보 비교 전체를 가리킨다. 표시 이름 `CNN-04-탐색연장`은 그 비교에서 CPU 참고로 사용한 앞선 조건이다. [DIAG-01](../diagnostics/DIAG-01/failure_diagnosis_20261104.md)은 이 CPU 체크포인트의 평가 진단으로, CNN 조건 번호를 부여하지 않는다.
